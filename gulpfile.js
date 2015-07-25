@@ -2,18 +2,23 @@ var gulp = require('gulp');
 var riot = require('gulp-riot');
 var concat = require('gulp-concat');
 var webserver = require('gulp-webserver');
+var server = require('gulp-express');
+
+var target = ['./tags/editor/*.jade', './tags/editor/**/*.jade'];
+var output = 'public/scripts';
 
 gulp.task('riot', function() {
   gulp
-    .src(['./tags/*.jade', './tags/**/*.jade'])
+    .src(target)
     .pipe(riot({template:'jade'}))
-    .pipe(concat('tags.js'))
-    .pipe(gulp.dest('public/scripts/'))
+    // .pipe(gulp.dest(output))
+    .pipe(concat('editor.tags.js'))
+    .pipe(gulp.dest(output))
     ;
 });
 
 gulp.task('watch', function(){
-  gulp.watch(['./tags/*.jade', './tags/**/*.jade'], ['riot']);
+  gulp.watch(target, ['riot']);
 });
 
 gulp.task('webserver', function() {
@@ -26,5 +31,9 @@ gulp.task('webserver', function() {
     }));
 });
 
+gulp.task('server', function() {
+  server.run(['server.js']);
+});
 
-gulp.task('default', ['watch', 'webserver']);
+
+gulp.task('default', ['watch', 'server']);
