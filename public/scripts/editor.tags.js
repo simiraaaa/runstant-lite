@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" class="panel"></console> </div> <footer></footer>', '.main { position: absolute; width: 100%; height: calc(100% - 64px); overflow: hidden; } .panel { display: block; padding: 10px; float: right; }', function(opts) {
+riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" class="panel"></console> </div> <footer></footer>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px); overflow: hidden; } .panel { display: block; padding: 10px; float: right; }', function(opts) {
     this.on('mount', function() {
     });
   
