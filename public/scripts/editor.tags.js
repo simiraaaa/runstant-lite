@@ -5,7 +5,7 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
   
 });
 
-riot.tag('console', '<div class="inner z-depth-2"> <div class="header yellow darken-2 white-text"><span class="title">console</span></div> </div>', 'console { } console .header { padding: 2px 5px; } console .header .title { font-size: 1.5rem; }', function(opts) {
+riot.tag('console', '<div class="inner z-depth-2"> <div class="header yellow darken-2 white-text"><span class="title">console</span></div> </div>', 'console { } console .inner { background: white; } console .header { padding: 2px 5px; } console .header .title { font-size: 1.5rem; }', function(opts) {
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
@@ -32,7 +32,7 @@ riot.tag('footer', '<h2> </h2>', function(opts) {
 riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href="#"><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="#">Share</a></li> </ul> <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {var self = this;
 });
 
-riot.tag('preview', '<div class="inner z-depth-2"> <div class="header yellow darken-2 white-text"><span class="title">preview</span></div> </div>', 'preview { } preview .header { padding: 2px 5px; } preview .header .title { font-size: 1.5rem; }', function(opts) {
+riot.tag('preview', '<div class="inner z-depth-2"> <div class="header yellow darken-2 white-text"><span class="title">preview</span></div> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 2px 5px; } preview .header .title { font-size: 1.5rem; }', function(opts) {
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
