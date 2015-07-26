@@ -1,9 +1,10 @@
 app
   header
 
-  editor
-  preview
-  console
+  div.main
+    editor
+    preview
+    console
   //- div.row
   //-   div.col.s4.preview
   //-     div aaa
@@ -12,21 +13,13 @@ app
   footer
 
   style.
+    .main {
+      position: absolute;
+      width: 100%;
+      height: calc(100% - 64px);
+      overflow: hidden;
+    }
 
-    .preview {
-      background: #ccf;
-      position: fixed;
-      left: 0px;
-      height: 100%;
-    }
-    .editor {
-      background: #fcc;
-      position: fixed;
-      right: 0px;
-      height: 100%;
-      height : -webkit-calc(100% - 64px) ;
-      height : calc(100% - 64px) ;
-    }
   script.
     this.on('mount', function() {
     });
