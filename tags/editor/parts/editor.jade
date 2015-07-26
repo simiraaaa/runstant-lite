@@ -19,13 +19,6 @@ editor
       #editor
 
   style.
-    editor {
-      display: block;
-      float: right;
-      width: 60%;
-      height : 100%;
-      padding: 10px;
-    }
     .inner {
       border: 1px solid #ccc;
       width: 100%;
@@ -43,6 +36,10 @@ editor
       height: 100%;
     }
   script.
+    this.root.style.width = opts.width;
+    this.root.style.height = opts.height;
+    this.root.style.float = opts.float;
+    
     this.on('mount', function() {
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");
