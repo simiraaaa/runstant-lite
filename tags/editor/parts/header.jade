@@ -1,2 +1,45 @@
 header
-  h2 header
+  nav.blue-grey.darken-3
+    .nav-wrapper
+      a(href='#home').brand-logo
+        img(src='/images/runstant.png')
+        span Run
+        span.lighter stant
+      ul.right.hide-on-small-and-down
+        li.tooltipped(data-tooltip='play')
+          a#btn-play(href='#')
+            i.mdi-av-play-arrow
+        |       
+        li.tooltipped(data-tooltip='share')
+          a#btn-share(href='#')
+            i.mdi-social-share
+        |       
+        li.tooltipped(data-tooltip='setting')
+          a#btn-setting(href='#')
+            i.mdi-action-settings
+      |     
+      ul#nav-mobile.side-nav(style='left: -250px;')
+        li
+          a(href='#') Share
+      |     
+      a.button-collapse(href='#', data-activates='nav-mobile')
+        i.mdi-navigation-menu
+  style(scoped).
+    :scope { display: block }
+    nav {
+      padding: 0px 20px;
+    }
+
+    .brand-logo {
+      position: relative;
+      white-space: nowrap;
+    }
+    .brand-logo img {
+      height: 40px;
+      transform: translate(0px, 5px);
+    }
+    .brand-logo .lighter {
+      font-weight: 200;
+    }
+  script.
+    var self = this;
