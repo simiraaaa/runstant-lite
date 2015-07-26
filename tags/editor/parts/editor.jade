@@ -1,0 +1,53 @@
+editor
+  .inner.z-depth-4
+    .header
+      ul.tabs
+        li.tab.col.s3#tab-html
+          a(data-type='html', href='#editor-html')
+            span.type html
+            span.lang (html)
+        li.tab.col.s3#tab-style
+          a(data-type='style', href='#editor-style')
+            span.type style
+            span.lang (css)
+        li.tab.col.s3#tab-script
+          a(data-type='script', href='#editor-script')
+            span.type script
+            span.lang (javascript)
+
+    .content
+      #editor
+
+  style.
+    editor {
+      right: 0px;
+      width: 60%;
+      height: 100%;
+      height : -webkit-calc(100% - 64px) ;
+      height : calc(100% - 64px) ;
+      position: absolute;
+      padding: 10px;
+    }
+    .inner {
+      border: 1px solid #ccc;
+      width: 100%;
+      height: 100%;
+    }
+    .header {
+      margin-bottom: 1px;
+    }
+    .content {
+      width: 100%;
+      height: calc(100% - 48px);
+    }
+    #editor {
+      width: 100%;
+      height: 100%;
+    }
+  script.
+    this.on('mount', function() {
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      editor.getSession().setMode("ace/mode/javascript");
+    });
+

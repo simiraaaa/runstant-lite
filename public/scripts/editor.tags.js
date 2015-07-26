@@ -1,5 +1,11 @@
 
-riot.tag('app', '<header></header> <div class="row"> <div class="col s4 preview"> <div>aaa</div> </div> <div class="col s8 editor"> <div class="inner"> <div id="editor"></div> </div> </div> </div> <footer></footer>', '.preview { background: #ccf; position: fixed; left: 0px; height: 100%; } .editor { background: #fcc; position: fixed; right: 0px; height: 100%; height : -webkit-calc(100% - 64px) ; height : calc(100% - 64px) ; } .inner { padding: 5px; width: 100%; height: 100%; } #editor { width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header></header> <editor></editor> <footer></footer>', '.preview { background: #ccf; position: fixed; left: 0px; height: 100%; } .editor { background: #fcc; position: fixed; right: 0px; height: 100%; height : -webkit-calc(100% - 64px) ; height : calc(100% - 64px) ; }', function(opts) {
+    this.on('mount', function() {
+    });
+  
+});
+
+riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class="tabs"> <li id="tab-html" class="tab col s3"><a data-type="html" href="#editor-html"><span class="type">html</span><span class="lang">(html)</span></a></li> <li id="tab-style" class="tab col s3"><a data-type="style" href="#editor-style"><span class="type">style</span><span class="lang">(css)</span></a></li> <li id="tab-script" class="tab col s3"><a data-type="script" href="#editor-script"><span class="type">script</span><span class="lang">(javascript)</span></a></li> </ul> </div> <div class="content"> <div id="editor"></div> </div> </div>', 'editor { right: 0px; width: 60%; height: 100%; height : -webkit-calc(100% - 64px) ; height : calc(100% - 64px) ; position: absolute; padding: 10px; } .inner { border: 1px solid #ccc; width: 100%; height: 100%; } .header { margin-bottom: 1px; } .content { width: 100%; height: calc(100% - 48px); } #editor { width: 100%; height: 100%; }', function(opts) {
     this.on('mount', function() {
       var editor = ace.edit("editor");
       editor.setTheme("ace/theme/monokai");
