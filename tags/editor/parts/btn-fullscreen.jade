@@ -27,9 +27,14 @@ btn-fullscreen
         panel.classList.add('nofullscreen');
       });
 
-      console.log(panels);
       $(opts.query).addClass('fullscreen');
       this.isFullScreen = true;
+
+      // タブを元に戻す
+      setTimeout(function() {
+        $('ul.tabs').tabs();
+        //- $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
+      }, 500);
     };
     this.exit = function() {
       $(opts.query).removeClass('fullscreen');
@@ -41,4 +46,11 @@ btn-fullscreen
       });
 
       this.isFullScreen = false;
+
+      // タブを元に戻す
+      setTimeout(function() {
+        $('ul.tabs').tabs();
+        //- $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
+      }, 500);
     };
+
