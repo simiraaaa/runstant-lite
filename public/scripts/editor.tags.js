@@ -25,8 +25,7 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
       this.isFullScreen = true;
 
       setTimeout(function() {
-        $('ul.tabs').tabs();
-
+        $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
       }, 500);
     };
     this.exit = function() {
@@ -41,8 +40,7 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
       this.isFullScreen = false;
 
       setTimeout(function() {
-        $('ul.tabs').tabs();
-
+        $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
       }, 500);
     };
   
