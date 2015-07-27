@@ -5,15 +5,15 @@ editor
         li.tab.col.s3#tab-html
           a(data-type='html', href='#editor-html')
             span.type html
-            small.lang ({this.data.code.html.type})
+            span.lang {this.data.code.html.type}
         li.tab.col.s3#tab-style
           a(data-type='style', href='#editor-style')
             span.type style
-            small.lang ({this.data.code.style.type})
+            span.lang {this.data.code.style.type}
         li.tab.col.s3#tab-script
           a(data-type='script', href='#editor-script')
             span.type script
-            small.lang ({this.data.code.script.type})
+            span.lang {this.data.code.script.type}
 
     .content
       //- #editor
@@ -48,6 +48,25 @@ editor
 
     editor .tabs .indicator {
       background: hsl(60, 100%, 60%);
+    }
+
+
+    @media only screen and (min-width: 601px) {
+      editor .tabs li.tab .lang {
+        font-size: x-small;
+      }
+
+      editor .tabs li.tab .lang:before {
+        content: '(';
+      }
+      editor .tabs li.tab .lang:after {
+        content: ')';
+      }
+    }
+    @media only screen and (max-width: 600px) {
+      editor .tabs li.tab span.type {
+        display: none;
+      }
     }
   script.
     var self = this;
