@@ -2,7 +2,9 @@
 ;(function (exports) {
   var runstant = {};
 
-  exports.TEMPLATE_HTML = "\<!DOCTYPE html\>";
+  exports.TEMPLATE_HTML = "<h1>Hello, runstant!</h1>";
+  exports.TEMPLATE_CSS = "body { background: red; }";
+  exports.TEMPLATE_JS = "console.log('Hello, runstant!')";
 
   runstant.data = {
     version: '0.0.1',

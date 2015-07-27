@@ -75,6 +75,8 @@ editor
       editor.setTheme("ace/theme/monokai");
       //- editor.getSession().setMode("ace/mode/javascript");
 
+      editor.$blockScrolling = Infinity;
+
       var code = self.data.code[type];
 
       setMode(editor, code.type);
