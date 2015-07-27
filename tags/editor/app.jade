@@ -2,33 +2,33 @@ app
   header
 
   div.main
-    editor.panel(width='60%', height='100%', float='right')
+    editor.panel(width='60%', height='100%', float='right', onsave='{onsave}')
     preview.panel(width='40%', height='60%', float='left')
     console.panel(width='40%', height='40%', float='left')
-  //- div.row
-  //-   div.col.s4.preview
-  //-     div aaa
-  //-   div.col.s8.editor
-  //-     editor
   footer
 
   style.
     body {
-    background: hsl(0, 0%, 95%);
+      background: hsl(0, 0%, 95%);
     }
     .main {
       position: absolute;
       width: 100%;
-      height: calc(100% - 64px);
+      height: calc(100% - 64px - 4px);
       overflow: hidden;
     }
 
     .panel {
       display: block;
-      padding: 10px;
+      padding: 5px 5px;
       float: right;
     }
 
   script.
+    var self = this;
     this.on('mount', function() {
     });
+
+    this.onsave = function() {
+      self.tags.preview.refresh();
+    };

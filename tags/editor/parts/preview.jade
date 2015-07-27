@@ -2,6 +2,8 @@ preview
   .inner.z-depth-2
     .header.cyan.lighten-5.grey-text.text-darken-2
       span.title preview
+    .content
+      #preview
 
   style.
     preview {
@@ -11,11 +13,23 @@ preview
     }
     preview .header {
       padding: 3px 10px;
+      height: 36px;
+      line-height: 36px;
     }
     preview .header .title {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
     }
   script.
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
+
+    this.on('mount', function() {
+      var preview = jframe("#preview");
+      this.preview = preview;
+    });
+
+    this.refresh = function() {
+      var v = runstant.data.code['html'].value;
+      this.preview.load(v);
+    };

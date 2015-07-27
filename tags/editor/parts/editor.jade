@@ -5,18 +5,21 @@ editor
         li.tab.col.s3#tab-html
           a(data-type='html', href='#editor-html')
             span.type html
-            span.lang (html)
+            small.lang ({this.data.code.html.type})
         li.tab.col.s3#tab-style
           a(data-type='style', href='#editor-style')
             span.type style
-            span.lang (css)
+            small.lang ({this.data.code.style.type})
         li.tab.col.s3#tab-script
           a(data-type='script', href='#editor-script')
             span.type script
-            span.lang (javascript)
+            small.lang ({this.data.code.script.type})
 
     .content
-      #editor
+      //- #editor
+      #editor-html.editor-unit html
+      #editor-style.editor-unit style
+      #editor-script.editor-unit script
 
   style.
     .inner {
@@ -26,14 +29,15 @@ editor
       width: 100%;
       height: 100%;
     }
-    .header {
+    editor .header {
       margin-bottom: 1px;
+      height: 32px;
     }
     .content {
       width: 100%;
-      height: calc(100% - 48px);
+      height: calc(100% - 36px);
     }
-    #editor {
+    #editor, #editor-html, #editor-style, #editor-script {
       width: 100%;
       height: 100%;
     }
@@ -48,16 +52,54 @@ editor
     }
 
     editor .tabs .indicator {
-      background: blue;
+      background: hsl(60, 100%, 60%);
     }
   script.
+    var self = this;
+    this.data = runstant.data;
+
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
 
     this.on('mount', function() {
-      var editor = ace.edit("editor");
-      editor.setTheme("ace/theme/monokai");
-      editor.getSession().setMode("ace/mode/javascript");
+      $('editor ul.tabs').tabs();
+
+      toEdit('html');
+      toEdit('style');
+      toEdit('script');
     });
+
+    var toEdit = function(type) {
+      var editor = ace.edit('editor-' + type);
+      editor.setTheme("ace/theme/monokai");
+      //- editor.getSession().setMode("ace/mode/javascript");
+
+      var code = self.data.code[type];
+
+      setMode(editor, code.type);
+
+      //- editor.setValue(runstant.data.code.html.value);
+      editor.setValue(code.value);
+
+      editor.commands.addCommand({
+        name: "save",
+        bindKey: { mac: "Command-S", win: "Ctrl-S", },
+        exec: function() {
+          var v = editor.getValue();
+          code.value = v;
+          opts.onsave && opts.onsave();
+        }
+      });
+    };
+
+    var setMode = function(editor, type) {
+      var map = {
+        "ecmascript6": "javascript",
+        "sass": "scss",
+      };
+      if (map[type]) type = map[type];
+
+      editor.getSession().setMode("ace/mode/" + type);
+    };
 
