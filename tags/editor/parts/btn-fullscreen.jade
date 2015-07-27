@@ -1,0 +1,44 @@
+btn-fullscreen
+  a(href='#', onclick='{expand}', if='{!isFullScreen}')
+    i.mdi-navigation-fullscreen
+  a(href='#', onclick='{exit}', if='{isFullScreen}')
+    i.mdi-navigation-fullscreen-exit
+
+  style.
+    btn-fullscreen {
+      display: block;
+
+      position: absolute;
+      bottom: 16px;
+      right: 10px;
+      line-height: 14px;
+      cursor: pointer;
+      font-size: 2rem;
+      z-index: 32;
+    }
+  script.
+    this.isFullScreen = false;
+    this.expand = function() {
+      var target = document.querySelector(opts.query);
+      var panels = document.querySelectorAll('.panel');
+
+      Array.prototype.forEach.call(panels, function(panel) {
+        if (panel === target) return ;
+        panel.classList.add('nofullscreen');
+      });
+
+      console.log(panels);
+      $(opts.query).addClass('fullscreen');
+      this.isFullScreen = true;
+    };
+    this.exit = function() {
+      $(opts.query).removeClass('fullscreen');
+      var panels = document.querySelectorAll('.panel');
+
+      Array.prototype.forEach.call(panels, function(panel) {
+        panel.classList.remove('fullscreen');
+        panel.classList.remove('nofullscreen');
+      });
+
+      this.isFullScreen = false;
+    };
