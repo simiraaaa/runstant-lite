@@ -46,6 +46,7 @@ app
     }
 
   script.
+    runstant.data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
     var self = this;
     this.on('mount', function() {
     });
