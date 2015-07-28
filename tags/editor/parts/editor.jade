@@ -76,47 +76,34 @@ editor
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
 
+    this.editors = {};
+
     this.on('mount', function() {
       $('editor ul.tabs').tabs();
 
-      toEdit('html');
-      toEdit('style');
-      toEdit('script');
+      this.setupEditor('html');
+      this.setupEditor('style');
+      this.setupEditor('script');
+
+      //- toEdit('html');
+      //- toEdit('style');
+      //- toEdit('script');
     });
 
-    var toEdit = function(type) {
-      var editor = ace.edit('editor-' + type);
-      editor.setTheme("ace/theme/monokai");
-      //- editor.getSession().setMode("ace/mode/javascript");
-
-      editor.$blockScrolling = Infinity;
-      editor.getSession().setTabSize(2);
-
+    this.setupEditor = function(type) {
+      var editor = this.editors[type] = new runstant.Editor('editor-' + type);
       var code = self.data.code[type];
 
-      setMode(editor, code.type);
-
-      //- editor.setValue(runstant.data.code.html.value);
+      editor.setMode(code.type);
       editor.setValue(code.value);
 
-      editor.commands.addCommand({
-        name: "save",
-        bindKey: { mac: "Command-S", win: "Ctrl-S", },
-        exec: function() {
-          var v = editor.getValue();
-          code.value = v;
-          opts.onsave && opts.onsave();
-        }
-      });
-    };
-
-    var setMode = function(editor, type) {
-      var map = {
-        "ecmascript6": "javascript",
-        "sass": "scss",
+      editor.onsave = function() {
+        var v = editor.getValue();
+        code.value = v;
+        opts.onsave && opts.onsave();
       };
-      if (map[type]) type = map[type];
 
-      editor.getSession().setMode("ace/mode/" + type);
+      // test
+      editor.setFontSize(22);
+      editor.setTheme('ace/theme/monokai');
     };
-

@@ -9,95 +9,71 @@ var runstant = runstant || {};
 
   Editor.prototype = {
 
-    init: function(param) {
-      this.editors = {};
-    },
-
-    register: function(key, id, mode) {
-      var editor = ace.edit(id);
+    init: function(id) {
+      var editor = this.editor = ace.edit(id);
       editor.setTheme("ace/theme/monokai");
-      // editor.setAutoScrollEditorIntoView(true);
 
+      // setup command
       defaults.commands.forEach(function(command) {
-      command.exec = command.exec.bind(this);
-      editor.commands.addCommand(command);
+        command.exec = command.exec.bind(this);
+        editor.commands.addCommand(command);
       }, this);
 
+      // setup options
       editor.setOptions({
-      enableBasicAutocompletion: true,
-      enableSnippets: true,
-      enableLiveAutocompletion: true
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
       });
       editor.$blockScrolling = Infinity;
-
-      this.editors[key] = editor;
-
-      this.setMode(key, mode);
+      editor.getSession().setTabSize(2);
 
       // support scroll in smart phone
       var isSmartPhone = (function() {
-      var ua = navigator.userAgent;
-      return ua.indexOf('iPhone') > 0 ||
-      ua.indexOf('iPad') > 0 ||
-      ua.indexOf('iPod') > 0 ||
-      ua.indexOf('Android') > 0;
+        var ua = navigator.userAgent;
+        return ua.indexOf('iPhone') > 0 ||
+        ua.indexOf('iPad') > 0 ||
+        ua.indexOf('iPod') > 0 ||
+        ua.indexOf('Android') > 0;
       })();
 
       if (isSmartPhone) {
-      $(editor.container).find('.ace_scroller')
-      .css('overflow', 'auto')
-      ;
+        $(editor.container).find('.ace_scroller')
+          .css('overflow', 'auto')
+          ;
       }
-      },
-
-    setValue: function(key, value) {
-      var editor =this.editors[key];
-      editor.setValue(value);
     },
 
-    getValue: function(key) {
-      var editor =this.editors[key];
-      return editor.getValue();
+    setValue: function(value) {
+      this.editor.setValue(value);
     },
 
-    setMode: function(key, mode) {
-      var tempMode = mode;
+    getValue: function() {
+      return this.editor.getValue();
+    },
+
+    setMode: function(type) {
       var map = {
-      "ecmascript6": "javascript",
-      "sass": "scss",
+        "ecmascript6": "javascript",
+        "sass": "scss",
       };
-      if (map[mode]) mode = map[mode];
+      if (map[type]) type = map[type];
 
-      var editor =this.editors[key];
-      editor.getSession().setMode("ace/mode/" + mode);
-
-      // 表示を更新
-      var $typeTab = $('#tab-' + key).find('.lang');
-      $typeTab.text( tempMode );
-
-      return this;
+      this.editor.getSession().setMode("ace/mode/" + type);
     },
 
     setTheme: function(theme) {
-      Object.keys(this.editors).forEach(function(key) {
-      var editor = this.editors[key];
-      editor.setTheme(theme);
-      }, this);
+      console.log(theme);
+      this.editor.setTheme(theme);
     },
 
     setTabSize: function(tabSize) {
-      tabSize = Number(tabSize) || 4;
-      Object.keys(this.editors).forEach(function(key) {
-      var editor = this.editors[key];
-      editor.getSession().setTabSize(tabSize);
-      }, this);
+      tabSize = Number(tabSize) || 2;
+      this.editor.getSession().setTabSize(tabSize);
     },
 
     setFontSize: function(size) {
-      Object.keys(this.editors).forEach(function(key) {
-      var editor = this.editors[key];
-      editor.setFontSize(+size);
-      }, this);
+      this.editor.setFontSize(+size);
     },
 
     setKeyboardHandler: function(key) {
@@ -107,25 +83,14 @@ var runstant = runstant || {};
       'emacs': "ace/keyboard/emacs",
       };
       var keybinding = keybindings[key];
-
-      Object.keys(this.editors).forEach(function(key) {
-      var editor = this.editors[key];
-      editor.setKeyboardHandler(keybinding);
-      }, this);
+      this.editor.setKeyboardHandler(keybinding);
     },
 
     addCommand: function(command) {
-      // TODO 
-      Object.keys(this.editors).forEach(function(key) {
-      var editor = this.editors[key];
-      editor.commands.addCommand(command);
-      }, this);
+      this.editor.commands.addCommand(command);
     },
-
-    focus: function(key) {
-      if (this.editors[key]) {
-      this.editors[key].focus();
-      }
+    focus: function() {
+      this.editor.focus();
     },
 
     onsave: function() {
