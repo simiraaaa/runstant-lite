@@ -31,6 +31,7 @@ preview
       border: none;
     }
   script.
+    var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
@@ -83,4 +84,11 @@ preview
     this.refresh = function() {
       var v = this.dataToCode();
       this.preview.load(v);
+    };
+
+    this.post = function(v) {
+      var frame = self.preview.domElement.querySelector('iframe');
+      var win = frame.contentWindow;
+
+      win.postMessage(v, '*');
     };

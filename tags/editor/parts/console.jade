@@ -5,7 +5,8 @@ console
 
     .content
       .content-console
-        span#console-input.input(type='text', contenteditable='true') hogehoge
+        span(each='{messages}' class='{type}') {value}
+        span#console-input.input(type='text', contenteditable='true', onkeypress='{keypress}')
     btn-fullscreen(query='console')
 
   style.
@@ -50,7 +51,6 @@ console
       color: #222;
       border-bottom: 0px;
     }
-
     console .content .content-console span.input:before {
       position: absolute;
       left: 7px;
@@ -58,11 +58,65 @@ console
       content: '> ';
       color: #47b4eb;
     }
+    console .content .content-console span.output {
+      outline: 0;
+    }
+    console .content .content-console span.output:before {
+      position: absolute;
+      left: 7px;
+      font-weight: bold;
+      content: '< ';
+      color: #47b4eb;
+    }
+    console .content .content-console span.error {
+      color: red;
+    }
+
   script.
+    var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
 
+    this.messages = [
+    ];
+
+    this.stack = [];
+
     this.on('mount', function() {
       var $input = $("#console-input");
     });
+
+    this.keypress = function(e) {
+      if (e.which === 13 && e.shiftKey === false) {
+        var target = $(e.target);
+        var v = target.text();
+        if (v === '') return false;
+
+        target.text('');
+
+        opts.onpost && opts.onpost(v);
+
+        this.stack.push(v);
+        this.print('input', v);
+
+        return false;
+      }
+      return true;
+    };
+
+    this.print = function(type, v) {
+      this.messages.push({
+        type: type,
+        value: v,
+      });
+      this.update();
+    };
+
+    this.clear = function() {
+      this.messages = [];
+      this.update();
+    }
+
+
+

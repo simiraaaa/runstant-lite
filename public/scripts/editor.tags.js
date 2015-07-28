@@ -1,12 +1,41 @@
 
-riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" class="panel"></console> </div> <footer></footer>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> </div> <footer></footer>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     runstant.data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
     var self = this;
     this.on('mount', function() {
+      window.onmessage = this.onmessage.bind(this);
     });
     
     this.onsave = function() {
       self.tags.preview.refresh();
+    };
+    
+    this.onpost = function(v) {
+      self.tags.preview.post(v);
+    };
+    
+    
+    this.onmessage = function(e) {
+      var data = JSON.parse(e.data);
+      var method = data.method;
+      var args = data.arguments;
+      var csl = self.tags.console;
+    
+      if (method == 'log') {
+          csl.print('log', args.join(' '));
+      }
+      else if (method == 'dir') {
+          csl.print('dir', JSON.stringify(args[0], null, 2));
+      }
+      else if (method === 'output') {
+          csl.print('output', args.join(' '));
+      }
+      else if (method == 'error') {
+          csl.print('error', args.join(' '));
+      }
+      else if (method == 'clear') {
+          csl.clear();
+      }
     };
   
 });
@@ -47,14 +76,51 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
   
 });
 
-riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">console</span></div> <div class="content"> <div class="content-console"><span id="console-input" type="text" contenteditable="true" class="input">hogehoge</span></div> </div> <btn-fullscreen query="console"></btn-fullscreen> </div>', 'console { } console .inner { background: white; } console .header { padding: 3px 10px; height: 36px; line-height: 36px; } console .header .title { font-size: 1.2rem; } console .content .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } console .content .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } console .content .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } console .content .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; }', function(opts) {
+riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">console</span></div> <div class="content"> <div class="content-console"><span each="{messages}" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div> </div> <btn-fullscreen query="console"></btn-fullscreen> </div>', 'console { } console .inner { background: white; } console .header { padding: 3px 10px; height: 36px; line-height: 36px; } console .header .title { font-size: 1.2rem; } console .content .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } console .content .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } console .content .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } console .content .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } console .content .content-console span.output { outline: 0; } console .content .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } console .content .content-console span.error { color: red; }', function(opts) {
+    var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
     
+    this.messages = [
+    ];
+    
+    this.stack = [];
+    
     this.on('mount', function() {
       var $input = $("#console-input");
     });
+    
+    this.keypress = function(e) {
+      if (e.which === 13 && e.shiftKey === false) {
+        var target = $(e.target);
+        var v = target.text();
+        if (v === '') return false;
+    
+        target.text('');
+    
+        opts.onpost && opts.onpost(v);
+    
+        this.stack.push(v);
+        this.print('input', v);
+    
+        return false;
+      }
+      return true;
+    };
+    
+    this.print = function(type, v) {
+      this.messages.push({
+        type: type,
+        value: v,
+      });
+      this.update();
+    };
+    
+    this.clear = function() {
+      this.messages = [];
+      this.update();
+    }
   
 });
 
@@ -106,6 +172,7 @@ riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a
 });
 
 riot.tag('preview', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">preview</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+    var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
@@ -158,6 +225,13 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div class="header cyan light
     this.refresh = function() {
       var v = this.dataToCode();
       this.preview.load(v);
+    };
+    
+    this.post = function(v) {
+      var frame = self.preview.domElement.querySelector('iframe');
+      var win = frame.contentWindow;
+    
+      win.postMessage(v, '*');
     };
   
 });

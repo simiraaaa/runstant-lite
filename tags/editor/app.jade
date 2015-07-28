@@ -4,7 +4,7 @@ app
   div.main
     editor.panel(width='60%', height='100%', float='right', onsave='{onsave}')
     preview.panel(width='40%', height='60%', float='left')
-    console.panel(width='40%', height='40%', float='left')
+    console.panel(width='40%', height='40%', float='left', onpost='{onpost}')
   footer
 
   style.
@@ -49,8 +49,37 @@ app
     runstant.data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
     var self = this;
     this.on('mount', function() {
+      window.onmessage = this.onmessage.bind(this);
     });
 
     this.onsave = function() {
       self.tags.preview.refresh();
+    };
+
+    this.onpost = function(v) {
+      self.tags.preview.post(v);
+    };
+
+
+    this.onmessage = function(e) {
+      var data = JSON.parse(e.data);
+      var method = data.method;
+      var args = data.arguments;
+      var csl = self.tags.console;
+
+      if (method == 'log') {
+          csl.print('log', args.join(' '));
+      }
+      else if (method == 'dir') {
+          csl.print('dir', JSON.stringify(args[0], null, 2));
+      }
+      else if (method === 'output') {
+          csl.print('output', args.join(' '));
+      }
+      else if (method == 'error') {
+          csl.print('error', args.join(' '));
+      }
+      else if (method == 'clear') {
+          csl.clear();
+      }
     };
