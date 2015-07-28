@@ -7,6 +7,8 @@ app
     console.panel(width='40%', height='40%', float='left', onpost='{onpost}')
   footer
 
+  detailmodal
+
   style.
     body {
       background: hsl(0, 0%, 95%);
@@ -48,6 +50,11 @@ app
   script.
     runstant.data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
     var self = this;
+
+    runstant.openDetailModal = function() {
+      $('#detailmodal').openModal();
+    };
+
     this.on('mount', function() {
       window.onmessage = this.onmessage.bind(this);
     });

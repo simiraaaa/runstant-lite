@@ -3,9 +3,9 @@ console
     .header.cyan.lighten-5.grey-text.text-darken-2
       span.title console
 
-    .content
+    .content(onclick='{click}')
       .content-console
-        span(each='{messages}' class='{type}') {value}
+        span(each='{messages}' class='{type}', onclick='confirm("{value}")') {value}
         span#console-input.input(type='text', contenteditable='true', onkeypress='{keypress}')
     btn-fullscreen(query='console')
 
@@ -103,6 +103,10 @@ console
         return false;
       }
       return true;
+    };
+
+    this.click = function() {
+      $('#console-input').focus();
     };
 
     this.print = function(type, v) {

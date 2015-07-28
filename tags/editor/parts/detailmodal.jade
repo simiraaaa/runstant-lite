@@ -1,0 +1,54 @@
+// クリップの詳細
+detailmodal#detailmodal.modal.bottom-sheet
+  div.modal-content
+    h4 Setting
+
+    form.row
+      div.col.s6
+        h5 Project
+        div.row
+          div.col.s12.input-field
+            input(value='hoge', type="text")
+            label Project Title
+          div.col.s12.input-field
+            textarea.materialize-textarea
+            label Description
+        div.row
+          div.col.s12
+            label Language
+          div.col.s4(each='{languages}')
+            label {name}
+            select.browser-default
+              option(each='{list}', value='{name}') {name}
+
+  script.
+    this.languages = [
+      {
+        name: 'html',
+        list: [
+          {name:'html'},
+          {name:'jade'},
+          {name:'markdown'},
+        ],
+      },
+      {
+        name: 'style',
+        list: [
+          {name:'css'},
+          {name:'stylus'},
+          {name:'less'},
+          {name:'sass'},
+        ],
+      },
+      {
+        name: 'script',
+        list: [
+          {name:'javascript'},
+          {name:'typescript'},
+          {name:'coffee'},
+          {name:'ecmascript6'},
+        ],
+      },
+    ];
+
+
