@@ -3,6 +3,9 @@ console
     .header.cyan.lighten-5.grey-text.text-darken-2
       span.title console
 
+    .content
+      .content-console
+        span#console-input.input(type='text', contenteditable='true') hogehoge
     btn-fullscreen(query='console')
 
   style.
@@ -19,7 +22,47 @@ console
     console .header .title {
       font-size: 1.2rem;
     }
+
+    console .content .content-console {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 5px 20px;
+      font-family: Consolas, Monaco, 'ＭＳ ゴシック';
+      overflow-x: auto;
+    }
+
+    console .content .content-console span {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      line-height: 1em;
+      margin-top: 2px;
+      padding-bottom: 2px;
+      color: #0055ff;
+      font-size: 13px;
+      white-space: pre;
+      word-wrap: break-word;
+    }
+
+    console .content .content-console span.input {
+      outline: 0;
+      color: #222;
+      border-bottom: 0px;
+    }
+
+    console .content .content-console span.input:before {
+      position: absolute;
+      left: 7px;
+      font-weight: bold;
+      content: '> ';
+      color: #47b4eb;
+    }
   script.
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
+
+    this.on('mount', function() {
+      var $input = $("#console-input");
+    });

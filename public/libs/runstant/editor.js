@@ -15,8 +15,11 @@ var runstant = runstant || {};
 
       // setup command
       defaults.commands.forEach(function(command) {
-        command.exec = command.exec.bind(this);
-        editor.commands.addCommand(command);
+        editor.commands.addCommand({
+          name: command.name,
+          bindKey: command.bindKey,
+          exec: command.exec.bind(this),
+        });
       }, this);
 
       // setup options
@@ -94,7 +97,8 @@ var runstant = runstant || {};
     },
 
     onsave: function() {
-
+      console.log(this);
+      // console.log(this.getValue());
     },
   };
 
@@ -130,7 +134,7 @@ var runstant = runstant || {};
         }
       },
       {
-      name: "selectwordright2",
+        name: "selectwordright2",
         bindKey: {
           mac: "Ctrl-Shift-Right",
           win: "Ctrl-Shift-Right",

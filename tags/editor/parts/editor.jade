@@ -84,6 +84,9 @@ editor
       this.setupEditor('html');
       this.setupEditor('style');
       this.setupEditor('script');
+
+      $('ul.tabs').tabs('select_tab', 'editor-' + 'script');
+      this.editors['script'].focus();
     });
 
     this.setupEditor = function(type) {

@@ -47,10 +47,14 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
   
 });
 
-riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">console</span></div> <btn-fullscreen query="console"></btn-fullscreen> </div>', 'console { } console .inner { background: white; } console .header { padding: 3px 10px; height: 36px; line-height: 36px; } console .header .title { font-size: 1.2rem; }', function(opts) {
+riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">console</span></div> <div class="content"> <div class="content-console"><span id="console-input" type="text" contenteditable="true" class="input">hogehoge</span></div> </div> <btn-fullscreen query="console"></btn-fullscreen> </div>', 'console { } console .inner { background: white; } console .header { padding: 3px 10px; height: 36px; line-height: 36px; } console .header .title { font-size: 1.2rem; } console .content .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } console .content .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } console .content .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } console .content .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; }', function(opts) {
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
     this.root.style.float = opts.float;
+    
+    this.on('mount', function() {
+      var $input = $("#console-input");
+    });
   
 });
 
@@ -70,6 +74,9 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
       this.setupEditor('html');
       this.setupEditor('style');
       this.setupEditor('script');
+    
+      $('ul.tabs').tabs('select_tab', 'editor-' + 'script');
+      this.editors['script'].focus();
     });
     
     this.setupEditor = function(type) {
@@ -110,8 +117,46 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div class="header cyan light
       this.refresh();
     });
     
+    var wrapTag = function(text, tag) {
+      return '<' + tag + '>' + text + '</' + tag + '>';
+    };
+    
+    this.dataToCode = function() {
+      var data = runstant.data;
+      var setting = data.setting;
+      var code = data.code;
+    
+      var htmlCode = code.html.value;
+      if (runstant.compiler[code.html.type]) {
+        htmlCode = runstant.compiler[code.html.type].func(htmlCode);
+      }
+      var cssCode = code.style.value;
+      if (runstant.compiler[code.style.type]) {
+        cssCode = runstant.compiler[code.style.type].func(cssCode);
+      }
+      var jsCode = code.script.value;
+      if (runstant.compiler[code.script.type]) {
+        jsCode = runstant.compiler[code.script.type].func(jsCode);
+      }
+    
+      var finalCode = htmlCode
+        .replace("${title}", setting.title)
+        .replace("${description}", setting.description)
+        .replace("${style}", cssCode)
+        .replace("${script}", jsCode)
+        ;
+    
+      var debug = true;
+      if (debug === true) {
+        var debugCode = '(' + runstant.util.ConsoleExtention.toString() + ')()';
+        finalCode = wrapTag(debugCode, 'script') + finalCode;
+      }
+    
+      return finalCode;
+    };
+    
     this.refresh = function() {
-      var v = runstant.data.code['html'].value;
+      var v = this.dataToCode();
       this.preview.load(v);
     };
   
