@@ -3,22 +3,22 @@ detailmodal#detailmodal.modal.bottom-sheet
   div.modal-content
     h4 Setting
 
-    form.row
+    form.row(name='_form')
       div.col.s6
         h5 Project
         div.row
           div.col.s12.input-field
-            input(value='hoge', type="text")
+            input(name='_title', value='hoge', type="text")
             label Project Title
           div.col.s12.input-field
-            textarea.materialize-textarea
+            textarea.materialize-textarea(name='_description')
             label Description
         div.row
           div.col.s12
             label Language
           div.col.s4(each='{languages}')
             label {name}
-            select.browser-default
+            select.browser-default(name='_{name}')
               option(each='{list}', value='{name}') {name}
 
   script.
@@ -50,5 +50,13 @@ detailmodal#detailmodal.modal.bottom-sheet
         ],
       },
     ];
+    this.init = function() {
+      var elements = this._form.elements;
+      elements._title.value = runstant.data.setting.title;
+      elements._description.value = runstant.data.setting.description;
+      elements._html.value = 'jade';
+      elements._style.value = 'less';
+      elements._script.value = 'coffee';
+    };
 
 
