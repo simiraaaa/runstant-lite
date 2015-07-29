@@ -57,6 +57,7 @@ app
       },
       complete: function() {
         self.tags.detailmodal.save();
+        self.tags.editor.updateMode();
         self.loadScripts();
       },
     });

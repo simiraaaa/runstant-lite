@@ -89,13 +89,14 @@ editor
 
       $('ul.tabs').tabs('select_tab', 'editor-' + 'script');
       this.editors['script'].focus();
+
+      this.updateMode();
     });
 
     this.setupEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
       var code = self.data.code[type];
 
-      editor.setMode(code.type);
       editor.setValue(code.value);
 
       editor.onsave = function() {
@@ -108,3 +109,13 @@ editor
       editor.setFontSize(14);
       editor.setTheme('ace/theme/monokai');
     };
+
+    this.updateMode = function() {
+      this.editors.$forIn(function(type, editor) {
+        var mode = self.data.code[type].type;
+        editor.setMode(mode);
+      });
+    };
+
+
+

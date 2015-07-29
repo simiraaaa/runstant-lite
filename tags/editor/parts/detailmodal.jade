@@ -62,6 +62,9 @@ detailmodal#detailmodal.modal.bottom-sheet
       elements._html.value = code.html.type;
       elements._style.value = code.style.type;
       elements._script.value = code.script.type;
+
+      elements._title.focus();
+      elements._title.select();
     };
 
     this.save = function() {

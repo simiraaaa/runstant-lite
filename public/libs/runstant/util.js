@@ -132,6 +132,7 @@
   // 動的にスクリプトをロードする
   util.loadScript = function(path, callback) {
     if (util.loadScript.cache[path]) {
+      callback && callback();
       return ;
     }
 
@@ -141,11 +142,10 @@
   util.loadScript.cache = {};
 
   util.loadScripts = function(pathes, callback) {
-    var count = 0;
+    var count = pathes.length;
     var counter = 0;
 
     pathes.forEach(function(path) {
-      count++;
       runstant.util.loadScript(path, function() {
         counter++;
 
@@ -154,10 +154,6 @@
         }
       });
     });
-
-    if (count === 0) {
-      callback && callback();
-    }
   };
 
   util.shorten = function(url, callback) {

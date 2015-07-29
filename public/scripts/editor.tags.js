@@ -9,6 +9,7 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
       },
       complete: function() {
         self.tags.detailmodal.save();
+        self.tags.editor.updateMode();
         self.loadScripts();
       },
     });
@@ -249,6 +250,9 @@ riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name
       elements._html.value = code.html.type;
       elements._style.value = code.style.type;
       elements._script.value = code.script.type;
+    
+      elements._title.focus();
+      elements._title.select();
     };
     
     this.save = function() {
@@ -284,13 +288,14 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     
       $('ul.tabs').tabs('select_tab', 'editor-' + 'script');
       this.editors['script'].focus();
+    
+      this.updateMode();
     });
     
     this.setupEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
       var code = self.data.code[type];
     
-      editor.setMode(code.type);
       editor.setValue(code.value);
     
       editor.onsave = function() {
@@ -301,6 +306,13 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
 
       editor.setFontSize(14);
       editor.setTheme('ace/theme/monokai');
+    };
+    
+    this.updateMode = function() {
+      this.editors.$forIn(function(type, editor) {
+        var mode = self.data.code[type].type;
+        editor.setMode(mode);
+      });
     };
   
 });
