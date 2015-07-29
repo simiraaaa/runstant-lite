@@ -4,11 +4,23 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
     
     runstant.openDetailModal = function() {
       self.tags.detailmodal.init();
-      $('#detailmodal').openModal();
+      $('#detailmodal').openModal({
+        complete: function() {
+          runstant.onCompleteDetailModal && runstant.onCompleteDetailModal();
+          self.loadScripts();
+        }
+      });
+    };
+    runstant.onCompleteDetailModal = function() {
+      alert('hoge');
     };
     
     this.on('mount', function() {
       window.onmessage = this.onmessage.bind(this);
+    
+      self.tags.preview.on('mount', function() {
+        self.loadScripts();
+      });
     });
     
     this.onsave = function() {
@@ -58,6 +70,34 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
       }
     };
     
+    
+    this.loadScripts = function() {
+      var code = runstant.data.code;
+    
+      var pathes = (function() {
+        var types = [
+          code.html.type,
+          code.style.type,
+          code.script.type,
+        ];
+    
+        var pathes = [];
+    
+        types.forEach(function(type) {
+          var path = runstant.constant.LANG_SCRIPT_MAP[type];
+          if (path) {
+            pathes.push(path);
+          }
+        });
+    
+        return pathes;
+      })();
+    
+      runstant.util.loadScripts(pathes, function() {
+        self.onsave();
+        self.update();
+      });
+    };
     
     this.onmessage = function(e) {
       var data = JSON.parse(e.data);
@@ -173,7 +213,7 @@ riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan light
 });
 
 <!-- クリップの詳細-->
-riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name="_form" class="row"> <div class="col s6"> <h5>Project</h5> <div class="row"> <div class="col s12 input-field"> <input name="_title" value="hoge" type="text"> <label>Project Title</label> </div> <div class="col s12 input-field"> <textarea name="_description" class="materialize-textarea"></textarea> <label>Description</label> </div> </div> <div class="row"> <div class="col s12"> <label>Language</label> </div> <div each="{languages}" class="col s4"> <label>{name}</label> <select name="_{name}" class="browser-default"> <option each="{list}" value="{name}">{name}</option> </select> </div> </div> </div> </form> </div>', 'detailmodal { max-height: 85% !important; }', 'id="detailmodal" class="modal bottom-sheet"', function(opts) {
+riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name="_form" onsubmit="return false;" class="row"> <div class="col s6"> <h5>Project</h5> <div class="row"> <div class="col s12 input-field"> <input name="_title" value="hoge" type="text"> <label>Project Title</label> </div> <div class="col s12 input-field"> <textarea name="_description" class="materialize-textarea"></textarea> <label>Description</label> </div> </div> <div class="row"> <div class="col s12"> <label>Language</label> </div> <div each="{languages}" class="col s4"> <label>{name}</label> <select name="_{name}" class="browser-default"> <option each="{list}" value="{name}">{name}</option> </select> </div> </div> </div> </form> </div>', 'detailmodal { max-height: 85% !important; }', 'id="detailmodal" class="modal bottom-sheet"', function(opts) {
     this.languages = [
       {
         name: 'html',
@@ -204,12 +244,26 @@ riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name
     ];
     this.init = function() {
       var elements = this._form.elements;
-      elements._title.value = runstant.data.setting.title;
-      elements._description.value = runstant.data.setting.description;
-      elements._html.value = 'jade';
-      elements._style.value = 'less';
-      elements._script.value = 'coffee';
+      var setting = runstant.data.setting;
+      var code = runstant.data.code;
+      elements._title.value = setting.title;
+      elements._description.value = setting.description;
+      elements._html.value = code.html.type;
+      elements._style.value = code.style.type;
+      elements._script.value = code.script.type;
     };
+    
+    runstant.onCompleteDetailModal = function() {
+      var elements = this._form.elements;
+      var setting = runstant.data.setting;
+      var code = runstant.data.code;
+    
+      setting.title = elements._title.value;
+      setting.description = elements._description.value;
+      code.html.type = elements._html.value;
+      code.style.type = elements._style.value;
+      code.script.type = elements._script.value;
+    }.bind(this);
   
 });
 
@@ -260,7 +314,7 @@ riot.tag('footer', '', 'footer { position: fixed; height: 30px; width: 100%; bac
 riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href="#"><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="#">Share</a></li> </ul> <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {var self = this;
 });
 
-riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.openDetailModal();" class="header cyan lighten-5 grey-text text-darken-2"><span class="title">preview</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.openDetailModal();" class="header cyan lighten-5 grey-text text-darken-2"><span class="title">{runstant.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -269,8 +323,6 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.openDe
     this.on('mount', function() {
       var preview = jframe("#preview");
       this.preview = preview;
-    
-      this.refresh();
     });
     
     var wrapTag = function(text, tag) {

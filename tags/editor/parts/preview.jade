@@ -1,7 +1,7 @@
 preview
   .inner.z-depth-2
     .header.cyan.lighten-5.grey-text.text-darken-2(onclick='runstant.openDetailModal();')
-      span.title preview
+      span.title {runstant.data.setting.title}
     .content
       #preview
 
@@ -39,8 +39,6 @@ preview
     this.on('mount', function() {
       var preview = jframe("#preview");
       this.preview = preview;
-
-      this.refresh();
     });
 
     var wrapTag = function(text, tag) {

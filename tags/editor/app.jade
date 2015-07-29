@@ -52,11 +52,23 @@ app
 
     runstant.openDetailModal = function() {
       self.tags.detailmodal.init();
-      $('#detailmodal').openModal();
+      $('#detailmodal').openModal({
+        complete: function() {
+          runstant.onCompleteDetailModal && runstant.onCompleteDetailModal();
+          self.loadScripts();
+        }
+      });
+    };
+    runstant.onCompleteDetailModal = function() {
+      alert('hoge');
     };
 
     this.on('mount', function() {
       window.onmessage = this.onmessage.bind(this);
+
+      self.tags.preview.on('mount', function() {
+        self.loadScripts();
+      });
     });
 
     this.onsave = function() {
@@ -109,6 +121,34 @@ app
       }
     };
 
+
+    this.loadScripts = function() {
+      var code = runstant.data.code;
+
+      var pathes = (function() {
+        var types = [
+          code.html.type,
+          code.style.type,
+          code.script.type,
+        ];
+
+        var pathes = [];
+
+        types.forEach(function(type) {
+          var path = runstant.constant.LANG_SCRIPT_MAP[type];
+          if (path) {
+            pathes.push(path);
+          }
+        });
+
+        return pathes;
+      })();
+
+      runstant.util.loadScripts(pathes, function() {
+        self.onsave();
+        self.update();
+      });
+    };
 
     this.onmessage = function(e) {
       var data = JSON.parse(e.data);

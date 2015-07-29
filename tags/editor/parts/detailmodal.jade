@@ -3,7 +3,7 @@ detailmodal#detailmodal.modal.bottom-sheet
   div.modal-content
     h4 Setting
 
-    form.row(name='_form')
+    form.row(name='_form', onsubmit='return false;')
       div.col.s6
         h5 Project
         div.row
@@ -55,11 +55,25 @@ detailmodal#detailmodal.modal.bottom-sheet
     ];
     this.init = function() {
       var elements = this._form.elements;
-      elements._title.value = runstant.data.setting.title;
-      elements._description.value = runstant.data.setting.description;
-      elements._html.value = 'jade';
-      elements._style.value = 'less';
-      elements._script.value = 'coffee';
+      var setting = runstant.data.setting;
+      var code = runstant.data.code;
+      elements._title.value = setting.title;
+      elements._description.value = setting.description;
+      elements._html.value = code.html.type;
+      elements._style.value = code.style.type;
+      elements._script.value = code.script.type;
     };
+
+    runstant.onCompleteDetailModal = function() {
+      var elements = this._form.elements;
+      var setting = runstant.data.setting;
+      var code = runstant.data.code;
+
+      setting.title = elements._title.value;
+      setting.description = elements._description.value;
+      code.html.type = elements._html.value;
+      code.style.type = elements._style.value;
+      code.script.type = elements._script.value;
+    }.bind(this);
 
 

@@ -140,6 +140,26 @@
   };
   util.loadScript.cache = {};
 
+  util.loadScripts = function(pathes, callback) {
+    var count = 0;
+    var counter = 0;
+
+    pathes.forEach(function(path) {
+      count++;
+      runstant.util.loadScript(path, function() {
+        counter++;
+
+        if (counter >= count) {
+          callback && callback();
+        }
+      });
+    });
+
+    if (count === 0) {
+      callback && callback();
+    }
+  };
+
   util.shorten = function(url, callback) {
     if (isNode) {
       var key = "AIzaSyCfmMcmHwD_YN8vXQjJwojUP-4xKHHdaoI";
