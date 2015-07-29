@@ -48,7 +48,6 @@ app
     }
 
   script.
-    runstant.data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
     var self = this;
 
     runstant.openDetailModal = function() {
@@ -62,10 +61,52 @@ app
 
     this.onsave = function() {
       self.tags.preview.refresh();
+      self.save();
     };
 
     this.onpost = function(v) {
       self.tags.preview.post(v);
+    };
+
+    var cache = '';
+    this.load = function() {
+      var data = null;
+
+      if (location.hash) {
+        var hash = location.hash.substr(1);
+        data = runstant.util.hash2json(hash);
+      }
+      else {
+        data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
+      }
+
+      // 後方互換
+      if (data.setting.detail && !data.setting.description) {
+        data.setting.description = data.setting.detail;
+      }
+
+      runstant.data = data;
+
+      // キャッシュしておく
+      cache = JSON.stringify(data);
+      // タイトル更新
+      document.title = data.setting.title + " | runstant";
+    };
+    this.load();
+
+    this.save = function() {
+      var data = runstant.data;
+      var dataString = JSON.stringify(data);
+
+      if (this.cache !== dataString) {
+        this.cache = dataString;
+
+        var hash = runstant.util.json2hash(data);
+        history.pushState(null, 'runstant', '#' + hash);
+
+        // タイトル更新
+        document.title = data.setting.title + " | runstant";
+      }
     };
 
 

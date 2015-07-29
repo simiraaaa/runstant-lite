@@ -20,7 +20,10 @@ detailmodal#detailmodal.modal.bottom-sheet
             label {name}
             select.browser-default(name='_{name}')
               option(each='{list}', value='{name}') {name}
-
+  style.
+    detailmodal {
+      max-height: 85% !important;
+    }
   script.
     this.languages = [
       {
