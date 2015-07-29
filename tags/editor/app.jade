@@ -50,18 +50,16 @@ app
   script.
     var self = this;
 
-    runstant.openDetailModal = function() {
-      self.tags.detailmodal.init();
-      $('#detailmodal').openModal({
-        complete: function() {
-          runstant.onCompleteDetailModal && runstant.onCompleteDetailModal();
-          self.loadScripts();
-        }
-      });
-    };
-    runstant.onCompleteDetailModal = function() {
-      alert('hoge');
-    };
+    runstant.detailModal = new runstant.Modal({
+      query: '#detailmodal',
+      ready: function() {
+        self.tags.detailmodal.init();
+      },
+      complete: function() {
+        self.tags.detailmodal.save();
+        self.loadScripts();
+      },
+    });
 
     this.on('mount', function() {
       window.onmessage = this.onmessage.bind(this);

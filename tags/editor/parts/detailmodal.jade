@@ -64,7 +64,7 @@ detailmodal#detailmodal.modal.bottom-sheet
       elements._script.value = code.script.type;
     };
 
-    runstant.onCompleteDetailModal = function() {
+    this.save = function() {
       var elements = this._form.elements;
       var setting = runstant.data.setting;
       var code = runstant.data.code;
@@ -74,6 +74,6 @@ detailmodal#detailmodal.modal.bottom-sheet
       code.html.type = elements._html.value;
       code.style.type = elements._style.value;
       code.script.type = elements._script.value;
-    }.bind(this);
+    };
 
 
