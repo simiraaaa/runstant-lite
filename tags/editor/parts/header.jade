@@ -7,22 +7,22 @@ header
         span.lighter stant
       ul.right.hide-on-small-and-down
         li.tooltipped(data-tooltip='play')
-          a#btn-play(href='#')
+          a#btn-play(href='')
             i.mdi-av-play-arrow
         |       
         li.tooltipped(data-tooltip='share')
-          a#btn-share(href='#')
+          a#btn-share(href='')
             i.mdi-social-share
         |       
         li.tooltipped(data-tooltip='setting')
-          a#btn-setting(href='#')
+          a#btn-setting(href='#', onclick='runstant.detailModal.open(); return false;')
             i.mdi-action-settings
       |     
       ul#nav-mobile.side-nav(style='left: -250px;')
         li
-          a(href='#') Share
+          a(href='') Share
       |     
-      a.button-collapse(href='#', data-activates='nav-mobile')
+      a.button-collapse(href='', data-activates='nav-mobile')
         i.mdi-navigation-menu
   style(scoped).
     :scope { display: block }

@@ -142,6 +142,10 @@
   util.loadScript.cache = {};
 
   util.loadScripts = function(pathes, callback) {
+    if (pathes.length <= 0) {
+      callback && callback();
+      return ;
+    }
     var count = pathes.length;
     var counter = 0;
 

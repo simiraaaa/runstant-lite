@@ -73,6 +73,7 @@ app
     this.onsave = function() {
       self.tags.preview.refresh();
       self.save();
+      Materialize.toast('save & play', 1000, "rounded");
     };
 
     this.onpost = function(v) {
