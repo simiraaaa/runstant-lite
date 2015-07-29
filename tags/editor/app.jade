@@ -49,6 +49,13 @@ app
 
   script.
     var self = this;
+    //- var milkcocoa = new MilkCocoa("vueicovczl3.mlkcca.com");
+    //- var projectDataStore = milkcocoa.dataStore('projects');
+
+    //- projectDataStore.get('icovo9ex0000fon', function(err, datum) {
+    //-   console.log(datum);
+    //- });
+
 
     runstant.detailModal = new runstant.Modal({
       query: '#detailmodal',
@@ -73,6 +80,7 @@ app
     this.onsave = function() {
       self.tags.preview.refresh();
       self.save();
+
       Materialize.toast('save & play', 1000, "rounded");
     };
 
@@ -118,6 +126,10 @@ app
 
         // タイトル更新
         document.title = data.setting.title + " | runstant";
+
+        //- projectDataStore.push(data, function(err, datum) {
+        //-   debugger;
+        //- });
       }
     };
 

@@ -1,6 +1,12 @@
 
 riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> </div> <footer></footer> <detailmodal></detailmodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
+
+
+
+
+
+    
     
     runstant.detailModal = new runstant.Modal({
       query: '#detailmodal',
@@ -25,6 +31,7 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
     this.onsave = function() {
       self.tags.preview.refresh();
       self.save();
+    
       Materialize.toast('save & play', 1000, "rounded");
     };
     
@@ -67,6 +74,9 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
         history.pushState(null, 'runstant', '#' + hash);
 
         document.title = data.setting.title + " | runstant";
+
+
+
       }
     };
     
@@ -322,7 +332,13 @@ riot.tag('footer', '', 'footer { position: fixed; height: 30px; width: 100%; bac
 
 });
 
-riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href=""><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href=""><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {var self = this;
+riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" onclick="{auth}" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href=""><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href=""><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {
+    var self = this;
+    
+    this.auth = function() {
+    
+    };
+  
 });
 
 riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header cyan lighten-5 grey-text text-darken-2"><span class="title">{runstant.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
