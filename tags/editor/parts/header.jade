@@ -1,7 +1,7 @@
 header
   nav.blue-grey.darken-3
     .nav-wrapper
-      a(href='#home').brand-logo
+      a(href='#home', onclick='{auth}').brand-logo
         img(src='/images/runstant.png')
         span Run
         span.lighter stant
@@ -43,3 +43,14 @@ header
     }
   script.
     var self = this;
+
+    this.auth = function() {
+    /*
+      var lock = new Auth0Lock('goYOrOk6TQmlKZDztlOTRvltA3HFaPV4', 'phi.auth0.com');
+
+      lock.show(function(err) {
+        debugger;
+      }) ;
+      return false;
+      */
+    };
