@@ -8,6 +8,7 @@ app
   footer
 
   detailmodal
+  sharemodal
 
   style.
     body {
@@ -62,6 +63,18 @@ app
       },
     });
 
+    runstant.shareModal = new runstant.Modal({
+      query: '#sharemodal',
+      ready: function() {
+        self.tags.sharemodal.init();
+      },
+      complete: function() {
+        //- self.tags.detailmodal.save();
+        //- self.tags.editor.updateMode();
+        //- self.loadScripts();
+      },
+    });
+
     this.on('mount', function() {
       window.onmessage = this.onmessage.bind(this);
 
@@ -110,8 +123,8 @@ app
       var data = runstant.data;
       var dataString = JSON.stringify(data);
 
-      if (this.cache !== dataString) {
-        this.cache = dataString;
+      if (cache !== dataString) {
+        cache = dataString;
 
         var hash = runstant.util.json2hash(data);
         history.pushState(null, 'runstant', '#' + hash);

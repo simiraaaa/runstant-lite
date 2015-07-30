@@ -188,10 +188,7 @@
       });
     }
     else {
-      var key = {
-        "junk.tmlife.net": "AIzaSyAZiKPSew71cIg8hjwzlF_fYJ4vfi_rDgw",
-        "phi-jp.github.io": "AIzaSyDhmy80EsFt4SjFnI5syKzBu1idEp1jBi4",
-      }[document.domain];
+      var key = "AIzaSyA3mnqKXrHh8uGNfJPnJmI97KTnpifJ4DM";
 
       return $.ajax({
         url: "https://www.googleapis.com/urlshortener/v1/url?key=" + key,

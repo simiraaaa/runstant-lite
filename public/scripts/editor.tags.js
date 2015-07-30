@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> </div> <footer></footer> <detailmodal></detailmodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
     
     runstant.detailModal = new runstant.Modal({
@@ -11,6 +11,18 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
         self.tags.detailmodal.save();
         self.tags.editor.updateMode();
         self.loadScripts();
+      },
+    });
+    
+    runstant.shareModal = new runstant.Modal({
+      query: '#sharemodal',
+      ready: function() {
+        self.tags.sharemodal.init();
+      },
+      complete: function() {
+
+
+
       },
     });
     
@@ -60,8 +72,8 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
       var data = runstant.data;
       var dataString = JSON.stringify(data);
     
-      if (this.cache !== dataString) {
-        this.cache = dataString;
+      if (cache !== dataString) {
+        cache = dataString;
     
         var hash = runstant.util.json2hash(data);
         history.pushState(null, 'runstant', '#' + hash);
@@ -212,7 +224,7 @@ riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan light
   
 });
 
-<!-- クリップの詳細-->
+<!-- プロジェクトの詳細-->
 riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name="_form" onsubmit="return false;" class="row"> <div class="col s6"> <h5>Project</h5> <div class="row"> <div class="col s12 input-field"> <input name="_title" value="hoge" type="text"> <label>Project Title</label> </div> <div class="col s12 input-field"> <textarea name="_description" class="materialize-textarea"></textarea> <label>Description</label> </div> </div> <div class="row"> <div class="col s12"> <label>Language</label> </div> <div each="{languages}" class="col s4"> <label>{name}</label> <select name="_{name}" class="browser-default"> <option each="{list}" value="{name}">{name}</option> </select> </div> </div> </div> </form> </div>', 'detailmodal { max-height: 85% !important; }', 'id="detailmodal" class="modal bottom-sheet"', function(opts) {
     this.languages = [
       {
@@ -322,7 +334,7 @@ riot.tag('footer', '', 'footer { position: fixed; height: 30px; width: 100%; bac
 
 });
 
-riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href=""><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href=""><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {var self = this;
+riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href=""><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#" onclick="runstant.shareModal.open(); return false;"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {var self = this;
 });
 
 riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header cyan lighten-5 grey-text text-darken-2"><span class="title">{runstant.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
@@ -384,6 +396,81 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
       var win = frame.contentWindow;
     
       win.postMessage(v, '*');
+    };
+  
+});
+
+<!-- シェアモーダル-->
+riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a class="waves-effect waves-light btn amber darken-1">Download</a></div> </div> </div> </div> </div>', 'sharemodal { max-height: 85% !important; }', 'id="sharemodal" class="modal bottom-sheet"', function(opts) {
+    var self = this;
+    this.init = function() {
+      runstant.util.shorten(location.href, function(url) {
+        var embed = runstant.constant.EMBED_CODE.replace('{url}', url);
+    
+        self.shortURL = url;
+        self._shorturl.value = url;
+        self._embedcode.value = embed;
+        self.update();
+      });
+    };
+    
+    this.share = function(e) {
+      var name = e.target.dataset.name;
+    
+      this[name]({
+        text: runstant.data.setting.title,
+        url: this.shortURL,
+      });
+    };
+    
+    this.twitter = function(param) {
+      var url = "https://twitter.com/intent/tweet?text={text}&hashtags=runstant&via={via}&url={url}";
+      url = url.replace("{text}", encodeURIComponent(param.text));
+      url = url.replace("{via}", "runstant");
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.facebook = function(param) {
+      var url = "https://www.facebook.com/sharer/sharer.php?u={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.google = function(param) {
+      var url = "https://plus.google.com/share?url={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.pocket = function(param) {
+      var url = "https://getpocket.com/edit?url={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.hatebu = function(param) {
+      var url = "http://b.hatena.ne.jp/entry/{url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share');
+    };
+    
+    this.fullscreen =  function(param) {
+        var html = this.project.toCode(false);
+        window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
+    };
+    
+    this.download = function() {
+      var title = '{title}.html'
+          .replace('{title}', this.project.getTitle())
+          .replace(/\s/g, '_')
+          ;
+        var html = this.project.toCode(false);
+      var blob = new Blob([html]);
+      var url = window.URL.createObjectURL(blob);
+    
+      $('#btn-download')[0].download = title;
+      $('#btn-download')[0].href = url;
     };
   
 });

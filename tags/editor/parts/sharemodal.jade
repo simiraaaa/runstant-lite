@@ -1,0 +1,114 @@
+// シェアモーダル
+sharemodal#sharemodal.modal.bottom-sheet
+  div.modal-content
+    h4 Share
+    div.row
+      div.col.s12
+        div.row
+          div.input-field.col.s12
+            input(name='_shorturl', value='getting...', type="text", onclick='this.select()')
+            label Short URL
+          div.input-field.col.s12
+            input(name='_embedcode', value='getting...', type="text", onclick='this.select()')
+            label Embed Code
+
+        div.row
+          h5 Social
+          div.input-field.col.s12
+            button.waves-effect.waves-light.btn.blue.lighten-2(data-name='twitter', onclick='{share}') Twitter
+            button.waves-effect.waves-light.btn.blue.darken-1(data-name='facebook', onclick='{share}')  Facebook
+            button.waves-effect.waves-light.btn.red.darken-1(data-name='google', onclick='{share}')  Google+
+            button.waves-effect.waves-light.btn.pink.lighten-1(data-name='pocket', onclick='{share}')  Pocket
+            button.waves-effect.waves-light.btn.blue.darken-2(data-name='hatebu', onclick='{share}')  Hatebu
+        div.row
+          h5 Other
+          div.input-field.col.s12
+            a.waves-effect.waves-light.btn.green.lighten-1 Fullscreen
+            | 
+            a.waves-effect.waves-light.btn.amber.darken-1 Download
+  style.
+    sharemodal {
+      max-height: 85% !important;
+    }
+  script.
+    var self = this;
+    this.init = function() {
+      runstant.util.shorten(location.href, function(url) {
+        var embed = runstant.constant.EMBED_CODE.replace('{url}', url);
+
+        self.shortURL = url;
+        self._shorturl.value = url;
+        self._embedcode.value = embed;
+        self.update();
+      });
+    };
+
+    this.share = function(e) {
+      var name = e.target.dataset.name;
+
+      this[name]({
+        text: runstant.data.setting.title,
+        url: this.shortURL,
+      });
+    };
+
+    this.twitter = function(param) {
+      var url = "https://twitter.com/intent/tweet?text={text}&hashtags=runstant&via={via}&url={url}";
+      url = url.replace("{text}", encodeURIComponent(param.text));
+      url = url.replace("{via}", "runstant");
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+
+    this.facebook = function(param) {
+      var url = "https://www.facebook.com/sharer/sharer.php?u={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+
+    this.google = function(param) {
+      var url = "https://plus.google.com/share?url={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+
+    this.pocket = function(param) {
+      var url = "https://getpocket.com/edit?url={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+
+    this.hatebu = function(param) {
+      var url = "http://b.hatena.ne.jp/entry/{url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share');
+    };
+
+    this.fullscreen =  function(param) {
+        var html = this.project.toCode(false);
+        window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
+    };
+
+    this.download = function() {
+      var title = '{title}.html'
+          .replace('{title}', this.project.getTitle())
+          .replace(/\s/g, '_')
+          ;
+        var html = this.project.toCode(false);
+      var blob = new Blob([html]);
+      var url = window.URL.createObjectURL(blob);
+
+      $('#btn-download')[0].download = title;
+      $('#btn-download')[0].href = url;
+    };
+
+
+
+
+
+
+
+
+
+
+    
