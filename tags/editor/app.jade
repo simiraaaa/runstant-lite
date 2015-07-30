@@ -57,6 +57,8 @@ app
     //-   console.log(datum);
     //- });
 
+    runstant.project = new runstant.Project();
+
 
     runstant.detailModal = new runstant.Modal({
       query: '#detailmodal',
@@ -92,7 +94,7 @@ app
 
     this.onsave = function() {
       self.tags.preview.refresh();
-      self.save();
+      runstant.project.save();
 
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -101,54 +103,8 @@ app
       self.tags.preview.post(v);
     };
 
-    var cache = '';
-    this.load = function() {
-      var data = null;
-
-      if (location.hash) {
-        var hash = location.hash.substr(1);
-        data = runstant.util.hash2json(hash);
-      }
-      else {
-        data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
-      }
-
-      // 後方互換
-      if (data.setting.detail && !data.setting.description) {
-        data.setting.description = data.setting.detail;
-      }
-
-      runstant.data = data;
-
-      // キャッシュしておく
-      cache = JSON.stringify(data);
-      // タイトル更新
-      document.title = data.setting.title + " | runstant";
-    };
-    this.load();
-
-    this.save = function() {
-      var data = runstant.data;
-      var dataString = JSON.stringify(data);
-
-      if (cache !== dataString) {
-        cache = dataString;
-
-        var hash = runstant.util.json2hash(data);
-        history.pushState(null, 'runstant', '#' + hash);
-
-        // タイトル更新
-        document.title = data.setting.title + " | runstant";
-
-        //- projectDataStore.push(data, function(err, datum) {
-        //-   debugger;
-        //- });
-      }
-    };
-
-
     this.loadScripts = function() {
-      var code = runstant.data.code;
+      var code = runstant.project.data.code;
 
       var pathes = (function() {
         var types = [

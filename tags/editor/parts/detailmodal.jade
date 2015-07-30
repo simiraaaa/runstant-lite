@@ -55,8 +55,8 @@ detailmodal#detailmodal.modal.bottom-sheet
     ];
     this.init = function() {
       var elements = this._form.elements;
-      var setting = runstant.data.setting;
-      var code = runstant.data.code;
+      var setting = runstant.project.data.setting;
+      var code = runstant.project.data.code;
       elements._title.value = setting.title;
       elements._description.value = setting.description;
       elements._html.value = code.html.type;
@@ -69,8 +69,8 @@ detailmodal#detailmodal.modal.bottom-sheet
 
     this.save = function() {
       var elements = this._form.elements;
-      var setting = runstant.data.setting;
-      var code = runstant.data.code;
+      var setting = runstant.project.data.setting;
+      var code = runstant.project.data.code;
 
       setting.title = elements._title.value;
       setting.description = elements._description.value;

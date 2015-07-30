@@ -41,46 +41,8 @@ preview
       this.preview = preview;
     });
 
-    var wrapTag = function(text, tag) {
-      return '<' + tag + '>' + text + '</' + tag + '>';
-    };
-
-    this.dataToCode = function() {
-      var data = runstant.data;
-      var setting = data.setting;
-      var code = data.code;
-
-      var htmlCode = code.html.value;
-      if (runstant.compiler[code.html.type]) {
-        htmlCode = runstant.compiler[code.html.type].func(htmlCode);
-      }
-      var cssCode = code.style.value;
-      if (runstant.compiler[code.style.type]) {
-        cssCode = runstant.compiler[code.style.type].func(cssCode);
-      }
-      var jsCode = code.script.value;
-      if (runstant.compiler[code.script.type]) {
-        jsCode = runstant.compiler[code.script.type].func(jsCode);
-      }
-
-      var finalCode = htmlCode
-        .replace("${title}", setting.title)
-        .replace("${description}", setting.description)
-        .replace("${style}", cssCode)
-        .replace("${script}", jsCode)
-        ;
-
-      var debug = true;
-      if (debug === true) {
-        var debugCode = '(' + runstant.util.ConsoleExtention.toString() + ')()';
-        finalCode = wrapTag(debugCode, 'script') + finalCode;
-      }
-
-      return finalCode;
-    };
-
     this.refresh = function() {
-      var v = this.dataToCode();
+      var v = runstant.project.toCode(true);
       this.preview.load(v);
     };
 

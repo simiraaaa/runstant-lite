@@ -7,6 +7,8 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
 
 
     
+    runstant.project = new runstant.Project();
+    
     
     runstant.detailModal = new runstant.Modal({
       query: '#detailmodal',
@@ -42,7 +44,7 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
     
     this.onsave = function() {
       self.tags.preview.refresh();
-      self.save();
+      runstant.project.save();
     
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -51,50 +53,8 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
       self.tags.preview.post(v);
     };
     
-    var cache = '';
-    this.load = function() {
-      var data = null;
-    
-      if (location.hash) {
-        var hash = location.hash.substr(1);
-        data = runstant.util.hash2json(hash);
-      }
-      else {
-        data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
-      }
-
-      if (data.setting.detail && !data.setting.description) {
-        data.setting.description = data.setting.detail;
-      }
-    
-      runstant.data = data;
-
-      cache = JSON.stringify(data);
-
-      document.title = data.setting.title + " | runstant";
-    };
-    this.load();
-    
-    this.save = function() {
-      var data = runstant.data;
-      var dataString = JSON.stringify(data);
-    
-      if (cache !== dataString) {
-        cache = dataString;
-    
-        var hash = runstant.util.json2hash(data);
-        history.pushState(null, 'runstant', '#' + hash);
-
-        document.title = data.setting.title + " | runstant";
-
-
-
-      }
-    };
-    
-    
     this.loadScripts = function() {
-      var code = runstant.data.code;
+      var code = runstant.project.data.code;
     
       var pathes = (function() {
         var types = [
@@ -266,8 +226,8 @@ riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name
     ];
     this.init = function() {
       var elements = this._form.elements;
-      var setting = runstant.data.setting;
-      var code = runstant.data.code;
+      var setting = runstant.project.data.setting;
+      var code = runstant.project.data.code;
       elements._title.value = setting.title;
       elements._description.value = setting.description;
       elements._html.value = code.html.type;
@@ -280,8 +240,8 @@ riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name
     
     this.save = function() {
       var elements = this._form.elements;
-      var setting = runstant.data.setting;
-      var code = runstant.data.code;
+      var setting = runstant.project.data.setting;
+      var code = runstant.project.data.code;
     
       setting.title = elements._title.value;
       setting.description = elements._description.value;
@@ -294,7 +254,7 @@ riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name
 
 riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class="tabs"> <li id="tab-html" class="tab col s3"><a data-type="html" href="#editor-html"><span class="type">html</span><span class="lang">{this.data.code.html.type}</span></a></li> <li id="tab-style" class="tab col s3"><a data-type="style" href="#editor-style"><span class="type">style</span><span class="lang">{this.data.code.style.type}</span></a></li> <li id="tab-script" class="tab col s3"><a data-type="script" href="#editor-script"><span class="type">script</span><span class="lang">{this.data.code.script.type}</span></a></li> </ul> </div> <div class="content"> <div id="editor-html" class="editor-unit">html</div> <div id="editor-style" class="editor-unit">style</div> <div id="editor-script" class="editor-unit">script</div> </div> <btn-fullscreen query="editor"></btn-fullscreen> </div>', 'editor .header { margin-bottom: 1px; height: 32px; } .content { width: 100%; height: calc(100% - 36px); } #editor, #editor-html, #editor-style, #editor-script { width: 100%; height: 100%; } editor .tabs { background-color: hsl(0, 0%, 27%); height: 36px; } editor .tabs .tab { height: 36px; line-height: 36px; } editor .tabs .indicator { /* background: hsl(60, 100%, 60%); */ } @media only screen and (min-width: 601px) { editor .tabs li.tab .lang { font-size: x-small; } editor .tabs li.tab .lang:before { content: \'(\'; } editor .tabs li.tab .lang:after { content: \')\'; } } @media only screen and (max-width: 600px) { editor .tabs li.tab span.type { display: none; } }', function(opts) {
     var self = this;
-    this.data = runstant.data;
+    this.data = runstant.project.data;
     
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -369,7 +329,7 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
     };
     
     this.dataToCode = function() {
-      var data = runstant.data;
+      var data = runstant.project.data;
       var setting = data.setting;
       var code = data.code;
     
@@ -403,7 +363,7 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
     };
     
     this.refresh = function() {
-      var v = this.dataToCode();
+      var v = runstant.project.toCode(true);
       this.preview.load(v);
     };
     
@@ -434,7 +394,7 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
       var name = e.target.dataset.name;
     
       this[name]({
-        text: runstant.data.setting.title,
+        text: runstant.project.data.setting.title,
         url: this.shortURL,
       });
     };
