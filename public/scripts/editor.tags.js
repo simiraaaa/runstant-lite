@@ -351,6 +351,9 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
         self._shorturl.value = url;
         self._embedcode.value = embed;
         self.update();
+    
+        self._shorturl.focus();
+        self._shorturl.select();
       });
     };
     

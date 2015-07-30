@@ -40,6 +40,9 @@ sharemodal#sharemodal.modal.bottom-sheet
         self._shorturl.value = url;
         self._embedcode.value = embed;
         self.update();
+
+        self._shorturl.focus();
+        self._shorturl.select();
       });
     };
 
