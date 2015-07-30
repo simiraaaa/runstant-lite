@@ -18,6 +18,13 @@ btn-fullscreen
     }
   script.
     this.isFullScreen = false;
+
+    this.on('mount', function() {
+      if (runstant.project.data.setting.fullscreen === opts.query) {
+        this.expand();
+      }
+    });
+
     this.expand = function() {
       var target = document.querySelector(opts.query);
       var panels = document.querySelectorAll('.panel');
@@ -29,6 +36,10 @@ btn-fullscreen
 
       $(opts.query).addClass('fullscreen');
       this.isFullScreen = true;
+
+      // 保存
+      runstant.project.data.setting.fullscreen = opts.query;
+      runstant.project.save();
 
       // タブを元に戻す
       setTimeout(function() {
@@ -45,6 +56,10 @@ btn-fullscreen
       });
 
       this.isFullScreen = false;
+
+      // 保存
+      runstant.project.data.setting.fullscreen = false;
+      runstant.project.save();
 
       // タブを元に戻す
       setTimeout(function() {

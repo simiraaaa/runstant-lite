@@ -9,6 +9,10 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
     
     runstant.project = new runstant.Project();
     
+    document.onkeyup = function(e) {
+      console.log(e);
+    };
+    
     
     runstant.detailModal = new runstant.Modal({
       query: '#detailmodal',
@@ -110,6 +114,13 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
 
 riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}"><i class="mdi-navigation-fullscreen"></i></a><a href="#" onclick="{exit}" if="{isFullScreen}"><i class="mdi-navigation-fullscreen-exit"></i></a>', 'btn-fullscreen { display: block; position: absolute; bottom: 16px; right: 10px; line-height: 14px; cursor: pointer; font-size: 2rem; z-index: 32; }', function(opts) {
     this.isFullScreen = false;
+    
+    this.on('mount', function() {
+      if (runstant.project.data.setting.fullscreen === opts.query) {
+        this.expand();
+      }
+    });
+    
     this.expand = function() {
       var target = document.querySelector(opts.query);
       var panels = document.querySelectorAll('.panel');
@@ -121,6 +132,9 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
     
       $(opts.query).addClass('fullscreen');
       this.isFullScreen = true;
+
+      runstant.project.data.setting.fullscreen = opts.query;
+      runstant.project.save();
 
       setTimeout(function() {
         $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
@@ -136,6 +150,9 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
       });
     
       this.isFullScreen = false;
+
+      runstant.project.data.setting.fullscreen = false;
+      runstant.project.save();
 
       setTimeout(function() {
         $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
