@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="60%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="40%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
 
 
@@ -45,6 +45,8 @@ riot.tag('app', '<header></header> <div class="main"> <editor width="60%" height
     this.onsave = function() {
       self.tags.preview.refresh();
       runstant.project.save();
+    
+      self.tags.console.clear();
     
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -304,7 +306,7 @@ riot.tag('footer', '', 'footer { position: fixed; height: 30px; width: 100%; bac
 
 });
 
-riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" onclick="{auth}" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href=""><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#" onclick="runstant.shareModal.open(); return false;"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {
+riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" onclick="{auth}" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href="" onclick="{opts.onplay}"><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#" onclick="runstant.shareModal.open(); return false;"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {
     var self = this;
     
     this.auth = function() {
@@ -323,44 +325,6 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
       var preview = jframe("#preview");
       this.preview = preview;
     });
-    
-    var wrapTag = function(text, tag) {
-      return '<' + tag + '>' + text + '</' + tag + '>';
-    };
-    
-    this.dataToCode = function() {
-      var data = runstant.project.data;
-      var setting = data.setting;
-      var code = data.code;
-    
-      var htmlCode = code.html.value;
-      if (runstant.compiler[code.html.type]) {
-        htmlCode = runstant.compiler[code.html.type].func(htmlCode);
-      }
-      var cssCode = code.style.value;
-      if (runstant.compiler[code.style.type]) {
-        cssCode = runstant.compiler[code.style.type].func(cssCode);
-      }
-      var jsCode = code.script.value;
-      if (runstant.compiler[code.script.type]) {
-        jsCode = runstant.compiler[code.script.type].func(jsCode);
-      }
-    
-      var finalCode = htmlCode
-        .replace("${title}", setting.title)
-        .replace("${description}", setting.description)
-        .replace("${style}", cssCode)
-        .replace("${script}", jsCode)
-        ;
-    
-      var debug = true;
-      if (debug === true) {
-        var debugCode = '(' + runstant.util.ConsoleExtention.toString() + ')()';
-        finalCode = wrapTag(debugCode, 'script') + finalCode;
-      }
-    
-      return finalCode;
-    };
     
     this.refresh = function() {
       var v = runstant.project.toCode(true);

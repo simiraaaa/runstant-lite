@@ -1,10 +1,11 @@
 app
-  header
+  header(onplay='{onsave}')
 
   div.main
     editor.panel(width='60%', height='100%', float='right', onsave='{onsave}')
     preview.panel(width='40%', height='60%', float='left')
     console.panel(width='40%', height='40%', float='left', onpost='{onpost}')
+
   footer
 
   detailmodal
@@ -96,6 +97,8 @@ app
       self.tags.preview.refresh();
       runstant.project.save();
 
+      self.tags.console.clear();
+
       Materialize.toast('save & play', 1000, "rounded");
     };
 
@@ -153,3 +156,5 @@ app
           csl.clear();
       }
     };
+
+
