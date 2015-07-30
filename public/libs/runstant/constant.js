@@ -39,12 +39,12 @@ h1 {\n\
 
   constant.TEMPLATE_DATA = {
     version: '0.0.1',
-    current: "script",
 
     setting: {
       title: "template - tmlib.js",
       description: "tmlib.js 用公式エディタ. 色々と使えますよ♪", // もと detail
       fullscreen: false,
+      current: "script",
     },
     code: {
       html: {

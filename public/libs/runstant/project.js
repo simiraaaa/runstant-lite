@@ -24,6 +24,11 @@
       // 後方互換
       if (data.setting.detail && !data.setting.description) {
         data.setting.description = data.setting.detail;
+        delete data.setting.detail;
+      }
+      if (data.current && !data.setting.current) {
+        data.setting.current = data.current;
+        delete data.current;
       }
 
       this.data = data;
