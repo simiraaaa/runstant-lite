@@ -271,11 +271,17 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
       this.setupEditor('style');
       this.setupEditor('script');
     
-      $('ul.tabs').tabs('select_tab', 'editor-' + 'script');
-      this.editors['script'].focus();
+      this.changeCurrentTab(this.data.setting.current);
     
       this.updateMode();
     });
+    
+    this.changeCurrentTab = function(type) {
+
+      $('ul.tabs').tabs('select_tab', 'editor-' + type);
+      this.editors[type].focus();
+    };
+    
     
     this.setupEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
@@ -284,13 +290,30 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
       editor.setValue(code.value);
     
       editor.onsave = function() {
+
         var v = editor.getValue();
         code.value = v;
+
+        var current = $('ul.tabs').find("a.active").data('type');
+        runstant.project.data.setting.current = current;
+    
         opts.onsave && opts.onsave();
       };
 
       editor.setFontSize(14);
       editor.setTheme('ace/theme/monokai');
+    
+      ['html', 'style', 'script'].forEach(function(type, i) {
+        var index = (i+1);
+        var key = 'Alt-' + index;
+    
+        editor.addCommand({
+          name: type,
+          bindKey: { mac: key, win: key, },
+          exec: function() { self.changeCurrentTab(type); }
+        });
+      });
+    
     };
     
     this.updateMode = function() {
