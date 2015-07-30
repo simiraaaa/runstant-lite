@@ -2,8 +2,8 @@ app
   header(onplay='{onsave}')
 
   div.main
-    editor.panel(width='60%', height='100%', float='right', onsave='{onsave}')
-    preview.panel(width='40%', height='60%', float='left')
+    editor.panel(width='{this.editorWidth}%', height='100%', float='right', onsave='{onsave}')
+    preview.panel(width='{100-this.editorWidth}%', height='60%', float='left')
     console.panel(width='40%', height='40%', float='left', onpost='{onpost}')
 
   footer
@@ -51,6 +51,7 @@ app
 
   script.
     var self = this;
+    this.editorWidth = '60';
     //- var milkcocoa = new MilkCocoa("vueicovczl3.mlkcca.com");
     //- var projectDataStore = milkcocoa.dataStore('projects');
 
