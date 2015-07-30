@@ -343,7 +343,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
   
 });
 
-riot.tag('footer', '', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; text-align: right; }', function(opts) {
+riot.tag('footer', '<ul> <li><a href="">about</a></li> <li><a href="">blog</a></li> <li><a href="">twitter</a></li> <li><a href="">github</a></li> <li><a href=""><i class="mdi-content-save"></i></a></li> </ul>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; text-align: right; } footer ul { margin: 3px; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; }', function(opts) {
 
 });
 
@@ -356,7 +356,7 @@ riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a
   
 });
 
-riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header cyan lighten-5 grey-text text-darken-2"><span class="title">{runstant.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header cyan lighten-5 grey-text text-darken-2"><span class="title">{runstant.project.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;

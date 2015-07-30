@@ -1,4 +1,19 @@
 footer
+  ul
+    li
+      a(href='') about
+    li
+      a(href='') blog
+    li
+      a(href='') twitter
+    li
+      a(href='') github
+    li
+      a(href='')
+        i.mdi-content-save
+
+  //- i.material-icons insert_chart
+  //- i.material-icons school
 
   style.
     footer {
@@ -8,4 +23,16 @@ footer
       background-color: hsl(200, 18%, 26%)!important;
       bottom: 0;
       text-align: right;
+    }
+
+    footer ul {
+      margin: 3px;
+    }
+
+    footer ul li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    footer ul li a {
+      color: white;
     }
