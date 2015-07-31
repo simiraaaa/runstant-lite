@@ -1,0 +1,85 @@
+project
+  .inner.z-depth-2
+    .header.cyan.lighten-5.grey-text.text-darken-2
+      span.title project
+
+    .content(onclick='{click}')
+      h4 {runstant.project.data.setting.title}
+      p {runstant.project.data.setting.description}
+      .content-console
+        span(each='{messages}' class='{type}', onclick='confirm("{value}")') {value}
+        span#project-input.input(type='text', contenteditable='true', onkeypress='{keypress}')
+    btn-fullscreen(query='project')
+
+  style.
+    project {
+    }
+    project .inner {
+      background: white;
+    }
+    project .header {
+      padding: 3px 10px;
+      height: 36px;
+      line-height: 36px;
+    }
+    project .header .title {
+      font-size: 1.2rem;
+    }
+
+    project .content {
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+  script.
+    var self = this;
+    this.root.style.width = opts.width;
+    this.root.style.height = opts.height;
+    this.root.style.float = opts.float;
+
+    this.messages = [
+    ];
+
+    this.stack = [];
+
+    this.on('mount', function() {
+      var $input = $("#console-input");
+    });
+
+    this.keypress = function(e) {
+      if (e.which === 13 && e.shiftKey === false) {
+        var target = $(e.target);
+        var v = target.text();
+        if (v === '') return false;
+
+        target.text('');
+
+        opts.onpost && opts.onpost(v);
+
+        this.stack.push(v);
+        this.print('input', v);
+
+        return false;
+      }
+      return true;
+    };
+
+    this.click = function() {
+      $('#console-input').focus();
+    };
+
+    this.print = function(type, v) {
+      this.messages.push({
+        type: type,
+        value: v,
+      });
+      this.update();
+    };
+
+    this.clear = function() {
+      this.messages = [];
+      this.update();
+    }
+
+
+
