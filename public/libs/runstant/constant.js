@@ -27,7 +27,7 @@
 \</html\>".replace(/scri____pt/g, 'script');
 
   constant.TEMPLATE_CSS = "body {\n\
-  background-color: rgb(252, 252, 254);\n\
+  background-color: hsl(0, 0%, 96%);\n\
 }\n\
 \n\
 h1 {\n\
