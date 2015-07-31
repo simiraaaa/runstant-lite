@@ -43,7 +43,10 @@ btn-fullscreen
 
       // タブを元に戻す
       setTimeout(function() {
-        $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
+        var tabs = $('editor ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
+        var tabs = $('util ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
       }, 500);
     };
     this.exit = function() {
@@ -63,7 +66,10 @@ btn-fullscreen
 
       // タブを元に戻す
       setTimeout(function() {
-        $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
+        var tabs = $('editor ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
+        var tabs = $('util ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
       }, 500);
     };
 

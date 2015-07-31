@@ -1,6 +1,6 @@
 preview
   .inner.z-depth-2
-    .header.cyan.lighten-5.grey-text.text-darken-2(onclick='runstant.detailModal.open();')
+    .header.white(onclick='runstant.detailModal.open();')
       span.title {runstant.project.data.setting.title}
     .content
       #preview
@@ -14,12 +14,17 @@ preview
       background: white;
     }
     preview .header {
+      background-color: white;
       padding: 3px 10px;
       height: 36px;
       line-height: 36px;
+      /*
+      border-bottom: 1px solid #aaa;
+      */
     }
     preview .header .title {
       font-size: 1.2rem;
+      color: hsl(358, 79%, 68%);
     }
     #preview {
       width: 100%;

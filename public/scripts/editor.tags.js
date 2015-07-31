@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> <project width="40%" height="40%" float="left" class="panel"></project> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" class="panel"></util> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> <project width="40%" height="40%" float="left" class="panel"></project> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
     this.editorWidth = '60';
 
@@ -138,7 +138,10 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
       runstant.project.save();
 
       setTimeout(function() {
-        $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
+        var tabs = $('editor ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
+        var tabs = $('util ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
       }, 500);
     };
     this.exit = function() {
@@ -156,7 +159,10 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
       runstant.project.save();
 
       setTimeout(function() {
-        $('ul.tabs').tabs('select_tab', $('ul.tabs').find(".active").attr('href').substr(1));
+        var tabs = $('editor ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
+        var tabs = $('util ul.tabs');
+        tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
       }, 500);
     };
   
@@ -296,7 +302,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     
     this.changeCurrentTab = function(type) {
 
-      $('ul.tabs').tabs('select_tab', 'editor-' + type);
+      $('editor ul.tabs').tabs('select_tab', 'editor-' + type);
       this.editors[type].focus();
     };
     
@@ -356,7 +362,7 @@ riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a
   
 });
 
-riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header cyan lighten-5 grey-text text-darken-2"><span class="title">{runstant.project.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { padding: 3px 10px; height: 36px; line-height: 36px; } preview .header .title { font-size: 1.2rem; } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header white"><span class="title">{runstant.project.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { background-color: white; padding: 3px 10px; height: 36px; line-height: 36px; /* border-bottom: 1px solid #aaa; */ } preview .header .title { font-size: 1.2rem; color: hsl(358, 79%, 68%); } #preview { width: 100%; height: 100%; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -381,7 +387,7 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
   
 });
 
-riot.tag('project', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">project</span></div> <div onclick="{click}" class="content"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> <div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="project-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div> </div> <btn-fullscreen query="project"></btn-fullscreen> </div>', 'project { } project .inner { background: white; } project .header { padding: 3px 10px; height: 36px; line-height: 36px; } project .header .title { font-size: 1.2rem; } project .content { padding: 10px; overflow-x: auto; }', function(opts) {
+riot.tag('project', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">project</span></div> <div onclick="{click}" class="content"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> <div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="project-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div> </div> <btn-fullscreen query="project"></btn-fullscreen> </div>', 'project { display:none !important; } project .inner { background: white; } project .header { padding: 3px 10px; height: 36px; line-height: 36px; } project .header .title { font-size: 1.2rem; } project .content { padding: 10px; overflow-x: auto; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -511,7 +517,7 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
   
 });
 
-riot.tag('project', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">project</span></div> <div onclick="{click}" class="content"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> <div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="project-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div> </div> <btn-fullscreen query="project"></btn-fullscreen> </div>', 'project { } project .inner { background: white; } project .header { padding: 3px 10px; height: 36px; line-height: 36px; } project .header .title { font-size: 1.2rem; } project .content { padding: 10px; overflow-x: auto; }', function(opts) {
+riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li id="tab-html" class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li id="tab-style" class="tab col s3"><a href="#console"><span class="type">console</span></a></li> </ul> </div> <div onclick="{click}" class="content"> <div id="project"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> </div> <div id="console"></div> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); padding: 10px; overflow-x: auto; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;

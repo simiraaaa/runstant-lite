@@ -1,33 +1,54 @@
-project
+util
   .inner.z-depth-2
-    .header.cyan.lighten-5.grey-text.text-darken-2
-      span.title project
+    .header
+      ul.tabs
+        li.tab.col.s3#tab-html
+          a(href='#project')
+            span.type project
+        li.tab.col.s3#tab-style
+          a(href='#console')
+            span.type console
+        //- li.tab.col.s3#tab-script
+        //-   a(data-type='script', href='#editor-script')
+        //-     span.type script
 
     .content(onclick='{click}')
-      h4 {runstant.project.data.setting.title}
-      p {runstant.project.data.setting.description}
-      .content-console
-        span(each='{messages}' class='{type}', onclick='confirm("{value}")') {value}
-        span#project-input.input(type='text', contenteditable='true', onkeypress='{keypress}')
-    btn-fullscreen(query='project')
+      #project
+        h4 {runstant.project.data.setting.title}
+        p {runstant.project.data.setting.description}
+      #console
+    btn-fullscreen(query='util')
 
   style.
-    project {
-      display:none !important;
+    util {
     }
-    project .inner {
+    util .inner {
       background: white;
     }
-    project .header {
+    util .tabs {
+    /*
+      background-color: hsl(0, 0%, 27%);
+      */
+      height: 36px;
+    }
+    util .tabs .tab {
+      height: 36px;
+      line-height: 36px;
+    }
+
+    /*
+    util .header {
       padding: 3px 10px;
       height: 36px;
       line-height: 36px;
     }
-    project .header .title {
+    util .header .title {
       font-size: 1.2rem;
     }
+    */
 
-    project .content {
+    util .content {
+      background-color: hsl(0, 0%, 96%);
       padding: 10px;
       overflow-x: auto;
     }

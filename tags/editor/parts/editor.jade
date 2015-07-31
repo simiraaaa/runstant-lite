@@ -94,7 +94,7 @@ editor
 
     this.changeCurrentTab = function(type) {
       // タブに反映
-      $('ul.tabs').tabs('select_tab', 'editor-' + type);
+      $('editor ul.tabs').tabs('select_tab', 'editor-' + type);
       this.editors[type].focus();
     };
 
