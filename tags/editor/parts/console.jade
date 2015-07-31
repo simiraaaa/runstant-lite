@@ -1,31 +1,11 @@
 console
-  .inner.z-depth-2
-    .header.cyan.lighten-5.grey-text.text-darken-2
-      span.title console
-
-    .content(onclick='{click}')
-      .content-console
-        span(each='{messages}' class='{type}', onclick='confirm("{value}")') {value}
-        span#console-input.input(type='text', contenteditable='true', onkeypress='{keypress}')
-    btn-fullscreen(query='console')
+  .content-console
+    span(each='{messages}' class='{type}', onclick='confirm("{value}")') {value}
+    span#console-input.input(type='text', contenteditable='true', onkeypress='{keypress}')
 
   style.
-    console {
-      display:none !important;
-    }
-    console .inner {
-      background: white;
-    }
-    console .header {
-      padding: 3px 10px;
-      height: 36px;
-      line-height: 36px;
-    }
-    console .header .title {
-      font-size: 1.2rem;
-    }
 
-    console .content .content-console {
+    console .content-console {
       position: relative;
       width: 100%;
       height: 100%;
@@ -35,7 +15,7 @@ console
       overflow-x: auto;
     }
 
-    console .content .content-console span {
+    console .content-console span {
       border-bottom: 1px solid #ddd;
       display: block;
       line-height: 1em;
@@ -47,29 +27,29 @@ console
       word-wrap: break-word;
     }
 
-    console .content .content-console span.input {
+    console .content-console span.input {
       outline: 0;
       color: #222;
       border-bottom: 0px;
     }
-    console .content .content-console span.input:before {
+    console .content-console span.input:before {
       position: absolute;
       left: 7px;
       font-weight: bold;
       content: '> ';
       color: #47b4eb;
     }
-    console .content .content-console span.output {
+    console .content-console span.output {
       outline: 0;
     }
-    console .content .content-console span.output:before {
+    console .content-console span.output:before {
       position: absolute;
       left: 7px;
       font-weight: bold;
       content: '< ';
       color: #47b4eb;
     }
-    console .content .content-console span.error {
+    console .content-console span.error {
       color: red;
     }
 
@@ -121,7 +101,12 @@ console
     this.clear = function() {
       this.messages = [];
       this.update();
-    }
+    };
+
+    this.focus = function() {
+      // タブに反映
+      $('util ul.tabs').tabs('select_tab', 'console');
+    };
 
 
 

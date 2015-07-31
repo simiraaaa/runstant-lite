@@ -2,10 +2,10 @@ util
   .inner.z-depth-2
     .header
       ul.tabs
-        li.tab.col.s3#tab-html
+        li.tab.col.s3
           a(href='#project')
             span.type project
-        li.tab.col.s3#tab-style
+        li.tab.col.s3
           a(href='#console')
             span.type console
         //- li.tab.col.s3#tab-script
@@ -16,7 +16,7 @@ util
       #project
         h4 {runstant.project.data.setting.title}
         p {runstant.project.data.setting.description}
-      #console
+      console#console(onpost='{opts.onpost}')
     btn-fullscreen(query='util')
 
   style.

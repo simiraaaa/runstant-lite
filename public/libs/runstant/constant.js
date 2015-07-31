@@ -35,7 +35,14 @@ h1 {\n\
   font-size: 23px;\n\
   font-family: \'Lucida Grande\',\'Hiragino Kaku Gothic ProN\', Meiryo, sans-serif;\n\
 }";
-  constant.TEMPLATE_JS = 'console.log("Hello, runstant!");';
+  constant.TEMPLATE_JS = '/*\n\
+ * runstant lite\n\
+ */\n\
+\n\
+window.onload = function() {\n\
+  // TODO: write code\n\
+  // console.log("Hello, runstant!");\n\
+}';
 
   constant.TEMPLATE_DATA = {
     version: '0.0.1',

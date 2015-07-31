@@ -4,9 +4,7 @@ app
   div.main
     editor.panel(width='{this.editorWidth}%', height='100%', float='right', onsave='{onsave}')
     preview.panel(width='{100-this.editorWidth}%', height='60%', float='left')
-    util.panel(width='40%', height='40%', float='left')
-    console.panel(width='40%', height='40%', float='left', onpost='{onpost}')
-    project.panel(width='40%', height='40%', float='left')
+    util.panel(width='40%', height='40%', float='left', onpost='{onpost}')
   footer
 
   detailmodal
@@ -14,7 +12,7 @@ app
 
   style.
     body {
-      background: hsl(0, 0%, 95%);
+      background: hsl(0, 0%, 90%);
     }
     .main {
       position: absolute;
@@ -104,7 +102,7 @@ app
       self.tags.preview.refresh();
       runstant.project.save();
 
-      self.tags.console.clear();
+      self.tags.util.tags.console.clear();
 
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -145,7 +143,7 @@ app
       var data = JSON.parse(e.data);
       var method = data.method;
       var args = data.arguments;
-      var csl = self.tags.console;
+      var csl = self.tags.util.tags.console;
 
       if (method == 'log') {
           csl.print('log', args.join(' '));
@@ -162,6 +160,8 @@ app
       else if (method == 'clear') {
           csl.clear();
       }
+
+      self.tags.util.tags.console.focus();
     };
 
 

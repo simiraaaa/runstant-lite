@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" class="panel"></util> <console width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></console> <project width="40%" height="40%" float="left" class="panel"></project> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 95%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
     this.editorWidth = '60';
 
@@ -51,7 +51,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       self.tags.preview.refresh();
       runstant.project.save();
     
-      self.tags.console.clear();
+      self.tags.util.tags.console.clear();
     
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -92,7 +92,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       var data = JSON.parse(e.data);
       var method = data.method;
       var args = data.arguments;
-      var csl = self.tags.console;
+      var csl = self.tags.util.tags.console;
     
       if (method == 'log') {
           csl.print('log', args.join(' '));
@@ -109,6 +109,8 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       else if (method == 'clear') {
           csl.clear();
       }
+    
+      self.tags.util.tags.console.focus();
     };
   
 });
@@ -168,7 +170,7 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
   
 });
 
-riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">console</span></div> <div onclick="{click}" class="content"> <div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div> </div> <btn-fullscreen query="console"></btn-fullscreen> </div>', 'console { display:none !important; } console .inner { background: white; } console .header { padding: 3px 10px; height: 36px; line-height: 36px; } console .header .title { font-size: 1.2rem; } console .content .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } console .content .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } console .content .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } console .content .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } console .content .content-console span.output { outline: 0; } console .content .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } console .content .content-console span.error { color: red; }', function(opts) {
+riot.tag('console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } console .content-console span.output { outline: 0; } console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } console .content-console span.error { color: red; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -216,7 +218,12 @@ riot.tag('console', '<div class="inner z-depth-2"> <div class="header cyan light
     this.clear = function() {
       this.messages = [];
       this.update();
-    }
+    };
+    
+    this.focus = function() {
+
+      $('util ul.tabs').tabs('select_tab', 'console');
+    };
   
 });
 
@@ -517,7 +524,7 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
   
 });
 
-riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li id="tab-html" class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li id="tab-style" class="tab col s3"><a href="#console"><span class="type">console</span></a></li> </ul> </div> <div onclick="{click}" class="content"> <div id="project"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> </div> <div id="console"></div> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); padding: 10px; overflow-x: auto; }', function(opts) {
+riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> </ul> </div> <div onclick="{click}" class="content"> <div id="project"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> </div> <console id="console" onpost="{opts.onpost}"></console> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); padding: 10px; overflow-x: auto; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
