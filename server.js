@@ -16,7 +16,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
   // res.send('hello world')
   res.render('editor', { title: 'Express' });
-  // res.render('index', { title: 'Express' });
+});
+app.get('/about', function(req, res) {
+  res.render('about', { title: 'Express' });
 });
 
 app.listen(app.get('port'), function() {

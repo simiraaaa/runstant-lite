@@ -1,0 +1,119 @@
+//- editor.jade
+extends ./layout
+
+block content
+  header
+    nav.blue-grey.darken-3
+      a(href='#home', onclick='{auth}').brand-logo
+        img(src='/images/runstant.png')
+        span Run
+        span.lighter stant
+    style(scoped).
+      :scope { display: block }
+      nav {
+        padding: 0px 20px;
+      }
+      .brand-logo {
+        position: relative;
+        white-space: nowrap;
+      }
+      .brand-logo img {
+        height: 40px;
+        transform: translate(0px, 5px);
+      }
+      .brand-logo .lighter {
+        font-weight: 200;
+      }
+
+  div.parallax-container
+    div.section.no-pad-bot
+      div.container
+        br 
+        h1.header.center.teal-text.text-lighten-2 Runstant Lite
+        div.row.center
+          h5.header.col.s12.light 思いついたらすぐに形にできるエディタ. それが runstant です.
+        div.row.center
+          a.btn-large.waves-effect.waves-light.teal.lighten-1 Get Started
+    div.parallax
+      img(src='http://materializecss.com/images/parallax1.jpg', style="display: block; transform: translate3d(-50%, 319px, 0px);")
+    style.
+      .parallax-container {
+        min-height: 400px;
+        height: auto;
+        color: rgba(255,255,255,.9);
+      }
+
+  div.container
+    div.section
+      div.row
+        div.col.s12.m4
+          div.icon-block
+            h2.center
+              i.material-icons flash_on
+            h5.center 高速な編集, 実行
+            p.light データをサーバーを介さず, URL に保存するため保存, 実行ともに高速に動作します.
+        div.col.s12.m4
+          div.icon-block
+            h2.center
+              i.material-icons flash_on
+            h5.center ログイン不要
+            p.light We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.
+        div.col.s12.m4
+          div.icon-block
+            h2.center
+              i.material-icons flash_on
+            h5.center 気軽にシェア
+            p.light We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.
+        div.col.s12.m4
+          div.icon-block
+            h2.center
+              i.material-icons flash_on
+            h5.center 多様な言語をサポート
+            p.light HTML は HTML, jade, Markdown, CSS は...
+        div.col.s12.m4
+          div.icon-block
+            h2.center
+              i.material-icons flash_on
+            h5.center Text Text Text Text 
+            p.light Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+        div.col.s12.m4
+          div.icon-block
+            h2.center
+              i.material-icons flash_on
+            h5.center Text Text Text Text 
+            p.light Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+
+
+  div.parallax-container
+    div.parallax
+      img(src='http://materializecss.com/templates/parallax-template/background1.jpg', style="display: block; transform: translate3d(-50%, 207px, 0px);")
+
+  div.container
+    div.section
+      div.row
+        div.col.s12.center
+          h3 埋め込みも簡単!!
+      div.runstant
+        iframe(src='http://goo.gl/CWviTj', width='100%',height='460px',style='border:0px;box-shadow:0px 0px 2px 0px #aaa')
+
+  div.parallax-container
+    div.parallax
+      img(src='http://materializecss.com/templates/parallax-template/background1.jpg', style="display: block; transform: translate3d(-50%, 207px, 0px);")
+
+  div.container
+    div.section
+      div.row
+        div.col.s12.center
+          h3 Contact Us
+          p.left-align.light Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+
+  footer.page-footer.blue-grey.darken-3
+    div.footer-copyright
+      div.container
+        | © 2014 Copyright Text
+        a.grey-text.text-lighten-4.right More Links
+
+  script.
+    $(document).ready(function(){
+      $('.parallax').parallax();
+    });
