@@ -17,8 +17,14 @@ app
     .main {
       position: absolute;
       width: 100%;
-      height: calc(100% - 64px - 30px);
+      height: calc(100% - 56px - 30px);
       overflow: hidden;
+    }
+
+    @media only screen and (min-width: 601px) {
+      .main {
+        height: calc(100% - 64px - 30px);
+      }
     }
 
     .panel {

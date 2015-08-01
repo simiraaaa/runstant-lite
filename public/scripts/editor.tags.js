@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 64px - 30px); overflow: hidden; } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
     this.editorWidth = '60';
 
@@ -367,7 +367,7 @@ riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a
   
 });
 
-riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header white"><span class="title">{runstant.project.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { background-color: white; padding: 3px 10px; height: 36px; line-height: 36px; /* border-bottom: 1px solid #aaa; */ } preview .header .title { font-size: 1.2rem; color: hsl(358, 79%, 68%); } #preview { width: 100%; height: 100%; overflow: hidden; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detailModal.open();" class="header white"><span class="title">{runstant.project.data.setting.title}</span></div> <div class="content"> <div id="preview"></div> </div> <btn-fullscreen query="preview"></btn-fullscreen> </div>', 'preview { } preview .inner { background: white; } preview .header { background-color: white; padding: 3px 10px; height: 36px; line-height: 36px; /* border-bottom: 1px solid #aaa; */ } preview .header .title { font-size: 1.2rem; color: hsl(358, 79%, 68%); } #preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } #preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -392,7 +392,7 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
   
 });
 
-riot.tag('project', '<div class="preview"></div>', 'project { } project .preview { width: 100%; height: 100%; overflow: hidden; } project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+riot.tag('project', '<div class="preview"></div>', 'project { } project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
     var self = this;
     
     this.on('mount', function() {
