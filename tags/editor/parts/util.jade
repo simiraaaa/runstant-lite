@@ -13,9 +13,7 @@ util
         //-     span.type script
 
     .content(onclick='{click}')
-      #project
-        h4 {runstant.project.data.setting.title}
-        p {runstant.project.data.setting.description}
+      project#project
       console#console(onpost='{opts.onpost}')
     btn-fullscreen(query='util')
 
@@ -49,7 +47,6 @@ util
 
     util .content {
       background-color: hsl(0, 0%, 96%);
-      padding: 10px;
       overflow-x: auto;
     }
 

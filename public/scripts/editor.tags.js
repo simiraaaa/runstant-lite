@@ -52,6 +52,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       runstant.project.save();
     
       self.tags.util.tags.console.clear();
+      self.tags.util.tags.project.refresh();
     
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -172,9 +173,6 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
 
 riot.tag('console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } console .content-console span.output { outline: 0; } console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } console .content-console span.error { color: red; }', function(opts) {
     var self = this;
-    this.root.style.width = opts.width;
-    this.root.style.height = opts.height;
-    this.root.style.float = opts.float;
     
     this.messages = [
     ];
@@ -394,55 +392,20 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
   
 });
 
-riot.tag('project', '<div class="inner z-depth-2"> <div class="header cyan lighten-5 grey-text text-darken-2"><span class="title">project</span></div> <div onclick="{click}" class="content"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> <div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="project-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div> </div> <btn-fullscreen query="project"></btn-fullscreen> </div>', 'project { display:none !important; } project .inner { background: white; } project .header { padding: 3px 10px; height: 36px; line-height: 36px; } project .header .title { font-size: 1.2rem; } project .content { padding: 10px; overflow-x: auto; }', function(opts) {
+riot.tag('project', '<div class="preview"></div>', 'project { } project .preview { width: 100%; height: 100%; } project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
     var self = this;
-    this.root.style.width = opts.width;
-    this.root.style.height = opts.height;
-    this.root.style.float = opts.float;
-    
-    this.messages = [
-    ];
-    
-    this.stack = [];
     
     this.on('mount', function() {
-      var $input = $("#console-input");
+      this.refresh();
     });
     
-    this.keypress = function(e) {
-      if (e.which === 13 && e.shiftKey === false) {
-        var target = $(e.target);
-        var v = target.text();
-        if (v === '') return false;
-    
-        target.text('');
-    
-        opts.onpost && opts.onpost(v);
-    
-        this.stack.push(v);
-        this.print('input', v);
-    
-        return false;
+    this.refresh = function() {
+      if (!self.jframe) {
+        self.jframe = jframe('project .preview');
       }
-      return true;
+      var v = runstant.project.toProject();
+      self.jframe.load(v);
     };
-    
-    this.click = function() {
-      $('#console-input').focus();
-    };
-    
-    this.print = function(type, v) {
-      this.messages.push({
-        type: type,
-        value: v,
-      });
-      this.update();
-    };
-    
-    this.clear = function() {
-      this.messages = [];
-      this.update();
-    }
   
 });
 
@@ -524,7 +487,7 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
   
 });
 
-riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> </ul> </div> <div onclick="{click}" class="content"> <div id="project"> <h4>{runstant.project.data.setting.title}</h4> <p>{runstant.project.data.setting.description}</p> </div> <console id="console" onpost="{opts.onpost}"></console> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); padding: 10px; overflow-x: auto; }', function(opts) {
+riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> </ul> </div> <div onclick="{click}" class="content"> <project id="project"></project> <console id="console" onpost="{opts.onpost}"></console> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); overflow-x: auto; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;

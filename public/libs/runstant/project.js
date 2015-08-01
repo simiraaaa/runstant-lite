@@ -88,6 +88,20 @@
 
       return finalCode;
     },
+    toProject: function() {
+      var md = '';
+      var setting = this.data.setting;
+
+      md += '# ' + setting.title + '\n\n';
+      md += setting.description;
+
+      console.log(md);
+
+      var html = runstant.util.markdown2html(md);
+      html += '<link href="/styles/markdown.css" rel="stylesheet"></link>\n';
+
+      return html;
+    },
   };
 
   exports.runstant.Project = Project;
