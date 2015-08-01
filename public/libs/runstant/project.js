@@ -95,8 +95,6 @@
       md += '# ' + setting.title + '\n\n';
       md += setting.description;
 
-      console.log(md);
-
       var html = runstant.util.markdown2html(md);
       html += '<link href="/styles/markdown.css" rel="stylesheet"></link>\n';
 

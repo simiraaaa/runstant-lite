@@ -66,7 +66,6 @@ var runstant = runstant || {};
     },
 
     setTheme: function(theme) {
-      console.log(theme);
       this.editor.setTheme(theme);
     },
 
@@ -97,7 +96,6 @@ var runstant = runstant || {};
     },
 
     onsave: function() {
-      console.log(this);
       // console.log(this.getValue());
     },
   };
