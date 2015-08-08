@@ -354,7 +354,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
   
 });
 
-riot.tag('footer', '<ul> <li><a href="/about" target="_blank">about</a></li> <li><a href="http://tmlife.io" target="_blank">blog</a></li> <li><a href="http://twitter.com/phi_jp" target="_blank">twitter</a></li> <li><a href="http://github.com/phi-jp" target="_blank">github</a></li> <li><a href=""><i class="mdi-content-save"></i></a></li> </ul>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; text-align: right; } footer ul { margin: 3px; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; }', function(opts) {
+riot.tag('footer', '<ul> <li><a href="/about" target="_blank">about</a></li> <li><a href="http://tmlife.io" target="_blank">blog</a></li> <li><a href="http://twitter.com/phi_jp" target="_blank">twitter</a></li> <li><a href="http://github.com/phi-jp" target="_blank">github</a></li> <li><a href=""><i class="small material-icons">dashboard</i></a></li> <li><a href=""><i class="small material-icons">settings_applications</i></a></li> </ul>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; text-align: right; } footer ul { margin: 3px; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; } footer ul li a i { position: relative; top: 3px; font-size: 15px !important; }', function(opts) {
 
 });
 
