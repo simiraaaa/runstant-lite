@@ -410,7 +410,7 @@ riot.tag('project', '<div class="preview"></div>', 'project { } project .preview
 });
 
 <!-- シェアモーダル-->
-riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a class="waves-effect waves-light btn amber darken-1">Download</a></div> </div> </div> </div> </div>', 'sharemodal { max-height: 85% !important; }', 'id="sharemodal" class="modal bottom-sheet"', function(opts) {
+riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a></div> </div> </div> </div> </div>', 'sharemodal { max-height: 85% !important; }', 'id="sharemodal" class="modal bottom-sheet"', function(opts) {
     var self = this;
     this.init = function() {
       runstant.util.shorten(location.href, function(url) {
@@ -468,21 +468,23 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
     };
     
     this.fullscreen =  function(param) {
-        var html = this.project.toCode(false);
-        window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
+      var html = runstant.project.toCode(false);
+      window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
     };
     
     this.download = function() {
       var title = '{title}.html'
-          .replace('{title}', this.project.getTitle())
+          .replace('{title}', runstant.project.data.setting.title)
           .replace(/\s/g, '_')
           ;
-        var html = this.project.toCode(false);
+        var html = runstant.project.toCode(false);
       var blob = new Blob([html]);
       var url = window.URL.createObjectURL(blob);
     
       $('#btn-download')[0].download = title;
       $('#btn-download')[0].href = url;
+      
+      return true;
     };
   
 });

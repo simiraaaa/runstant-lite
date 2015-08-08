@@ -23,9 +23,9 @@ sharemodal#sharemodal.modal.bottom-sheet
         div.row
           h5 Other
           div.input-field.col.s12
-            a.waves-effect.waves-light.btn.green.lighten-1 Fullscreen
+            a.waves-effect.waves-light.btn.green.lighten-1(onclick='{fullscreen}') Fullscreen
             | 
-            a.waves-effect.waves-light.btn.amber.darken-1 Download
+            a#btn-download.waves-effect.waves-light.btn.amber.darken-1(onclick='{download}') Download
   style.
     sharemodal {
       max-height: 85% !important;
@@ -88,21 +88,23 @@ sharemodal#sharemodal.modal.bottom-sheet
     };
 
     this.fullscreen =  function(param) {
-        var html = this.project.toCode(false);
-        window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
+      var html = runstant.project.toCode(false);
+      window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
     };
 
     this.download = function() {
       var title = '{title}.html'
-          .replace('{title}', this.project.getTitle())
+          .replace('{title}', runstant.project.data.setting.title)
           .replace(/\s/g, '_')
           ;
-        var html = this.project.toCode(false);
+        var html = runstant.project.toCode(false);
       var blob = new Blob([html]);
       var url = window.URL.createObjectURL(blob);
 
       $('#btn-download')[0].download = title;
       $('#btn-download')[0].href = url;
+      
+      return true;
     };
 
 
