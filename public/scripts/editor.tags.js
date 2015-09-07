@@ -354,15 +354,21 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
   
 });
 
-riot.tag('footer', '<ul> <li><a href="/about" target="_blank">about</a></li> <li><a href="http://tmlife.io" target="_blank">blog</a></li> <li><a href="http://twitter.com/phi_jp" target="_blank">twitter</a></li> <li><a href="http://github.com/phi-jp" target="_blank">github</a></li> <li><a href=""><i class="small material-icons">dashboard</i></a></li> <li><a href=""><i class="small material-icons">settings_applications</i></a></li> </ul>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; text-align: right; } footer ul { margin: 3px; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; } footer ul li a i { position: relative; top: 3px; font-size: 15px !important; }', function(opts) {
-
+riot.tag('footer', '<div class="row"> <div class="col s6"> <input type="text" value="{runstant.project.data.setting.title}" onblur="{onblurtitle}"> </div> <div class="col s6"> <ul> <li><a href="http://twitter.com/phi_jp" target="_blank"><i class="small material-icons">account_box</i></a></li> <li><a href="http://github.com/phi-jp" target="_blank"><i class="small material-icons">build</i></a></li> <li><a href=""><i class="small material-icons">dashboard</i></a></li> <li><a href=""><i class="small material-icons">settings_applications</i></a></li> </ul> </div> </div>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; color: white } footer .row { } footer input { width: auto !important; height: 1.8rem !important; } footer ul { margin: 3px; text-align: right; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; } footer ul li a i { position: relative; top: 3px; font-size: 15px !important; }', function(opts) {
+    this.onblurtitle = function(e) {
+      var title = e.target.value;
+      runstant.project.data.setting.title = title;
+      runstant.project.save();
+      riot.update();
+    };
+  
 });
 
-riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="#home" onclick="{auth}" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href="" onclick="{opts.onplay}"><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#" onclick="runstant.shareModal.open(); return false;"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {
+riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="/about" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href="" onclick="{opts.onplay}"><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="fork" class="tooltipped"><a id="btn-play" href="" onclick="{fork}"><i class="mdi material-icons">call_split</i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#" onclick="runstant.shareModal.open(); return false;"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav> <style scoped="scoped"> :scope { display: block } nav { padding: 0px 20px; } .brand-logo { position: relative; white-space: nowrap; } .brand-logo img { height: 40px; transform: translate(0px, 5px); } .brand-logo .lighter { font-weight: 200; } </style>', function(opts) {
     var self = this;
     
-    this.auth = function() {
-    
+    this.fork = function() {
+      window.open(location.href);
     };
   
 });

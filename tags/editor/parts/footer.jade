@@ -1,22 +1,21 @@
 footer
-  ul
-    li
-      a(href='/about', target='_blank') about
-    li
-      a(href='http://tmlife.io', target='_blank') blog
-    li
-      a(href='http://twitter.com/phi_jp', target='_blank') twitter
-    li
-      a(href='http://github.com/phi-jp', target='_blank') github
-    li
-      a(href='')
-        i.small.material-icons dashboard
-    li
-      a(href='')
-        i.small.material-icons settings_applications
-
-  //- i.material-icons insert_chart
-  //- i.material-icons school
+  div.row
+    div.col.s6
+      input(type='text', value='{runstant.project.data.setting.title}', onblur='{onblurtitle}')
+    div.col.s6
+      ul
+        li
+          a(href='http://twitter.com/phi_jp', target='_blank')
+            i.small.material-icons account_box
+        li
+          a(href='http://github.com/phi-jp', target='_blank')
+            i.small.material-icons build
+        li
+          a(href='')
+            i.small.material-icons dashboard
+        li
+          a(href='')
+            i.small.material-icons settings_applications
 
   style.
     footer {
@@ -25,11 +24,20 @@ footer
       width: 100%;
       background-color: hsl(200, 18%, 26%)!important;
       bottom: 0;
-      text-align: right;
+      color: white
+    }
+    footer .row {
+
+    }
+
+    footer input {
+      width: auto !important;
+      height: 1.8rem !important;
     }
 
     footer ul {
       margin: 3px;
+      text-align: right;
     }
 
     footer ul li {
@@ -44,3 +52,11 @@ footer
       top: 3px;
       font-size: 15px !important;
     }
+
+  script.
+    this.onblurtitle = function(e) {
+      var title = e.target.value;
+      runstant.project.data.setting.title = title;
+      runstant.project.save();
+      riot.update();
+    };

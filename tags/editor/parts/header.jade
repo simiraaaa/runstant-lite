@@ -1,7 +1,7 @@
 header
   nav.blue-grey.darken-3
     .nav-wrapper
-      a(href='#home', onclick='{auth}').brand-logo
+      a(href='/about').brand-logo
         img(src='/images/runstant.png')
         span Run
         span.lighter stant
@@ -9,7 +9,11 @@ header
         li.tooltipped(data-tooltip='play')
           a#btn-play(href='', onclick='{opts.onplay}')
             i.mdi-av-play-arrow
-        |       
+        | 
+        li.tooltipped(data-tooltip='fork')
+          a#btn-play(href='', onclick='{fork}')
+            i.mdi.material-icons call_split
+        | 
         li.tooltipped(data-tooltip='share')
           a#btn-share(href='#', onclick='runstant.shareModal.open(); return false;')
             i.mdi-social-share
@@ -44,13 +48,6 @@ header
   script.
     var self = this;
 
-    this.auth = function() {
-    /*
-      var lock = new Auth0Lock('goYOrOk6TQmlKZDztlOTRvltA3HFaPV4', 'phi.auth0.com');
-
-      lock.show(function(err) {
-        debugger;
-      }) ;
-      return false;
-      */
+    this.fork = function() {
+      window.open(location.href);
     };
