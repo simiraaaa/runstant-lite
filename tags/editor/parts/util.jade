@@ -8,13 +8,14 @@ util
         li.tab.col.s3
           a(href='#console')
             span.type console
-        //- li.tab.col.s3#tab-script
-        //-   a(data-type='script', href='#editor-script')
-        //-     span.type script
+        li.tab.col.s3
+          a(href='#panel-cdn')
+            span.type cdn
 
-    .content(onclick='{click}')
+    .content
       project#project
       console#console(onpost='{opts.onpost}')
+      panel-cdn#panel-cdn()
     btn-fullscreen(query='util')
 
   style.
@@ -81,10 +82,6 @@ util
         return false;
       }
       return true;
-    };
-
-    this.click = function() {
-      $('#console-input').focus();
     };
 
     this.print = function(type, v) {

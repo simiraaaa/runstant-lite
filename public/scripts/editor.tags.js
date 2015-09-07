@@ -491,7 +491,7 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
   
 });
 
-riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> </ul> </div> <div onclick="{click}" class="content"> <project id="project"></project> <console id="console" onpost="{opts.onpost}"></console> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); overflow-x: auto; }', function(opts) {
+riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> <li class="tab col s3"><a href="#panel-cdn"><span class="type">cdn</span></a></li> </ul> </div> <div class="content"> <project id="project"></project> <console id="console" onpost="{opts.onpost}"></console> <panel-cdn id="panel-cdn"></panel-cdn> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); overflow-x: auto; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -524,10 +524,6 @@ riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="
       return true;
     };
     
-    this.click = function() {
-      $('#console-input').focus();
-    };
-    
     this.print = function(type, v) {
       this.messages.push({
         type: type,
@@ -540,5 +536,25 @@ riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="
       this.messages = [];
       this.update();
     }
+  
+});
+
+riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="materialize"> </div> </div> <div class="row"> <div class="col s12"> <ul> <li each="{results}"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a> <input type="text" onclick="this.select()" value="{latest}"> </li> </ul> </div> </div>', function(opts) {
+    var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
+    
+    this.results = [];
+    
+    this.search = function() {
+      var q = this._search.value;
+    
+      $.ajax(api.format(q))
+        .done(function(res) {
+          this.results = res.results;
+          this.update();
+        }.bind(this))
+        ;
+    };
+    
+    this.search();
   
 });

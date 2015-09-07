@@ -1,0 +1,30 @@
+panel-cdn
+
+  div.row
+    div.col.s12
+      input(type='text', name='_search', onblur='{search}', value='materialize')
+  div.row
+    div.col.s12
+      ul
+        li(each='{results}')
+          a(href='https://cdnjs.com/libraries/{name}', target='_blank') {name}: 
+          input(type='text', onclick='this.select()', value='{latest}')
+
+  script.
+    var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
+
+    this.results = [];
+
+    this.search = function() {
+      var q = this._search.value;
+
+      $.ajax(api.format(q))
+        .done(function(res) {
+          this.results = res.results;
+          this.update();
+        }.bind(this))
+        ;
+    };
+
+    this.search();
+
