@@ -10,10 +10,6 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
     
     runstant.project = new runstant.Project();
     
-    document.onkeyup = function(e) {
-      console.log(e);
-    };
-    
     
     runstant.detailModal = new runstant.Modal({
       query: '#detailmodal',
