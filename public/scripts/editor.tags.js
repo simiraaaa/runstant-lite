@@ -539,7 +539,7 @@ riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="
   
 });
 
-riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="materialize"> </div> </div> <div class="row"> <div class="col s12"> <ul> <li each="{results}"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a> <input type="text" onclick="this.select()" value="{latest}"> </li> </ul> </div> </div>', function(opts) {
+riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value=""> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
     var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
     
     this.results = [];
@@ -554,7 +554,5 @@ riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text
         }.bind(this))
         ;
     };
-    
-    this.search();
   
 });
