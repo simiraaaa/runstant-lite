@@ -8,6 +8,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
 
 
     
+    runstant.user = new runstant.User();
     runstant.project = new runstant.Project();
     
     
@@ -29,6 +30,17 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
         self.tags['modal-share'].init();
       },
       complete: function() {
+      },
+    });
+    
+    runstant.userModal = new runstant.Modal({
+      query: '#modal-user',
+      ready: function() {
+        self.tags['modal-user'].init();
+      },
+      complete: function() {
+        self.tags['modal-user'].save();
+        self.tags.editor.setupEditors();
       },
     });
     
@@ -177,9 +189,11 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     this.on('mount', function() {
       $('editor ul.tabs').tabs();
     
-      this.setupEditor('html');
-      this.setupEditor('style');
-      this.setupEditor('script');
+      this.initEditor('html');
+      this.initEditor('style');
+      this.initEditor('script');
+    
+      this.setupEditors();
     
       this.changeCurrentTab(this.data.setting.current);
     
@@ -193,7 +207,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     };
     
     
-    this.setupEditor = function(type) {
+    this.initEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
       var code = self.data.code[type];
     
@@ -226,6 +240,16 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     
     };
     
+    this.setupEditors = function() {
+      var user = runstant.user;
+      for (var key in this.editors) {
+        var editor = this.editors[key];
+        editor.setFontSize(user.data.fontSize);
+        editor.setTabSize(user.data.tabSize);
+        editor.setTheme(user.data.theme);
+      }
+    };
+    
     this.updateMode = function() {
       this.editors.$forIn(function(type, editor) {
         var mode = self.data.code[type].type;
@@ -235,7 +259,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
   
 });
 
-riot.tag('footer', '<div class="row"> <div class="col s6"> <input type="text" value="{runstant.project.data.setting.title}" onblur="{onblurtitle}"> </div> <div class="col s6"> <ul> <li><a href="http://twitter.com/phi_jp" target="_blank"><i class="small material-icons">account_box</i></a></li> <li><a href="http://github.com/phi-jp" target="_blank"><i class="small material-icons">build</i></a></li> <li><a href=""><i class="small material-icons">dashboard</i></a></li> <li><a href=""><i class="small material-icons">settings_applications</i></a></li> </ul> </div> </div>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; color: white } footer .row { } footer input { width: auto !important; height: 1.8rem !important; } footer ul { margin: 3px; text-align: right; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; } footer ul li a i { position: relative; top: 3px; font-size: 15px !important; }', function(opts) {
+riot.tag('footer', '<div class="row"> <div class="col s6"> <input type="text" value="{runstant.project.data.setting.title}" onblur="{onblurtitle}"> </div> <div class="col s6"> <ul> <li><a href="http://twitter.com/phi_jp" target="_blank"><i class="small material-icons">account_box</i></a></li> <li><a href="http://github.com/phi-jp" target="_blank"><i class="small material-icons">build</i></a></li> <li><a href=""><i class="small material-icons">dashboard</i></a></li> <li><a href="" onclick="runstant.userModal.open(); return false;"><i class="small material-icons">settings_applications</i></a></li> </ul> </div> </div>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; color: white } footer .row { } footer input { width: auto !important; height: 1.8rem !important; } footer ul { margin: 3px; text-align: right; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; } footer ul li a i { position: relative; top: 3px; font-size: 15px !important; }', function(opts) {
     this.onblurtitle = function(e) {
       var title = e.target.value;
       runstant.project.data.setting.title = title;
@@ -466,9 +490,24 @@ riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="
   
 });
 
-<!-- シェアモーダル-->
-riot.tag('modal-user', '<div class="modal-content"> <h4>User</h4> </div>', 'id="modal-user" class="modal bottom-sheet"', function(opts) {
-
+<!-- ユーザーモーダル-->
+riot.tag('modal-user', '<div class="modal-content"> <h4>User</h4> <form name="_userForm" onsubmit="return false" class="row"> <div class="col s6"> <div class="row"> <div class="col s12 input-field"> <input name="_username" type="text" value="{runstant.user.data.username}"> <label>User Name</label> </div> <div class="col s12"> <label>Theme</label> <select name="_theme" value="{runstant.user.data.theme}" class="browser-default"> <option each="{runstant.Editor.themes}" value="{theme}">{caption}</option> </select> </div> </div> </div> <div class="col s6"> <div class="row"> <div class="col s12"> <label>Tab Size ({_tabSize.value})</label> <p class="range-field"> <input name="_tabSize" type="range" value="{runstant.user.data.tabSize}" min="0" max="16" oninput="{update}"> </p> </div> <div class="col s12"> <label>Font Size ({_fontSize.value})</label> <p class="range-field"> <input name="_fontSize" type="range" value="{runstant.user.data.fontSize}" min="0" max="16" oninput="{update}"> </p> </div> </div> </div> </form> </div>', 'id="modal-user" class="modal bottom-sheet"', function(opts) {
+    this.init = function() {
+      this.update();
+    };
+    
+    this.save = function() {
+      var elements = this._userForm.elements;
+      var user = runstant.user;
+    
+      user.data.username = elements._username.value;
+      user.data.tabSize = elements._tabSize.value;
+      user.data.fontSize = elements._fontSize.value;
+      user.data.theme = elements._theme.value;
+    
+      user.save();
+    };
+  
 });
 
 riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="" placeHolder="search"> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
