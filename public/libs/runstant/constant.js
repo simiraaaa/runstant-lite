@@ -48,8 +48,8 @@ window.onload = function() {\n\
     version: '0.0.1',
 
     setting: {
-      title: "template - tmlib.js",
-      description: "tmlib.js 用公式エディタ. 色々と使えますよ♪", // もと detail
+      title: "template - runstant lite",
+      description: "思いたったらすぐ開発. プログラミングに革命を...", // もと detail
       fullscreen: false,
       current: "script",
     },

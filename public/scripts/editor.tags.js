@@ -207,6 +207,7 @@ riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name
       elements._style.value = code.style.type;
       elements._script.value = code.script.type;
     
+      elements._description.focus();
       elements._title.focus();
       elements._title.select();
     };
