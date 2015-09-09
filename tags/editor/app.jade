@@ -104,8 +104,8 @@ app
       self.tags.preview.refresh();
       runstant.project.save();
 
-      self.tags.util.tags.console.clear();
-      self.tags.util.tags.project.refresh();
+      self.tags.util.tags['panel-console'].clear();
+      self.tags.util.tags['panel-project'].refresh();
 
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -146,7 +146,7 @@ app
       var data = JSON.parse(e.data);
       var method = data.method;
       var args = data.arguments;
-      var csl = self.tags.util.tags.console;
+      var csl = self.tags.util.tags['panel-console'];
 
       if (method == 'log') {
           csl.print('log', args.join(' '));
@@ -164,7 +164,7 @@ app
           csl.clear();
       }
 
-      self.tags.util.tags.console.focus();
+      csl.focus();
     };
 
 

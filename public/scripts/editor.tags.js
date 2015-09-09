@@ -47,8 +47,8 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       self.tags.preview.refresh();
       runstant.project.save();
     
-      self.tags.util.tags.console.clear();
-      self.tags.util.tags.project.refresh();
+      self.tags.util.tags['panel-console'].clear();
+      self.tags.util.tags['panel-project'].refresh();
     
       Materialize.toast('save & play', 1000, "rounded");
     };
@@ -89,7 +89,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       var data = JSON.parse(e.data);
       var method = data.method;
       var args = data.arguments;
-      var csl = self.tags.util.tags.console;
+      var csl = self.tags.util.tags['panel-console'];
     
       if (method == 'log') {
           csl.print('log', args.join(' '));
@@ -107,7 +107,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
           csl.clear();
       }
     
-      self.tags.util.tags.console.focus();
+      csl.focus();
     };
   
 });
@@ -163,60 +163,6 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
         var tabs = $('util ul.tabs');
         tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
       }, 500);
-    };
-  
-});
-
-riot.tag('console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } console .content-console span.output { outline: 0; } console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } console .content-console span.error { color: red; }', function(opts) {
-    var self = this;
-    
-    this.messages = [
-    ];
-    
-    this.stack = [];
-    
-    this.on('mount', function() {
-      var $input = $("#console-input");
-    });
-    
-    this.keypress = function(e) {
-      if (e.which === 13 && e.shiftKey === false) {
-        var target = $(e.target);
-        var v = target.text();
-        if (v === '') return false;
-    
-        target.text('');
-    
-        opts.onpost && opts.onpost(v);
-    
-        this.stack.push(v);
-        this.print('input', v);
-    
-        return false;
-      }
-      return true;
-    };
-    
-    this.click = function() {
-      $('#console-input').focus();
-    };
-    
-    this.print = function(type, v) {
-      this.messages.push({
-        type: type,
-        value: v,
-      });
-      this.update();
-    };
-    
-    this.clear = function() {
-      this.messages = [];
-      this.update();
-    };
-    
-    this.focus = function() {
-
-      $('util ul.tabs').tabs('select_tab', 'console');
     };
   
 });
@@ -394,23 +340,6 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
   
 });
 
-riot.tag('project', '<div class="preview"></div>', 'project { } project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
-    var self = this;
-    
-    this.on('mount', function() {
-      this.refresh();
-    });
-    
-    this.refresh = function() {
-      if (!self.jframe) {
-        self.jframe = jframe('project .preview');
-      }
-      var v = runstant.project.toProject();
-      self.jframe.load(v);
-    };
-  
-});
-
 <!-- シェアモーダル-->
 riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a></div> </div> </div> </div> </div>', 'sharemodal { max-height: 85% !important; }', 'id="sharemodal" class="modal bottom-sheet"', function(opts) {
     var self = this;
@@ -491,7 +420,7 @@ riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="r
   
 });
 
-riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> <li class="tab col s3"><a href="#panel-cdn"><span class="type">cdn</span></a></li> </ul> </div> <div class="content"> <project id="project"></project> <console id="console" onpost="{opts.onpost}"></console> <panel-cdn id="panel-cdn"></panel-cdn> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); overflow-x: auto; }', function(opts) {
+riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> <li class="tab col s3"><a href="#panel-cdn"><span class="type">cdn</span></a></li> </ul> </div> <div class="content"> <panel-project id="project"></panel-project> <panel-console id="console" onpost="{opts.onpost}"></panel-console> <panel-cdn id="panel-cdn"></panel-cdn> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); overflow-x: auto; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -539,7 +468,7 @@ riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="
   
 });
 
-riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value=""> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
+riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="" placeHolder="search"> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
     var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
     
     this.results = [];
@@ -553,6 +482,81 @@ riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text
           this.update();
         }.bind(this))
         ;
+    };
+  
+});
+
+riot.tag('panel-console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'panel-console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } panel-console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } panel-console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } panel-console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } panel-console .content-console span.output { outline: 0; } panel-console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } panel-console .content-console span.error { color: red; }', function(opts) {
+    var self = this;
+    
+    this.messages = [
+    ];
+    
+    this.stack = [];
+    
+    this.on('mount', function() {
+      var $input = $("#console-input");
+    });
+    
+    this.keypress = function(e) {
+      if (e.which === 13 && e.shiftKey === false) {
+        var target = $(e.target);
+        var v = target.text();
+        if (v === '') return false;
+    
+        target.text('');
+    
+        opts.onpost && opts.onpost(v);
+    
+        this.stack.push(v);
+        this.print('input', v);
+    
+        return false;
+      }
+      return true;
+    };
+    
+    this.click = function() {
+      $('#console-input').focus();
+    };
+    
+    this.print = function(type, v) {
+      this.messages.push({
+        type: type,
+        value: v,
+      });
+      this.update();
+    };
+    
+    this.clear = function() {
+      this.messages = [];
+      this.update();
+    };
+    
+    this.focus = function() {
+
+      $('util ul.tabs').tabs('select_tab', 'console');
+    };
+  
+});
+
+riot.tag('panel-project', '<div class="preview"></div>', 'panel-project { } panel-project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } panel-project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+    var self = this;
+    
+    this.on('mount', function() {
+      this.refresh();
+    
+      this.on('update', function() {
+        this.refresh();
+      });
+    });
+    
+    this.refresh = function() {
+      if (!self.jframe) {
+        self.jframe = jframe('panel-project .preview');
+      }
+      var v = runstant.project.toProject();
+      self.jframe.load(v);
     };
   
 });

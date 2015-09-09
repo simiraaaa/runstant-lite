@@ -1,11 +1,11 @@
-console
+panel-console
   .content-console
     span(each='{messages}' class='{type}', onclick='confirm("{value}")') {value}
     span#console-input.input(type='text', contenteditable='true', onkeypress='{keypress}')
 
   style.
 
-    console .content-console {
+    panel-console .content-console {
       position: relative;
       width: 100%;
       height: 100%;
@@ -15,7 +15,7 @@ console
       overflow-x: auto;
     }
 
-    console .content-console span {
+    panel-console .content-console span {
       border-bottom: 1px solid #ddd;
       display: block;
       line-height: 1em;
@@ -27,29 +27,29 @@ console
       word-wrap: break-word;
     }
 
-    console .content-console span.input {
+    panel-console .content-console span.input {
       outline: 0;
       color: #222;
       border-bottom: 0px;
     }
-    console .content-console span.input:before {
+    panel-console .content-console span.input:before {
       position: absolute;
       left: 7px;
       font-weight: bold;
       content: '> ';
       color: #47b4eb;
     }
-    console .content-console span.output {
+    panel-console .content-console span.output {
       outline: 0;
     }
-    console .content-console span.output:before {
+    panel-console .content-console span.output:before {
       position: absolute;
       left: 7px;
       font-weight: bold;
       content: '< ';
       color: #47b4eb;
     }
-    console .content-console span.error {
+    panel-console .content-console span.error {
       color: red;
     }
 
