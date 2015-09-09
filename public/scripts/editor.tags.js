@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <modal-detail></modal-detail> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <modal-detail></modal-detail> <modal-share></modal-share>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
     this.editorWidth = '60';
 
@@ -24,9 +24,9 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
     });
     
     runstant.shareModal = new runstant.Modal({
-      query: '#sharemodal',
+      query: '#modal-share',
       ready: function() {
-        self.tags.sharemodal.init();
+        self.tags['modal-share'].init();
       },
       complete: function() {
       },
@@ -279,86 +279,6 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
   
 });
 
-<!-- シェアモーダル-->
-riot.tag('sharemodal', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a></div> </div> </div> </div> </div>', 'sharemodal { max-height: 85% !important; }', 'id="sharemodal" class="modal bottom-sheet"', function(opts) {
-    var self = this;
-    this.init = function() {
-      runstant.util.shorten(location.href, function(url) {
-        var embed = runstant.constant.EMBED_CODE.replace('{url}', url);
-    
-        self.shortURL = url;
-        self._shorturl.value = url;
-        self._embedcode.value = embed;
-        self.update();
-    
-        self._shorturl.focus();
-        self._shorturl.select();
-      });
-    };
-    
-    this.share = function(e) {
-      var name = e.target.dataset.name;
-    
-      this[name]({
-        text: runstant.project.data.setting.title,
-        url: this.shortURL,
-      });
-    };
-    
-    this.twitter = function(param) {
-      var url = "https://twitter.com/intent/tweet?text={text}&hashtags=runstant&via={via}&url={url}";
-      url = url.replace("{text}", encodeURIComponent(param.text));
-      url = url.replace("{via}", "runstant");
-      url = url.replace("{url}", encodeURIComponent(param.url));
-      window.open(url, 'share', 'width=640, height=480');
-    };
-    
-    this.facebook = function(param) {
-      var url = "https://www.facebook.com/sharer/sharer.php?u={url}";
-      url = url.replace("{url}", encodeURIComponent(param.url));
-      window.open(url, 'share', 'width=640, height=480');
-    };
-    
-    this.google = function(param) {
-      var url = "https://plus.google.com/share?url={url}";
-      url = url.replace("{url}", encodeURIComponent(param.url));
-      window.open(url, 'share', 'width=640, height=480');
-    };
-    
-    this.pocket = function(param) {
-      var url = "https://getpocket.com/edit?url={url}";
-      url = url.replace("{url}", encodeURIComponent(param.url));
-      window.open(url, 'share', 'width=640, height=480');
-    };
-    
-    this.hatebu = function(param) {
-      var url = "http://b.hatena.ne.jp/entry/{url}";
-      url = url.replace("{url}", encodeURIComponent(param.url));
-      window.open(url, 'share');
-    };
-    
-    this.fullscreen =  function(param) {
-      var html = runstant.project.toCode(false);
-      window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
-    };
-    
-    this.download = function() {
-      var title = '{title}.html'
-          .replace('{title}', runstant.project.data.setting.title)
-          .replace(/\s/g, '_')
-          ;
-        var html = runstant.project.toCode(false);
-      var blob = new Blob([html]);
-      var url = window.URL.createObjectURL(blob);
-    
-      $('#btn-download')[0].download = title;
-      $('#btn-download')[0].href = url;
-      
-      return true;
-    };
-  
-});
-
 riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> <li class="tab col s3"><a href="#panel-cdn"><span class="type">cdn</span></a></li> </ul> </div> <div class="content"> <panel-project id="project"></panel-project> <panel-console id="console" onpost="{opts.onpost}"></panel-console> <panel-cdn id="panel-cdn"></panel-cdn> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .inner { background: white; } util .tabs { /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); overflow-x: auto; }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
@@ -462,6 +382,86 @@ riot.tag('modal-detail', '<div class="modal-content"> <h4>Setting</h4> <form nam
       code.html.type = elements._html.value;
       code.style.type = elements._style.value;
       code.script.type = elements._script.value;
+    };
+  
+});
+
+<!-- シェアモーダル-->
+riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a></div> </div> </div> </div> </div>', 'modal-share { max-height: 85% !important; }', 'id="modal-share" class="modal bottom-sheet"', function(opts) {
+    var self = this;
+    this.init = function() {
+      runstant.util.shorten(location.href, function(url) {
+        var embed = runstant.constant.EMBED_CODE.replace('{url}', url);
+    
+        self.shortURL = url;
+        self._shorturl.value = url;
+        self._embedcode.value = embed;
+        self.update();
+    
+        self._shorturl.focus();
+        self._shorturl.select();
+      });
+    };
+    
+    this.share = function(e) {
+      var name = e.target.dataset.name;
+    
+      this[name]({
+        text: runstant.project.data.setting.title,
+        url: this.shortURL,
+      });
+    };
+    
+    this.twitter = function(param) {
+      var url = "https://twitter.com/intent/tweet?text={text}&hashtags=runstant&via={via}&url={url}";
+      url = url.replace("{text}", encodeURIComponent(param.text));
+      url = url.replace("{via}", "runstant");
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.facebook = function(param) {
+      var url = "https://www.facebook.com/sharer/sharer.php?u={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.google = function(param) {
+      var url = "https://plus.google.com/share?url={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.pocket = function(param) {
+      var url = "https://getpocket.com/edit?url={url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share', 'width=640, height=480');
+    };
+    
+    this.hatebu = function(param) {
+      var url = "http://b.hatena.ne.jp/entry/{url}";
+      url = url.replace("{url}", encodeURIComponent(param.url));
+      window.open(url, 'share');
+    };
+    
+    this.fullscreen =  function(param) {
+      var html = runstant.project.toCode(false);
+      window.open("data:text/html;charset=utf8;base64," + window.btoa(unescape(encodeURIComponent(html))));
+    };
+    
+    this.download = function() {
+      var title = '{title}.html'
+          .replace('{title}', runstant.project.data.setting.title)
+          .replace(/\s/g, '_')
+          ;
+        var html = runstant.project.toCode(false);
+      var blob = new Blob([html]);
+      var url = window.URL.createObjectURL(blob);
+    
+      $('#btn-download')[0].download = title;
+      $('#btn-download')[0].href = url;
+      
+      return true;
     };
   
 });

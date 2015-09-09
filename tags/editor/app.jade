@@ -8,7 +8,7 @@ app
   footer
 
   modal-detail
-  sharemodal
+  modal-share
 
   style.
     body {
@@ -81,9 +81,9 @@ app
     });
 
     runstant.shareModal = new runstant.Modal({
-      query: '#sharemodal',
+      query: '#modal-share',
       ready: function() {
-        self.tags.sharemodal.init();
+        self.tags['modal-share'].init();
       },
       complete: function() {
       },
