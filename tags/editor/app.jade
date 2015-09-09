@@ -66,6 +66,7 @@ app
     //-   console.log(datum);
     //- });
 
+    runstant.user = new runstant.User();
     runstant.project = new runstant.Project();
 
 
@@ -87,6 +88,17 @@ app
         self.tags['modal-share'].init();
       },
       complete: function() {
+      },
+    });
+
+    runstant.userModal = new runstant.Modal({
+      query: '#modal-user',
+      ready: function() {
+        self.tags['modal-user'].init();
+      },
+      complete: function() {
+        self.tags['modal-user'].save();
+        self.tags.editor.setupEditors();
       },
     });
 

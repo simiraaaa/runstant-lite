@@ -83,9 +83,11 @@ editor
     this.on('mount', function() {
       $('editor ul.tabs').tabs();
 
-      this.setupEditor('html');
-      this.setupEditor('style');
-      this.setupEditor('script');
+      this.initEditor('html');
+      this.initEditor('style');
+      this.initEditor('script');
+
+      this.setupEditors();
 
       this.changeCurrentTab(this.data.setting.current);
 
@@ -99,7 +101,7 @@ editor
     };
 
 
-    this.setupEditor = function(type) {
+    this.initEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
       var code = self.data.code[type];
 
@@ -131,6 +133,16 @@ editor
         });
       });
 
+    };
+
+    this.setupEditors = function() {
+      var user = runstant.user;
+      for (var key in this.editors) {
+        var editor = this.editors[key];
+        editor.setFontSize(user.data.fontSize);
+        editor.setTabSize(user.data.tabSize);
+        editor.setTheme(user.data.theme);
+      }
     };
 
     this.updateMode = function() {

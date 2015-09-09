@@ -2,3 +2,42 @@
 modal-user#modal-user.modal.bottom-sheet
   div.modal-content
     h4 User
+
+    form.row(name='_userForm', onsubmit='return false')
+      div.col.s6
+        div.row
+          div.col.s12.input-field
+            input(name='_username', type='text', value='{runstant.user.data.username}')
+            label User Name
+          div.col.s12
+            label Theme
+            select.browser-default(name='_theme', value='{runstant.user.data.theme}')
+              option(each='{runstant.Editor.themes}', value='{theme}') {caption}
+      div.col.s6
+        div.row
+          div.col.s12
+            label Tab Size ({_tabSize.value})
+            p.range-field
+              input(name='_tabSize', type='range', value='{runstant.user.data.tabSize}', min='0', max='16', oninput='{update}')
+          div.col.s12
+            label Font Size ({_fontSize.value})
+            p.range-field
+              input(name='_fontSize', type='range', value='{runstant.user.data.fontSize}', min='0', max='16', oninput='{update}')
+
+  script.
+    this.init = function() {
+      this.update();
+    };
+
+    this.save = function() {
+      var elements = this._userForm.elements;
+      var user = runstant.user;
+
+      user.data.username = elements._username.value;
+      user.data.tabSize = elements._tabSize.value;
+      user.data.fontSize = elements._fontSize.value;
+      user.data.theme = elements._theme.value;
+
+      user.save();
+    };
+
