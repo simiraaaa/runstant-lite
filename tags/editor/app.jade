@@ -7,7 +7,7 @@ app
     util.panel(width='40%', height='40%', float='left', onpost='{onpost}')
   footer
 
-  detailmodal
+  modal-detail
   sharemodal
 
   style.
@@ -69,12 +69,12 @@ app
 
 
     runstant.detailModal = new runstant.Modal({
-      query: '#detailmodal',
+      query: '#modal-detail',
       ready: function() {
-        self.tags.detailmodal.init();
+        self.tags['modal-detail'].init();
       },
       complete: function() {
-        self.tags.detailmodal.save();
+        self.tags['modal-detail'].save();
         self.tags.editor.updateMode();
         self.loadScripts();
       },
@@ -86,9 +86,6 @@ app
         self.tags.sharemodal.init();
       },
       complete: function() {
-        //- self.tags.detailmodal.save();
-        //- self.tags.editor.updateMode();
-        //- self.loadScripts();
       },
     });
 

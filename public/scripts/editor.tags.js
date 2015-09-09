@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <detailmodal></detailmodal> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <modal-detail></modal-detail> <sharemodal></sharemodal>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
     this.editorWidth = '60';
 
@@ -12,12 +12,12 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
     
     
     runstant.detailModal = new runstant.Modal({
-      query: '#detailmodal',
+      query: '#modal-detail',
       ready: function() {
-        self.tags.detailmodal.init();
+        self.tags['modal-detail'].init();
       },
       complete: function() {
-        self.tags.detailmodal.save();
+        self.tags['modal-detail'].save();
         self.tags.editor.updateMode();
         self.loadScripts();
       },
@@ -29,9 +29,6 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
         self.tags.sharemodal.init();
       },
       complete: function() {
-
-
-
       },
     });
     
@@ -163,65 +160,6 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
         var tabs = $('util ul.tabs');
         tabs.tabs('select_tab', tabs.find(".active").attr('href').substr(1));
       }, 500);
-    };
-  
-});
-
-<!-- プロジェクトの詳細-->
-riot.tag('detailmodal', '<div class="modal-content"> <h4>Setting</h4> <form name="_form" onsubmit="return false;" class="row"> <div class="col s6"> <h5>Project</h5> <div class="row"> <div class="col s12 input-field"> <input name="_title" value="hoge" type="text"> <label>Project Title</label> </div> <div class="col s12 input-field"> <textarea name="_description" class="materialize-textarea"></textarea> <label>Description</label> </div> </div> <div class="row"> <div class="col s12"> <label>Language</label> </div> <div each="{languages}" class="col s4"> <label>{name}</label> <select name="_{name}" class="browser-default"> <option each="{list}" value="{name}">{name}</option> </select> </div> </div> </div> </form> </div>', 'detailmodal { max-height: 85% !important; }', 'id="detailmodal" class="modal bottom-sheet"', function(opts) {
-    this.languages = [
-      {
-        name: 'html',
-        list: [
-          {name:'html'},
-          {name:'jade'},
-          {name:'markdown'},
-        ],
-      },
-      {
-        name: 'style',
-        list: [
-          {name:'css'},
-          {name:'stylus'},
-          {name:'less'},
-          {name:'sass'},
-        ],
-      },
-      {
-        name: 'script',
-        list: [
-          {name:'javascript'},
-          {name:'typescript'},
-          {name:'coffee'},
-          {name:'ecmascript6'},
-        ],
-      },
-    ];
-    this.init = function() {
-      var elements = this._form.elements;
-      var setting = runstant.project.data.setting;
-      var code = runstant.project.data.code;
-      elements._title.value = setting.title;
-      elements._description.value = setting.description;
-      elements._html.value = code.html.type;
-      elements._style.value = code.style.type;
-      elements._script.value = code.script.type;
-    
-      elements._description.focus();
-      elements._title.focus();
-      elements._title.select();
-    };
-    
-    this.save = function() {
-      var elements = this._form.elements;
-      var setting = runstant.project.data.setting;
-      var code = runstant.project.data.code;
-    
-      setting.title = elements._title.value;
-      setting.description = elements._description.value;
-      code.html.type = elements._html.value;
-      code.style.type = elements._style.value;
-      code.script.type = elements._script.value;
     };
   
 });
@@ -466,6 +404,65 @@ riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="
       this.messages = [];
       this.update();
     }
+  
+});
+
+<!-- プロジェクトの詳細-->
+riot.tag('modal-detail', '<div class="modal-content"> <h4>Setting</h4> <form name="_form" onsubmit="return false;" class="row"> <div class="col s6"> <h5>Project</h5> <div class="row"> <div class="col s12 input-field"> <input name="_title" value="hoge" type="text"> <label>Project Title</label> </div> <div class="col s12 input-field"> <textarea name="_description" class="materialize-textarea"></textarea> <label>Description</label> </div> </div> <div class="row"> <div class="col s12"> <label>Language</label> </div> <div each="{languages}" class="col s4"> <label>{name}</label> <select name="_{name}" class="browser-default"> <option each="{list}" value="{name}">{name}</option> </select> </div> </div> </div> </form> </div>', 'modal-detail { max-height: 85% !important; }', 'id="modal-detail" class="modal bottom-sheet"', function(opts) {
+    this.languages = [
+      {
+        name: 'html',
+        list: [
+          {name:'html'},
+          {name:'jade'},
+          {name:'markdown'},
+        ],
+      },
+      {
+        name: 'style',
+        list: [
+          {name:'css'},
+          {name:'stylus'},
+          {name:'less'},
+          {name:'sass'},
+        ],
+      },
+      {
+        name: 'script',
+        list: [
+          {name:'javascript'},
+          {name:'typescript'},
+          {name:'coffee'},
+          {name:'ecmascript6'},
+        ],
+      },
+    ];
+    this.init = function() {
+      var elements = this._form.elements;
+      var setting = runstant.project.data.setting;
+      var code = runstant.project.data.code;
+      elements._title.value = setting.title;
+      elements._description.value = setting.description;
+      elements._html.value = code.html.type;
+      elements._style.value = code.style.type;
+      elements._script.value = code.script.type;
+    
+      elements._description.focus();
+      elements._title.focus();
+      elements._title.select();
+    };
+    
+    this.save = function() {
+      var elements = this._form.elements;
+      var setting = runstant.project.data.setting;
+      var code = runstant.project.data.code;
+    
+      setting.title = elements._title.value;
+      setting.description = elements._description.value;
+      code.html.type = elements._html.value;
+      code.style.type = elements._style.value;
+      code.script.type = elements._script.value;
+    };
   
 });
 
