@@ -2,14 +2,21 @@ panel-cdn
 
   div.row
     div.col.s12
-      input(type='text', name='_search', onblur='{search}', value='materialize')
-  div.row
+      input(type='text', name='_search', onblur='{search}', value='')
     div.col.s12
       ul
-        li(each='{results}')
-          a(href='https://cdnjs.com/libraries/{name}', target='_blank') {name}: 
-          input(type='text', onclick='this.select()', value='{latest}')
+        li(each='{results}').row.result
+          div.col.s3
+            a(href='https://cdnjs.com/libraries/{name}', target='_blank') {name}: 
+          div.col.s9
+            span {description}
+            //- input(type='text', onclick='this.select()', value='{latest}')
 
+  style.
+    panel-cdn .result {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
   script.
     var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
 
@@ -25,6 +32,4 @@ panel-cdn
         }.bind(this))
         ;
     };
-
-    this.search();
 
