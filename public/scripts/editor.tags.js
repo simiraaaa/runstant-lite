@@ -1,5 +1,5 @@
 
-riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <modal-detail></modal-detail> <modal-share></modal-share>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
+riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <modal-detail></modal-detail> <modal-share></modal-share> <modal-user></modal-user>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
     this.editorWidth = '60';
 
@@ -464,6 +464,11 @@ riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="
       return true;
     };
   
+});
+
+<!-- シェアモーダル-->
+riot.tag('modal-user', '<div class="modal-content"> <h4>User</h4> </div>', 'id="modal-user" class="modal bottom-sheet"', function(opts) {
+
 });
 
 riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="" placeHolder="search"> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
