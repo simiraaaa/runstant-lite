@@ -29,6 +29,19 @@ block content
       .parallax img {
         display: block;
         transform: translate3d(-50%, 50%, 0px);
+        -webkit-transition: 250ms;
+        -moz-transition: 250ms;
+        -o-transition: 250ms;
+        -ms-transition: 250ms;
+        transition: 250ms;
+      }
+
+      .parallax-container:hover .parallax img {
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+        filter: grayscale(100%);
       }
 
   div.parallax-container
@@ -40,7 +53,10 @@ block content
           span.lighter stant 
           span Lite
         div.row.center
-          h5.header.col.s12.light 思いたったらすぐ開発. プログラミングに革命を...
+          h5.header.col.s12.light
+            | 思いたったらすぐ開発
+            br 
+            | プログラミングに革命を...
         div.row.center
           a.btn-large.waves-effect.waves-light.teal.lighten-1(href='/') Getting Started
     div.parallax
@@ -62,24 +78,23 @@ block content
               i.material-icons create
             h5.center just coding
             p.light
-              | Runstant Lite は, ブラウザ上で高速に動作するオンラインエディタ&プレビューツールです.
+              | Runstant Lite を開けば, ログインすることなく即座にコーディングを始めることができます.
               br
-              | ページを開いたらログインすることなく, 即座にコーディングを始めることができます.
+              | Runstant Lite は, ブラウザ上で高速に動作するエディタ&プレビューツールです.
               br
-              | 優れたエディタプラグインを使っているのでコードのハイライトや補完, オートインデント機能, vim や Emacs 対応といった
-              | コーディングに必要な機能をデフォルトで完備しています.
+              | コードのハイライトや補完, オートインデント機能, vim や Emacs 対応といったコーディングに必要な機能をデフォルトで完備しています.
         div.col.s12.m4
           div.icon-block
             h2.center
               i.material-icons play_arrow
             h5.center just run
             p.light
-              | コードを書いたら保存しましょう. 一瞬でプレビュー画面に反映され実行結果を確認することができます.
+              | コードを保存してみてください. 今までにない速度で実行結果を確認できます. 
               br
-              | サーバーを介さず, URL に情報を保存することで今までにない速度の保存, 実行を実現しています.
+              | サーバーを介さず, URL に情報を保存することにより高速な保存, 実行を実現しています.
               br
               | また, コンソール画面も使えるのでデバッグも簡単に行うことが出来ます.
-
+              
         div.col.s12.m4
           div.icon-block
             h2.center
@@ -88,7 +103,7 @@ block content
             p.light
               | 完成したらツイッターやフェイスブックでシェアして自慢しましょう.
               br
-              | URL に情報を保存しているので, それをコピーしてシェアするだけで, すべての人があなたと同じ実行結果を共有することができます.
+              | URL に情報を保存しているので, 直接 URL をコピーしてシェアするだけで, すべての人があなたと同じ実行結果を共有することができます.
               br
               | また, iframe 化してページに実行結果を埋め込むこともできるので, ブログなどに貼り付けて多くの人に見てもらうことができます.
 
@@ -147,7 +162,7 @@ block content
 
   div.parallax-container
     div.parallax
-      img(src='http://materializecss.com/templates/parallax-template/background1.jpg')
+      img(src='/images/concrete_jungle.jpg')
 
   div.container
     div.section
