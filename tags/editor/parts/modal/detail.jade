@@ -1,11 +1,10 @@
 // プロジェクトの詳細
 modal-detail#modal-detail.modal.bottom-sheet
   div.modal-content
-    h4 Setting
+    h4 Project Setting
 
     form.row(name='_form', onsubmit='return false;')
       div.col.s6
-        h5 Project
         div.row
           div.col.s12.input-field
             input(name='_title', value='hoge', type="text")
@@ -13,6 +12,7 @@ modal-detail#modal-detail.modal.bottom-sheet
           div.col.s12.input-field
             textarea.materialize-textarea(name='_description')
             label Description
+      div.col.s6
         div.row
           div.col.s12
             label Language
