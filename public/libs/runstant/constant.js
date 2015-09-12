@@ -18,7 +18,6 @@
     \n\
     \<style\>${style}\</style\>\n\
     \n\
-    \<scri____pt src=\"http://cdn.rawgit.com/phi-jp/high/0.0.3/high.js\"\>\</scri____pt\>\n\
     \<scri____pt\>${script}\</scri____pt\>\n\
   \</head\>\n\
   \<body\>\n\
