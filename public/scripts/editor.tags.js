@@ -53,6 +53,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
     });
     
     this.onsave = function() {
+      self.tags.editor.saveCode();
       self.tags.preview.refresh();
       runstant.project.save();
     
@@ -214,13 +215,6 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
       editor.setValue(code.value);
     
       editor.onsave = function() {
-
-        var v = editor.getValue();
-        code.value = v;
-
-        var current = $('ul.tabs').find("a.active").data('type');
-        runstant.project.data.setting.current = current;
-    
         opts.onsave && opts.onsave();
       };
 
@@ -238,6 +232,21 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
         });
       });
     
+    };
+    
+    
+    this.saveCode = function() {
+      var project = runstant.project;
+
+      for (var key in this.editors) {
+        var editor = this.editors[key];
+        var code = project.data.code[key];
+        var v = editor.getValue();
+        code.value = v;
+      }
+
+      var current = $('ul.tabs').find("a.active").data('type');
+      project.data.setting.current = current;
     };
     
     this.setupEditors = function() {

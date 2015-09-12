@@ -111,6 +111,7 @@ app
     });
 
     this.onsave = function() {
+      self.tags.editor.saveCode();
       self.tags.preview.refresh();
       runstant.project.save();
 
