@@ -2,59 +2,28 @@
 extends ./layout
 
 block content
-  header
-    nav.blue-grey.darken-3
-      div.row
-        div.col.s12
-          a(href='/').brand-logo
-            img(src='/images/runstant.png')
-            span Run
-            span.lighter stant 
-            span Lite
+  include parts/header
 
-          ul.right.social-nav.hide-on-small-and-down
-            li.tweet-btn.
-              <a href="https://twitter.com/share" class="twitter-share-button" data-via="phi_jp" data-hashtags="runstant">Tweet</a>
-              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-            li.hatebu-btn.
-              <a href="http://b.hatena.ne.jp/entry/http://lite.runstant.com" class="hatena-bookmark-button" data-hatena-bookmark-title="Runstant Lite" data-hatena-bookmark-layout="standard-noballoon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-            li.pocket-btn-temp.
-              <a data-pocket-label="pocket" data-pocket-count="none" class="pocket-btn" data-lang="en"></a>
-              <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+  style(scoped).
+    :scope { display: block }
 
-    style(scoped).
-      :scope { display: block }
+    .parallax img {
+      display: block;
+      transform: translate3d(-50%, 50%, 0px);
+      -webkit-transition: 250ms;
+      -moz-transition: 250ms;
+      -o-transition: 250ms;
+      -ms-transition: 250ms;
+      transition: 250ms;
+    }
 
-      .parallax img {
-        display: block;
-        transform: translate3d(-50%, 50%, 0px);
-        -webkit-transition: 250ms;
-        -moz-transition: 250ms;
-        -o-transition: 250ms;
-        -ms-transition: 250ms;
-        transition: 250ms;
-      }
-
-      .parallax-container:hover .parallax img {
-        -webkit-filter: grayscale(100%);
-        -moz-filter: grayscale(100%);
-        -o-filter: grayscale(100%);
-        -ms-filter: grayscale(100%);
-        filter: grayscale(100%);
-      }
-
-      .social-nav {
-        height: 64px;
-      }
-
-      .tweet-btn, .hatebu-btn {
-        padding-top: 8px;
-        padding-right: 4px;
-      }
-      .pocket-btn-temp {
-        padding-top: 10px;
-        padding-right: 4px;
-      }
+    .parallax-container:hover .parallax img {
+      -webkit-filter: grayscale(100%);
+      -moz-filter: grayscale(100%);
+      -o-filter: grayscale(100%);
+      -ms-filter: grayscale(100%);
+      filter: grayscale(100%);
+    }
 
   div.parallax-container
     div.section.no-pad-bot
@@ -208,34 +177,8 @@ block content
           //- h3 Contact Us
           //- p.left-align.light Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
 
-  footer.page-footer.blue-grey.darken-3
-    div.container
-      div.row
-        div.col.s12.m6
-          h5.white-text Join Development
-          p.grey-text.text-lighten-4
-            | Runstant Lite はオープンソースとして開発しています.
-            | Github や Gitter で一緒に開発したいというかたはお気軽に♪
-
-          p
-            a.btn.blue-grey.darken-1(href='https://github.com/phi-jp/runstant-lite', target='_blank') Github
-            | 
-            a.btn.pink.accent-2(href='https://gitter.im/phi-jp/runstant-lite', target='_blank') Gitter
-            | 
-            a.btn.blue.darken-2(href='https://twitter.com/intent/follow?original_referer=http%3A%2F%2Flocalhost%3A3000%2Fabout&ref_src=twsrc%5Etfw&screen_name=runstant&tw_p=followbutton', target='_blank') Twitter
-        div.col.s12.m4.offset-l2
-          h5.white-text Contact
-          ul
-            li.
-              <a href="https://twitter.com/phi_jp" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @phi_jp</a>
-              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-            li.
-              <iframe src="https://ghbtns.com/github-btn.html?user=phi-jp&type=follow&count=false&size=large" frameborder="0" scrolling="0"></iframe>
-    div.footer-copyright
-      div.container
-        | Copyright © 2015 phi. All Rights Reserved.
-        a.grey-text.text-lighten-4.right MIT
-
+  include parts/footer
+  
   script.
     $(document).ready(function(){
       $('.parallax').parallax();

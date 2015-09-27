@@ -2,15 +2,7 @@
 extends ./layout
 
 block content
-  header
-    nav.blue-grey.darken-3
-      div.row
-        div.col.s12
-          a(href='/').brand-logo
-            img(src='/images/runstant.png')
-            span Run
-            span.lighter stant 
-            span Lite
+  include parts/header
   
   div.container
     div.row
@@ -24,4 +16,6 @@ block content
               p #{collection.description}
             div.card-action
               a(href='{url}', target='_blank') Open
+
+  include parts/footer
 
