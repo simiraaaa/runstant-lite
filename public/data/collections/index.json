@@ -1,0 +1,28 @@
+{
+  "collections": [
+    {
+      "title": "Templates",
+      "url": "/collections/templates",
+      "description": "様々なライブラリのテンプレートです. 気軽に色々なライブラリを試すことができます!",
+      "image": "/images/logo/runstant.png"
+    },
+    {
+      "title": "Touch the color",
+      "url": "touch-the-color/",
+      "description": "順番に色をタッチ!",
+      "image": "/images/logo/runstant.png"
+    },
+    {
+      "title": "Touch the kanji",
+      "url": "touch-the-kanji/",
+      "description": "意外と知らない!? 漢字になおすとどれかな?",
+      "image": "/images/logo/runstant.png"
+    },
+    {
+      "title": "1111",
+      "url": "1111/",
+      "description": "1111",
+      "image": "/images/logo/runstant.png"
+    }
+  ]
+}

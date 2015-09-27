@@ -1,0 +1,27 @@
+//- 
+extends ./layout
+
+block content
+  header
+    nav.blue-grey.darken-3
+      div.row
+        div.col.s12
+          a(href='/').brand-logo
+            img(src='/images/runstant.png')
+            span Run
+            span.lighter stant 
+            span Lite
+  
+  div.container
+    div.row
+      each collection in json.collections
+        div.col.s12.m4
+          div.card
+            a.card-image(href='#{collection.url}')
+              img(src='#{collection.image}')
+            div.card-content
+              span.card-title.grey-text.text-darken-4 #{collection.title}
+              p #{collection.description}
+            div.card-action
+              a(href='{url}', target='_blank') Open
+
