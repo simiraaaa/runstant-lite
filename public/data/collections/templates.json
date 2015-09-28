@@ -52,17 +52,18 @@
   {
     "title": "game",
     "samples": [
-      { "title": "tmlib.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "phina.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "tmlib.js", "url": "http://goo.gl/kPLBxY" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
   {
     "title": "graphics",
     "samples": [
+      { "title": "three.js", "url": "http://goo.gl/KFHw16" },
       { "title": "d3.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "three.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "Processing.js", "url": "dummy", "visible":false }
+      { "title": "Processing.js", "url": "aaaaaaaaaaaaaa" },
+      { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
   {
