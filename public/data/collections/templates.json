@@ -3,36 +3,36 @@
     "title": "language",
     "samples": [
       { "title": "Jade", "url": "http://goo.gl/93hZZW" },
-      { "title": "Markdown", "url": "http://goo.gl/KAtwrh" },
-      { "title": "Less", "url": "http://goo.gl/KAtwrh" },
-      { "title": "Sass", "url": "http://goo.gl/KAtwrh" },
-      { "title": "Stylus", "url": "http://goo.gl/KAtwrh" },
-      { "title": "TypeScript", "url": "http://goo.gl/KAtwrh" },
-      { "title": "CoffeeScript", "url": "http://goo.gl/KAtwrh" },
-      { "title": "ES6", "url": "http://goo.gl/KAtwrh" },
+      { "title": "Markdown", "url": "http://goo.gl/pYftEs" },
+      { "title": "Less", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "Sass", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "Stylus", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "TypeScript", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "CoffeeScript", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "ES6", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy" }
     ]
   },
   {
     "title": "dom",
     "samples": [
-      { "title": "jQuery", "url": "http://goo.gl/KAtwrh" },
+      { "title": "jQuery", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy" }
     ]
   },
   {
     "title": "css",
     "samples": [
-      { "title": "Bootstrap", "url": "http://goo.gl/KAtwrh" },
-      { "title": "Materialize", "url": "http://goo.gl/KAtwrh" },
+      { "title": "Bootstrap", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "Materialize", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy" }
     ]
   },
   {
     "title": "game",
     "samples": [
-      { "title": "tmlib.js", "url": "http://goo.gl/KAtwrh" },
-      { "title": "phina.js", "url": "http://goo.gl/KAtwrh" },
+      { "title": "tmlib.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "phina.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy" }
     ]
   },
