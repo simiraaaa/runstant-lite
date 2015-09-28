@@ -1,10 +1,12 @@
 @side-width: 300px;
+@advertising-height: 200px;
 
 header {
   display: block;
 
   .side-nav {
     width: @side-width;
+    padding-bottom: @advertising-height + 65px;
 
     li {
       padding: 0px;
@@ -48,6 +50,15 @@ header {
         line-height: 40px;
       }
     }
+
+    // 広告
+    li.advertising {
+      width: @side-width;
+      height: @advertising-height;
+      background-color: #aaa;
+      position: fixed;
+      bottom: 0px;
+    }
   }
 }
 
@@ -72,10 +83,6 @@ main {
     height: 100%;
   }
 }
-
-
-
-
 
 
 
