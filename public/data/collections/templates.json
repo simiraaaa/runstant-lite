@@ -61,7 +61,7 @@
     "title": "graphics",
     "samples": [
       { "title": "three.js", "url": "http://goo.gl/KFHw16" },
-      { "title": "d3.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "d3.js", "url": "http://goo.gl/JJ9nRO" },
       { "title": "Processing.js", "url": "aaaaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
