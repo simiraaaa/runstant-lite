@@ -4,22 +4,23 @@
     "samples": [
       { "title": "Default", "url": "http://lite.runstant.com" },
       { "title": "Jade", "url": "http://goo.gl/93hZZW" },
-      { "title": "Markdown", "url": "http://goo.gl/oNAMVk" },
+      { "title": "Markdown", "url": "http://goo.gl/82bJCX" },
       { "title": "Less", "url": "http://goo.gl/YdaK3w" },
       { "title": "Sass", "url": "http://goo.gl/vp0pQJ" },
       { "title": "Stylus", "url": "http://goo.gl/uGQtJx" },
       { "title": "TypeScript", "url": "http://goo.gl/JO0obg" },
       { "title": "CoffeeScript", "url": "http://goo.gl/2LrVbZ" },
+      { "title": "ES6", "url": "aaaaaaaaaaaaaaaa", "visible":false },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
   {
     "title": "dom",
     "samples": [
-      { "title": "jQuery", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "riot.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "AngularJS", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "React.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "jQuery", "url": "http://goo.gl/Eiuks6" },
+      { "title": "Riot.js", "url": "http://goo.gl/ty8eri" },
+      { "title": "AngularJS", "url": "http://goo.gl/bmi279" },
+      { "title": "React", "url": "http://goo.gl/93s8WK" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
