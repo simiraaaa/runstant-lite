@@ -72,7 +72,7 @@ window.onload = function() {\n\
 
   constant.LANG_SCRIPT_MAP = {
     'coffee': "http://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.7.1/coffee-script.min.js",
-    'ecmascript6': "http://cdn.rawgit.com/phi-jp/runstant/625e2c2e06bb409e92d05b1bc4e64584a9d1e434/plugins/traceur-compiler/traceur.js",
+    'ecmascript6': "https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js",
     'typescript': "http://rawgit.com/niutech/typescript-compile/gh-pages/js/typescript.min.js",
 
     'stylus': "http://cdnjs.cloudflare.com/ajax/libs/stylus/0.32.1/stylus.js",

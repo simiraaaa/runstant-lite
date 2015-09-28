@@ -100,13 +100,9 @@
   };
   // 
   util.es62js = function(code) {
-    var compiler = new traceur.Compiler({
-      experimental: true,
-    });
-    var result = compiler.stringToString(code);
-    var code = result.js.match(/"use strict";([\s\S]*)return/m)[1];
+    var result = babel.transform(code);
 
-    return '// Compiled ECMAScript 6\n\n' + code;
+    return '// Compiled ECMAScript 6\n\n' + result.code;
   };
   // 
   util.typescript2js = function(code) {
@@ -348,7 +344,6 @@
     },
     'ecmascript6': {
         func: util.es62js,
-        prefix: script2tag("http://cdn.rawgit.com/google/traceur-compiler/519f5663415cb825ead961177c4165d52721c33f/bin/traceur-runtime.js"),
     },
     'typescript': {
         func: util.typescript2js,
