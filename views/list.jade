@@ -12,8 +12,9 @@ block content
             a(href='') #{category.title}
             ul
               each sample in category.samples
-                li.sample
-                  a(href='#{sample.url}', target='preview', data-path='#{category.title}/#{sample.title}') #{sample.title}
+                if sample.visible !== false
+                  li.sample
+                    a(href='#{sample.url}', target='preview', data-path='#{category.title}/#{sample.title}') #{sample.title}
 
   main.main
     iframe.preview(name='preview')

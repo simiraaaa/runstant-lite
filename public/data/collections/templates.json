@@ -4,14 +4,13 @@
     "samples": [
       { "title": "Default", "url": "http://lite.runstant.com" },
       { "title": "Jade", "url": "http://goo.gl/93hZZW" },
-      { "title": "Markdown", "url": "http://goo.gl/kXfBK7" },
-      { "title": "Less", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "Sass", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "Stylus", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "TypeScript", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "CoffeeScript", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "ES6", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "dummy", "url": "dummy" }
+      { "title": "Markdown", "url": "http://goo.gl/oNAMVk" },
+      { "title": "Less", "url": "http://goo.gl/YdaK3w" },
+      { "title": "Sass", "url": "http://goo.gl/vp0pQJ" },
+      { "title": "Stylus", "url": "http://goo.gl/uGQtJx" },
+      { "title": "TypeScript", "url": "http://goo.gl/JO0obg" },
+      { "title": "CoffeeScript", "url": "http://goo.gl/2LrVbZ" },
+      { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
   {
@@ -21,7 +20,7 @@
       { "title": "riot.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "AngularJS", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "React.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "dummy", "url": "dummy" }
+      { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
   {
@@ -29,7 +28,7 @@
     "samples": [
       { "title": "Bootstrap", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "Materialize", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "dummy", "url": "dummy" }
+      { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
   {
@@ -37,7 +36,7 @@
     "samples": [
       { "title": "tmlib.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "phina.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "dummy", "url": "dummy" }
+      { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
   {
