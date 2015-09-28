@@ -2,8 +2,9 @@
   {
     "title": "language",
     "samples": [
+      { "title": "Default", "url": "http://lite.runstant.com" },
       { "title": "Jade", "url": "http://goo.gl/93hZZW" },
-      { "title": "Markdown", "url": "http://goo.gl/pYftEs" },
+      { "title": "Markdown", "url": "http://goo.gl/kXfBK7" },
       { "title": "Less", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "Sass", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "Stylus", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
@@ -17,6 +18,9 @@
     "title": "dom",
     "samples": [
       { "title": "jQuery", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "riot.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "AngularJS", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "React.js", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy" }
     ]
   },
