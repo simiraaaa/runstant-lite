@@ -22,7 +22,7 @@
     "samples": [
       { "title": "TypeScript", "url": "http://goo.gl/JO0obg" },
       { "title": "CoffeeScript", "url": "http://goo.gl/2LrVbZ" },
-      { "title": "ES6", "url": "aaaaaaaaaaaaaaaa", "visible":false },
+      { "title": "ECMAScript6", "url": "http://goo.gl/TWKDSE" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
