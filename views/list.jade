@@ -3,17 +3,37 @@ extends ./layout
 
 block content
   link(rel='stylesheet', href='/styles/list.css')
-  include parts/header
 
-  header
-    ul#nav-mobile.side-nav.fixed
-      each category in json
-        li #{category.title}
-          ul
-            each sample in category.samples
-              li
-                a #{sample.title}
-
+  side
+    nav
+      ul#nav-mobile.side-nav.fixed
+        each category in json
+          li.category.opened
+            a(href='') #{category.title}
+            ul
+              each sample in category.samples
+                li.sample
+                  a(href='#{sample.url}', target='preview', data-path='#{category.title}/#{sample.title}') #{sample.title}
 
   main.main
-    div Hello, world!
+    iframe.preview(name='preview')
+
+  script.
+    $(function() {
+      $('li.category>a').click(function() {
+        var elm = $(this);
+        elm.parent().toggleClass('opened');
+        return false;
+      });
+
+      $('li.sample>a').click(function() {
+        var path = this.dataset.path;
+        location.hash = path;
+      });
+
+      // 
+      var hash = location.hash.substr(1);
+      var target = $('[data-path="'+ hash +'"]');
+      var href = target.attr('href');
+      $('.preview').attr('src', href);
+    });
