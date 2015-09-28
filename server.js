@@ -29,6 +29,14 @@ app.get('/collections', function(req, res) {
     pretty: true,
   });
 });
+app.get('/collections/:id', function(req, res) {
+  var json = require('./public/data/collections/'+req.params.id+'.json');
+  res.render('list', {
+    title: 'Express',
+    json: json,
+    pretty: true,
+  });
+});
 
 app.listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));

@@ -1,0 +1,19 @@
+//- 
+extends ./layout
+
+block content
+  link(rel='stylesheet', href='/styles/list.css')
+  include parts/header
+
+  header
+    ul#nav-mobile.side-nav.fixed
+      each category in json
+        li #{category.title}
+          ul
+            each sample in category.samples
+              li
+                a #{sample.title}
+
+
+  main.main
+    div Hello, world!
