@@ -30,8 +30,8 @@
     "title": "dom",
     "samples": [
       { "title": "jQuery", "url": "http://goo.gl/Eiuks6" },
-      { "title": "jQuery UI", "url": "aaaaaaaaaaaaa" },
-      { "title": "jQuery Mobile", "url": "aaaaaaaaaaa" },
+      { "title": "jQuery UI", "url": "http://goo.gl/hjYl2c" },
+      { "title": "jQuery Mobile", "url": "aaaaaaaaaaa", "visible":false },
       { "title": "Riot.js", "url": "http://goo.gl/ty8eri" },
       { "title": "AngularJS", "url": "http://goo.gl/bmi279" },
       { "title": "React", "url": "http://goo.gl/93s8WK" },
