@@ -69,7 +69,7 @@
   {
     "title": "その他",
     "samples": [
-      { "title": "dummy", "url": "dummy" }
+      { "title": "dummy", "url": "dummy", "visible":false }
     ]
   }
 ]

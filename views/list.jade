@@ -54,6 +54,9 @@ block content
       $('li.sample>a').click(function() {
         var path = this.dataset.path;
         location.hash = path;
+
+        $('li.sample').removeClass('active');
+        $(this.parentNode).addClass('active');
       });
 
       // 
@@ -61,4 +64,5 @@ block content
       var target = $('[data-path="'+ hash +'"]');
       var href = target.attr('href');
       $('.preview').attr('src', href);
+      target.parent().addClass('active');
     });
