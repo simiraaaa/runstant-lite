@@ -23,6 +23,14 @@ header {
         font-weight: bold;
         font-size: 0.9rem !important;
         /*border-bottom: 1px solid hsla(0, 50%, 0%, 0.1);*/
+
+        > span.badge {
+          padding-top: 7px;
+          right: 5px;
+          i {
+            transition: 200ms;
+          }
+        }
       }
 
       ul {
@@ -30,10 +38,17 @@ header {
         overflow: hidden;
         transition: 200ms;
       }
-      &.opened ul {
-        max-height: 500px;
-        overflow: scroll;
+      &.opened {
+        ul {
+          max-height: 500px;
+          overflow: scroll;
+        }
+
+        span.badge i {
+          transform: rotate(-180deg);
+        }
       }
+
     }
 
     li.sample {

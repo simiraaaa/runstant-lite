@@ -16,6 +16,8 @@ block content
         each category in json
           li.category.opened
             a(href='') #{category.title}
+              span.badge
+                i.material-icons keyboard_arrow_down
             ul
               each sample in category.samples
                 if sample.visible !== false
