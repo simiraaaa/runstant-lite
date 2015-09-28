@@ -30,7 +30,7 @@
     "title": "dom",
     "samples": [
       { "title": "jQuery", "url": "http://goo.gl/Eiuks6" },
-      { "title": "jQuery UI", "url": "http://goo.gl/hjYl2c" },
+      { "title": "jQuery UI", "url": "http://goo.gl/aYRpRG" },
       { "title": "jQuery Mobile", "url": "aaaaaaaaaaa", "visible":false },
       { "title": "Riot.js", "url": "http://goo.gl/ty8eri" },
       { "title": "AngularJS", "url": "http://goo.gl/bmi279" },
@@ -44,8 +44,8 @@
   {
     "title": "css",
     "samples": [
-      { "title": "Bootstrap", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "Materialize", "url": "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "Bootstrap", "url": "http://goo.gl/NNW83L" },
+      { "title": "Materialize", "url": "http://goo.gl/CmYcEh" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
