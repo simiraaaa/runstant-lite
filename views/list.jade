@@ -27,7 +27,9 @@ block content
 
   script.
     $(function() {
-      $(".button-collapse").sideNav();
+      $(".button-collapse").sideNav({
+        menuWidth: 300,
+      });
 
       $('li.category>a').click(function() {
         var elm = $(this);
