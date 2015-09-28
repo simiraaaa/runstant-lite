@@ -98,6 +98,10 @@
       var html = runstant.util.markdown2html(md);
       html += '<link href="/styles/markdown.css" rel="stylesheet"></link>\n';
 
+      // var stylePath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/default.min.css';
+      var stylePath = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/github.min.css';
+      html += '<link rel="stylesheet" href="{0}" />'.format(stylePath);
+
       return html;
     },
   };

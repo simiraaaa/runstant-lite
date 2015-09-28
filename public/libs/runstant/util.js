@@ -49,7 +49,17 @@
   };
 
   util.markdown2html = function(code) {
-    var source = marked(code);
+    var renderer = new marked.Renderer();
+    renderer.link = function(href, title, text) {
+      return '<a href="{0}" target="_blank">{1}</a>'.format(href, text);
+    };
+    marked.setOptions({
+      highlight: function(code) {
+        var v = hljs.highlightAuto(code);
+        return v.value;
+      },
+    });
+    var source = marked(code, { renderer: renderer });
 
     return '<!-- Compiled Markdown -->\n\n' + source;
   };
