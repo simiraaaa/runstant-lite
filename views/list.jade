@@ -4,8 +4,14 @@ extends ./layout
 block content
   link(rel='stylesheet', href='/styles/list.css')
 
-  side
+  header
     nav
+      div.container
+        div.nav-wrapper
+          //- a.page-title Navbar
+      a.button-collapse.hide-on-large-only(href='', data-activates="nav-mobile")
+        i.mdi-navigation-menu
+    div.nav-wrapper
       ul#nav-mobile.side-nav.fixed
         each category in json
           li.category.opened
@@ -21,6 +27,8 @@ block content
 
   script.
     $(function() {
+      $(".button-collapse").sideNav();
+
       $('li.category>a').click(function() {
         var elm = $(this);
         elm.parent().toggleClass('opened');

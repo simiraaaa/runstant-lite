@@ -1,9 +1,9 @@
-@side-width: 300px;
+@side-width: 240px;
 
-side {
+header {
   display: block;
 
-  nav .side-nav {
+  .side-nav {
     width: @side-width;
 
     li {
@@ -51,9 +51,14 @@ side {
   }
 }
 
-main {
-  padding-left: @side-width;
+@media only screen and (min-width: 992px) {
+  header, main {
+    padding-left: @side-width;
+  }
+}
 
+
+main {
   height: 100vh;
   margin-top: -66px;
   padding-top: 66px;
