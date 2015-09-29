@@ -52,19 +52,42 @@ block content
       });
 
       $('li.sample>a').click(function() {
-        var path = this.dataset.path;
-        location.hash = path;
-
-        $('li.sample').removeClass('active');
-        $(this.parentNode).addClass('active');
+        openFromAnchor($(this));
 
         $(".button-collapse").sideNav('hide');
       });
 
       // 
       var hash = location.hash.substr(1);
+      hash = decodeURIComponent(hash);
       var target = $('[data-path="'+ hash +'"]');
-      var href = target.attr('href');
-      $('.preview').attr('src', href);
-      target.parent().addClass('active');
+      openFromAnchor(target);
     });
+
+    var openFromAnchor = function(a) {
+      // opne preview
+      var href = a.attr('href');
+      $('.preview').attr('src', href);
+
+      // setup hash
+      var path = a.data('path');
+      path = encodeURIComponent(path);
+      location.hash = path;
+
+      // add class
+      $('li.sample').removeClass('active');
+      a.parent().addClass('active');
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
