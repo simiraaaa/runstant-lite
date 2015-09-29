@@ -35,8 +35,9 @@
       { "title": "Riot.js", "url": "http://goo.gl/ty8eri" },
       { "title": "AngularJS", "url": "http://goo.gl/bmi279" },
       { "title": "React", "url": "http://goo.gl/93s8WK" },
-      { "title": "Backbone.js", "url": "aaaaaaaaaaaaaaaa" },
-      { "title": "Ember.js", "url": "aaaaaaaaaaaaaaaa" },
+      { "title": "Mithril", "url": "http://goo.gl/rcG5Bc" },
+      { "title": "Backbone.js", "url": "http://goo.gl/lAhZlB" },
+      { "title": "Ember.js", "url": "http://goo.gl/M5vhdQ" },
       { "title": "Knockout.js", "url": "aaaaaaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
@@ -62,7 +63,7 @@
     "samples": [
       { "title": "three.js", "url": "http://goo.gl/KFHw16" },
       { "title": "d3.js", "url": "http://goo.gl/JJ9nRO" },
-      { "title": "Processing.js", "url": "aaaaaaaaaaaaaa" },
+      { "title": "p5.js", "url": "http://goo.gl/3YzOAC" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
