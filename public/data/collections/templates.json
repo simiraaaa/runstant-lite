@@ -37,8 +37,8 @@
       { "title": "React", "url": "http://goo.gl/93s8WK" },
       { "title": "Mithril", "url": "http://goo.gl/rcG5Bc" },
       { "title": "Backbone.js", "url": "http://goo.gl/lAhZlB" },
-      { "title": "Ember.js", "url": "http://goo.gl/M5vhdQ" },
-      { "title": "Knockout.js", "url": "aaaaaaaaaaaaaaaa" },
+      { "title": "Ember.js", "url": "http://goo.gl/jLGhDp" },
+      { "title": "Knockout.js", "url": "http://goo.gl/ETsuh3" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
