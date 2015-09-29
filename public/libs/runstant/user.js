@@ -20,6 +20,8 @@
           theme: 'ace/theme/monokai',
           tabSize: 2,
           fontSize: 13,
+
+          projects: [],
         };
         this.save();
       }
@@ -27,6 +29,30 @@
         var zipedData = localStorage.getItem(LOCAL_STORAGE_KEY);
         var strData = runstant.util.unzip(zipedData);
         this.data = JSON.parse(strData);
+      }
+
+      return this;
+    },
+
+    addProject: function(id, data) {
+      if (!this.data.projects) this.data.projects = [];
+
+      var project = this.data.projects.find(function(p) {
+        return p.title === data.setting.title;
+      });
+
+      if (project) {
+        project.id = id;
+        project.title = data.setting.title;
+        project.description = data.setting.description;
+      }
+      else {
+        project = {
+          id: id,
+          title: data.setting.title,
+          description: data.setting.description,
+        };
+        this.data.projects.push(project);
       }
 
       return this;

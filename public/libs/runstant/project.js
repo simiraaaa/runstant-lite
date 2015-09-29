@@ -51,9 +51,12 @@
         // タイトル更新
         document.title = data.setting.title + " | runstant";
 
-        //- projectDataStore.push(data, function(err, datum) {
-        //-   debugger;
-        //- });
+        // ユーザーデータにプロジェクト情報を保存
+        runstant.util.shorten(location.href, function(url) {
+          var id = url.replace('http://goo.gl/', '');
+
+          runstant.user.addProject(id, data).save();
+        });
       }
     },
     toCode: function(debug) {
