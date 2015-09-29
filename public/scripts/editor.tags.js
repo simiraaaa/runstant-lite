@@ -127,7 +127,11 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
     
     this.on('mount', function() {
       if (runstant.project.data.setting.fullscreen === opts.query) {
+        document.body.classList.add('no-transition');
         this.expand();
+        setTimeout(function() {
+          document.body.classList.remove('no-transition');
+        }, 128);
       }
     });
     
