@@ -1,0 +1,44 @@
+//- 
+extends ./layout
+
+block content
+  include parts/header
+
+  app
+  
+  // jszip
+  script(src='http://cdnjs.cloudflare.com/ajax/libs/jszip/2.3.0/jszip.min.js')
+
+  script(src='/libs/runstant/constant.js')
+  script(src='/libs/runstant/util.js')
+  script(src='/libs/runstant/user.js')
+  script(src='/libs/runstant/project.js')
+  script(src='/libs/runstant/modal.js')
+  script(src='/libs/runstant/editor.js')
+  //- script(src='/scripts/editor.tags.js')
+
+  div.
+    <script type='riot/tag'>
+      <app>
+        <div class='container'>
+          <h2>{user.data.username}</h2>
+
+          <ul class='collection with-header'>
+            <li class='collection-header'><h4>Projects</h4></li>
+            <li each='{user.data.projects}' class='collection-item'>
+              <b>{title}</b>
+              ... 
+              <span>{description}</span>
+              <a href="http://goo.gl/{id}" target='_blank' class="secondary-content"><i class="material-icons">send</i></a>
+            </li>
+          </ul>
+        </div>
+      </app>
+
+      this.user = new runstant.User();
+    </script>
+
+  script.
+    riot.mount('app');
+
+  include parts/footer

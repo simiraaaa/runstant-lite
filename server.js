@@ -21,6 +21,12 @@ app.get('/', function(req, res) {
 app.get('/about', function(req, res) {
   res.render('about', { title: 'Express' });
 });
+app.get('/user', function(req, res) {
+  res.render('user', {
+    title: 'Express',
+    pretty: true,
+  });
+});
 app.get('/collections', function(req, res) {
   var json = require('./public/data/collections/index.json');
   res.render('collections', {
