@@ -26,10 +26,12 @@ block content
           <ul class='collection with-header'>
             <li class='collection-header'><h4>Projects</h4></li>
             <li each='{user.data.projects}' class='collection-item'>
-              <b>{title}</b>
-              ... 
-              <span>{description}</span>
+              <a href='http://goo.gl/{id}' target='_blank'>{title}</a>
               <a href="http://goo.gl/{id}" target='_blank' class="secondary-content"><i class="material-icons">send</i></a>
+              ... 
+              <div>
+                {description}
+              </div>
             </li>
           </ul>
         </div>
