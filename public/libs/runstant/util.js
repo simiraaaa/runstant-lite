@@ -166,7 +166,19 @@
     });
   };
 
-  util.shorten = function(url, callback) {
+  util.shorten = function (url, callback, error) {
+    var URL_MAX_LENGTH = 0x3fff;
+
+    if (url.length > URL_MAX_LENGTH) {
+      return (error || function (e) {
+        alert('コードが長すぎます!!\n100%以下にしてください\nコードの長さ: '
+          + (e.length / e.max * 100).toFixed(2) + '%');
+      })({
+        length: url.length,
+        max: URL_MAX_LENGTH
+      });
+    }
+
     if (isNode) {
       var key = "AIzaSyCfmMcmHwD_YN8vXQjJwojUP-4xKHHdaoI";
 
