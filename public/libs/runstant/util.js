@@ -69,7 +69,7 @@
     var source = '';
     less.Parser().parse(code, function(err, tree) {
       if (err) {
-        return console.error(err)
+        return console.error(err);
       }
       source = tree.toCSS();
     });
@@ -166,7 +166,19 @@
     });
   };
 
-  util.shorten = function(url, callback) {
+  util.shorten = function (url, callback, error) {
+    var URL_MAX_LENGTH = 0x3fff;
+
+    if (url.length > URL_MAX_LENGTH) {
+      return (error || function (e) {
+        alert('コードが長すぎます!!\n100%以下にしてください\nコードの長さ: '
+          + (e.length / e.max * 100).toFixed(2) + '%');
+      })({
+        length: url.length,
+        max: URL_MAX_LENGTH
+      });
+    }
+
     if (isNode) {
       var key = "AIzaSyCfmMcmHwD_YN8vXQjJwojUP-4xKHHdaoI";
 
@@ -213,46 +225,6 @@
       });
 
     }
-  };
-
-  /*
-   * 短縮URLにアクセス可能か確認
-   * @param url 短縮URL
-   * @param success アクセスできたときに実行される関数
-   * @param error アクセスできなかったときに実行される関数
-   * 
-   * {
-   *  url:url,
-   *  success:success,
-   *  error:error,
-   * }
-   * という形式でもOK
-   */
-  util.tryAccess = function (url, success, error) {
-      if (typeof url !== 'string') {
-          url = url.url;
-          success = url.success;
-          error = url.error;
-      }
-
-      success = success || function () {};
-      error = error || function () {};
-      var frame = document.createElement('iframe');
-
-      frame.src = url;
-      frame.style.display = 'none';
-      frame.onload = function () {
-          try {
-              this.contentDocument;
-              success();
-          } catch (e) {
-              error(e);
-          } finally {
-              this.parentNode.removeChild(this);
-          }
-      };
-
-      document.body.appendChild(frame);
   };
 
 
