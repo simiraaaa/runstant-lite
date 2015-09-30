@@ -6,11 +6,15 @@ block content
 
   header
     nav.blue-grey.darken-3
-      div.container
-        div.nav-wrapper
-          //- a.page-title Navbar
-      a.button-collapse.hide-on-large-only(href='', data-activates="nav-mobile")
-        i.mdi-navigation-menu
+      div.row
+        div.col.s12
+          a(href='/').brand-logo
+            img(src='/images/runstant.png')
+            span Run
+            span.lighter stant 
+            span Lite
+          a.button-collapse.hide-on-large-only(href='', data-activates="nav-mobile")
+            i.mdi-navigation-menu
     div.nav-wrapper
       ul#nav-mobile.side-nav.fixed
         each category in json
