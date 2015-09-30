@@ -16,21 +16,21 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
   // res.send('hello world')
-  res.render('editor', { title: 'Express' });
+  res.render('editor', { title: 'Editor' });
 });
 app.get('/about', function(req, res) {
-  res.render('about', { title: 'Express' });
+  res.render('about', { title: 'About' });
 });
 app.get('/user', function(req, res) {
   res.render('user', {
-    title: 'Express',
+    title: 'User',
     pretty: true,
   });
 });
 app.get('/collections', function(req, res) {
   var json = require('./public/data/collections/index.json');
   res.render('collections', {
-    title: 'Express',
+    title: 'Collections',
     json: json,
     pretty: true,
   });
@@ -38,7 +38,7 @@ app.get('/collections', function(req, res) {
 app.get('/collections/:id', function(req, res) {
   var json = require('./public/data/collections/'+req.params.id+'.json');
   res.render('list', {
-    title: 'Express',
+    title: req.params.id,
     json: json,
     pretty: true,
   });
