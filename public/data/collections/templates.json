@@ -1,5 +1,12 @@
 [
   {
+    "title": "About",
+    "samples": [
+      { "title": "About", "url": "http://goo.gl/5InxG6" },
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  },
+  {
     "title": "markup language",
     "samples": [
       { "title": "Default(HTML)", "url": "http://lite.runstant.com" },
