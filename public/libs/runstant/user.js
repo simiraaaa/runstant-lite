@@ -41,19 +41,16 @@
         return p.title === data.setting.title;
       });
 
-      if (project) {
-        project.id = id;
-        project.title = data.setting.title;
-        project.description = data.setting.description;
-      }
-      else {
+      if (!project) {
         project = {
-          id: id,
-          title: data.setting.title,
-          description: data.setting.description,
+          created: (new Date()).format('Y-m-d H:i:s'),
         };
         this.data.projects.push(project);
       }
+      project.id = id;
+      project.title = data.setting.title;
+      project.description = data.setting.description;
+      project.updated = (new Date()).format('Y-m-d H:i:s');
 
       return this;
     },
