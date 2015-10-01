@@ -1,5 +1,5 @@
-@side-width: 300px;
-@advertising-height: 240px;
+@side-width: 240px;
+@advertising-height: 200px;
 
 header {
   display: block;
@@ -10,18 +10,18 @@ header {
 
     li {
       padding: 0px;
-      > a {
-        height: 50px;
-        line-height: 50px;
-      }
     }
 
     li.category {
-      background-color: hsl(200, 18%, 26%);
+
+      background-color: hsl(200, 18%, 36%);
 
       > a {
         color: white;
         font-size: 0.9rem !important;
+        height: 42px;
+        line-height: 42px;
+
         /*border-bottom: 1px solid hsla(0, 50%, 0%, 0.1);*/
 
         > span.badge {
@@ -55,6 +55,8 @@ header {
       padding-left: 15px;
       background-color: #fff;
 
+      border-bottom: 1px solid hsla(0, 50%, 0%, 0.1);
+
       &.active {
         background-color: hsl(0, 0%, 80%);
       }
@@ -65,8 +67,8 @@ header {
 
       a {
         font-size: 0.7rem !important;
-        height: 40px;
-        line-height: 40px;
+        height: 36px;
+        line-height: 36px;
       }
     }
 
