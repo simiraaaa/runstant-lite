@@ -16,43 +16,51 @@
     var zip = new JSZip();
     zip.file('data', data);
 
-    return zip.generate({ type: "base64" });
+    return zip.generate({
+      type: "base64",
+    });
   };
 
   util.unzip = function (data) {
     var zip = new JSZip();
     var files = zip.load(data, {
-      base64: true
+      base64: true,
     });
-
+    
     return files.file('data').asText();
+  };
+
+  util.deflate = function (data) {
+    return JSZip.base64.encode(JSZip.compressions.DEFLATE.compress(encodeURI(data)));
+  };
+
+  util.inflate = function (data) {
+    var strArray = JSZip.compressions.DEFLATE.uncompress(JSZip.base64.decode(data));
+
+    // 文字列だったり配列だったりする
+    if (typeof strArray === 'string') { return decodeURI(strArray); }
+    // JSZip内に文字列化する関数があると思うけどわからないのでとりあえずここに書く
+    data = '';
+    for (var i = 0, len = strArray.length; i < len; ++i) {
+      data += String.fromCharCode(strArray[i]);
+    }
+    return decodeURI(data);
   };
 
   util.json2hash = function (obj) {
     var str = JSON.stringify(obj);
-    var unmin = str;
-    console.log('圧縮前', str.length);
-    var s = new Date();
-    str = util.minify(str);
-    console.log('time:', new Date() - s, '可逆:', util.unminify(str) === unmin);
-    console.log('圧縮後', str.length);
-    console.log('圧縮率', (str.length / unmin.length * 100).toFixed(2));
-    var zipedFile = this.zip(str);
+    var zipedFile = this.deflate(str);
 
     //zip圧縮後の圧縮率
-    console.log('ziped圧縮率', (zipedFile.length / (unmin=this.zip(unmin)).length * 100).toFixed(2));
+    console.log('ziped圧縮率', (zipedFile.length / (str=this.zip(str)).length * 100).toFixed(2));
 
-    var encoded = encodeURI(zipedFile);
-
-    //encodeURI圧縮率
-    console.log('URI圧縮率', (encoded.length / encodeURI(unmin).length * 100).toFixed(2));
-    return encoded;
+    return zipedFile;
   };
 
   util.hash2json = function (data) {
     data = decodeURI(data);
-    data = this.unzip(data);
-    data = util.unminify(data);
+    data = this.inflate(data);
+
     data = JSON.parse(data);
     return data;
   };
@@ -149,100 +157,6 @@
     });
 
     return '// Compiled TypeScript\n\n' + outfile.source;
-  };
-
-  // unminify で元に戻せる minify
-  util.minify = function (str) {
-    var regex = /[\'\"\!\&\|\^\~\-\=\(\)\&\%\#\?\<\>\+\*\;\:\[\]\{\}\t \@\`\\\,\/\.\n]/g;
-    var after = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    var targetAll = str.replace(regex, ',').split(',');
-
-    // 連続する空白も追加
-    [].push.apply(targetAll, str.match(/\s+/g));
-
-
-    // 適当にソート
-    targetAll.sort();
-
-    // 重複と文字長2以下除外して、出現回数をカウント(出現回数2以下除外)
-    var target = [];
-    for (var i = 1, c = 0, len = targetAll.length, temp = targetAll[0]; i < len; ++i) {
-      var x = targetAll[i];
-      if (x !== temp) {
-        if (temp.length > 2 && ++c > 2) target.push({
-          str: temp,
-          count: c,
-          cost: c * (temp.length - 1)
-        });
-        temp = x;
-        c = 0;
-      } else {
-        ++c;
-      }
-    }
-
-    // コスト順
-    target.sort(function (a, b) {
-      return b.cost - a.cost;
-    });
-
-    var position = 0;
-    var AFTER_POSITON_LAST = after.length;
-
-    var replaced = '0';
-
-    var next = function () {
-      replaced = '';
-      var p = ++position;
-      while (p > 0) {
-        replaced = after[p % AFTER_POSITON_LAST] + replaced;
-        p = p / AFTER_POSITON_LAST | 0;
-      }
-      return replaced || (replaced = '0');
-    };
-
-    // 文字数を減らすことができるかの判定
-    var canMinify = function (x) {
-      var len = x.str.length;
-      var y = len - replaced.length;
-      if (y < 1) return false;
-      y *= x.count;
-      return y > len + replaced.length;
-    };
-
-    var _history = [];
-
-    target.some(function (x) {
-      while (str.indexOf(replaced) !== -1) next();
-      if (!canMinify(x)) return true;
-      str = str.split(x.str).join(replaced);
-      _history.push([replaced, x.str]);
-      next();
-      return false;
-    });
-
-    //最後にこの関数でminifyされたかどうかわかる文字列を引っ付けておく
-    return str + '//' + JSON.stringify(_history) + 'isMin';
-  };
-
-  util.unminify = function (str) {
-    var s = new Date();
-    var isMin = str.slice(-5) === 'isMin';
-    if (!isMin) {
-      console.log('is not min');
-      return str;
-    }
-    str = str.slice(0, -5);
-    var index = str.lastIndexOf('//');
-    var _history = JSON.parse(str.slice(index).slice(2));
-    str = str.slice(0, index);
-    for (var i = _history.length - 1; i >= 0; --i) {
-      var h = _history[i];
-      str = str.split(h[0]).join(h[1]);
-    }
-    console.log('unmin', new Date - s);
-    return str;
   };
 
   // 動的にスクリプトをロードする
