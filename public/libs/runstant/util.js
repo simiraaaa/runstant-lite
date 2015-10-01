@@ -40,7 +40,7 @@
     var zipedFile = this.zip(str);
 
     //zip圧縮後の圧縮率
-    console.log('ziped圧縮率', (str.length / this.zip(unmin).length * 100).toFixed(2));
+    console.log('ziped圧縮率', (zipedFile.length / this.zip(unmin).length * 100).toFixed(2));
     return encodeURI(zipedFile);
   };
 
