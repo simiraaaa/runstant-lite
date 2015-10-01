@@ -31,11 +31,12 @@
   };
 
   util.deflate = function (data) {
-    return JSZip.base64.encode(JSZip.compressions.DEFLATE.compress(encodeURI(data)));
+    // = を - に置換しているのは今後クエリストリングで使えるようにするため
+    return JSZip.base64.encode(JSZip.compressions.DEFLATE.compress(encodeURI(data))).split('=').join('-');
   };
 
   util.inflate = function (data) {
-    var strArray = JSZip.compressions.DEFLATE.uncompress(JSZip.base64.decode(data));
+    var strArray = JSZip.compressions.DEFLATE.uncompress(JSZip.base64.decode(data.split('-').join('=')));
 
     // 文字列だったり配列だったりする
     if (typeof strArray === 'string') { return decodeURI(strArray); }
