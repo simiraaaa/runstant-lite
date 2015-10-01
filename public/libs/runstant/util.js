@@ -40,8 +40,13 @@
     var zipedFile = this.zip(str);
 
     //zip圧縮後の圧縮率
-    console.log('ziped圧縮率', (zipedFile.length / this.zip(unmin).length * 100).toFixed(2));
-    return encodeURI(zipedFile);
+    console.log('ziped圧縮率', (zipedFile.length / (unmin=this.zip(unmin)).length * 100).toFixed(2));
+
+    var encoded = encodeURI(zipedFile);
+
+    //encodeURI圧縮率
+    console.log('URI圧縮率', (encoded.length / encodeURI(unmin).length * 100).toFixed(2));
+    return encoded;
   };
 
   util.hash2json = function (data) {
