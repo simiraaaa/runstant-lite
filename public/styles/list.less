@@ -1,6 +1,8 @@
 @side-width: 240px;
 @advertising-height: 200px;
 
+
+
 header {
   display: block;
 
@@ -89,13 +91,6 @@ header {
   }
 }
 
-@media only screen and (min-width: 992px) {
-  header, main {
-    padding-left: @side-width;
-  }
-}
-
-
 main {
   height: 100vh;
   margin-top: -66px;
@@ -112,8 +107,21 @@ main {
 }
 
 
+@media only screen and (min-width: 992px) {
+  header, main {
+    padding-left: @side-width;
+  }
+  header {
+    nav {
+      display: none;
+    }
+  }
+  main {
+    margin-top: 0px;
+    padding-top: 0px;
+  }
 
-
+}
 
 
 
