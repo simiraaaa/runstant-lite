@@ -58,6 +58,7 @@
         var v = hljs.highlightAuto(code);
         return v.value;
       },
+      breaks: true,
     });
     var source = marked(code, { renderer: renderer });
 
