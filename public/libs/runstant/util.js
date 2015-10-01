@@ -39,6 +39,8 @@
     console.log('圧縮率', (str.length / unmin.length * 100).toFixed(2));
     var zipedFile = this.zip(str);
 
+    //zip圧縮後の圧縮率
+    console.log('ziped圧縮率', (str.length / this.zip(unmin).length * 100).toFixed(2));
     return encodeURI(zipedFile);
   };
 
@@ -215,11 +217,18 @@
       return false;
     });
 
-    return str + '//' + JSON.stringify(_history);
+    //最後にこの関数でminifyされたかどうかわかる文字列を引っ付けておく
+    return str + '//' + JSON.stringify(_history) + 'isMin';
   };
 
   util.unminify = function (str) {
     var s = new Date();
+    var isMin = str.slice(-5) === 'isMin';
+    if (!isMin) {
+      console.log('is not min');
+      return str;
+    }
+    str = str.slice(0, -5);
     var index = str.lastIndexOf('//');
     var _history = JSON.parse(str.slice(index).slice(2));
     str = str.slice(0, index);
