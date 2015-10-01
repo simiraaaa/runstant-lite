@@ -4,21 +4,31 @@ var concat = require('gulp-concat');
 var webserver = require('gulp-webserver');
 var server = require('gulp-express');
 
-var target = ['./tags/editor/*.jade', './tags/editor/**/*.jade'];
+var target = {
+  editor: ['./tags/editor/*.jade', './tags/editor/**/*.jade'],
+  user: ['./tags/user/*.jade', './tags/user/**/*.jade'],
+}
 var output = 'public/scripts';
 
 gulp.task('riot', function() {
   gulp
-    .src(target)
+    .src(target.editor)
     .pipe(riot({template:'jade'}))
-    // .pipe(gulp.dest(output))
     .pipe(concat('editor.tags.js'))
+    .pipe(gulp.dest(output))
+    ;
+
+  gulp
+    .src(target.user)
+    .pipe(riot({template:'jade'}))
+    .pipe(concat('user.tags.js'))
     .pipe(gulp.dest(output))
     ;
 });
 
 gulp.task('watch', function(){
-  gulp.watch(target, ['riot']);
+  gulp.watch(target.editor, ['riot']);
+  gulp.watch(target.user, ['riot']);
 });
 
 gulp.task('webserver', function() {

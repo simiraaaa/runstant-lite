@@ -6,6 +6,11 @@ block content
 
   app
   
+  // ace
+  script(src="http://cdn.jsdelivr.net/ace/1.1.9/min/ace.js")
+  script(src="http://cdn.jsdelivr.net/ace/1.1.9/min/ext-language_tools.js")
+  script(src="http://cdn.jsdelivr.net/ace/1.1.9/min/ext-emmet.js")
+    
   // jszip
   script(src='http://cdnjs.cloudflare.com/ajax/libs/jszip/2.3.0/jszip.min.js')
 
@@ -15,34 +20,13 @@ block content
   script(src='/libs/runstant/project.js')
   script(src='/libs/runstant/modal.js')
   script(src='/libs/runstant/editor.js')
-  //- script(src='/scripts/editor.tags.js')
-
-  div.
-    <script type='riot/tag'>
-      <app>
-        <div class='container'>
-          <h2>{user.data.username}</h2>
-
-          <ul class='collection with-header'>
-            <li class='collection-header'><h4>Projects</h4></li>
-            <li each='{projects}' class='collection-item'>
-              <a href='http://goo.gl/{id}' target='_blank'>{title}</a>
-              <a href="http://goo.gl/{id}" target='_blank' class="secondary-content"><i class="material-icons">send</i></a>
-              ... 
-              <time>{created}</time>
-              <div>
-                {description}
-              </div>
-            </li>
-          </ul>
-        </div>
-      </app>
-
-      this.user = new runstant.User();
-      this.projects = this.user.getStorage('logs').projects;
-    </script>
+  script(src='/scripts/user.tags.js')
 
   script.
     riot.mount('app');
+
+    $(document).ready(function() {
+      $('ul.tabs').tabs();
+    });
 
   include parts/footer
