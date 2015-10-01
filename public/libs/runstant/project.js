@@ -52,11 +52,13 @@
         document.title = data.setting.title + " | runstant";
 
         // ユーザーデータにプロジェクト情報を保存
-        runstant.util.shorten(location.href, function(url) {
-          var id = url.replace('http://goo.gl/', '');
+        if (runstant.user) {
+          runstant.util.shorten(location.href, function(url) {
+            var id = url.replace('http://goo.gl/', '');
 
-          runstant.user.addProject(id, data).save();
-        });
+            runstant.user.logProject(id, data);
+          });
+        }
       }
     },
     toCode: function(debug) {

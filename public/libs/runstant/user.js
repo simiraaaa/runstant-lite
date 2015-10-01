@@ -1,6 +1,9 @@
 
 ;(function (exports) {
-  var LOCAL_STORAGE_KEY = 'runstant-user-setting-beta';
+  var LOCAL_STORAGE_KEYS = {
+    user: 'runstant-lite-user-setting',
+    logs: 'runstant-lite-logs',
+  };
 
   var User = function() {
     this.load();
@@ -12,7 +15,7 @@
     },
 
     load: function() {
-      this.data = localStorage.getItem(LOCAL_STORAGE_KEY);
+      this.data = this.getStorage('user');
       if (!this.data) {
         this.data = {
           username: 'runstant',
@@ -20,24 +23,22 @@
           theme: 'ace/theme/monokai',
           tabSize: 2,
           fontSize: 13,
-
-          projects: [],
         };
         this.save();
-      }
-      else {
-        var zipedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-        var strData = runstant.util.unzip(zipedData);
-        this.data = JSON.parse(strData);
       }
 
       return this;
     },
 
-    addProject: function(id, data) {
-      if (!this.data.projects) this.data.projects = [];
+    logProject: function(id, data) {
+      var logs = this.getStorage('logs');
+      if (!logs) {
+        logs = {
+          projects: [],
+        };
+      }
 
-      var project = this.data.projects.find(function(p) {
+      var project = logs.projects.find(function(p) {
         return p.title === data.setting.title;
       });
 
@@ -45,22 +46,41 @@
         project = {
           created: (new Date()).format('Y-m-d H:i:s'),
         };
-        this.data.projects.push(project);
+        logs.projects.push(project);
       }
       project.id = id;
       project.title = data.setting.title;
       project.description = data.setting.description;
       project.updated = (new Date()).format('Y-m-d H:i:s');
 
+      this.setStorage('logs', logs);
+
       return this;
     },
 
     save: function() {
-      var strData = JSON.stringify(this.data);
-      var zipedData = runstant.util.zip(strData);
-      localStorage.setItem(LOCAL_STORAGE_KEY, zipedData);
+      this.setStorage('user', this.data);
 
       return this;
+    },
+
+    getStorage: function(key) {
+      var data = null;
+      var key = LOCAL_STORAGE_KEYS[key];
+      var item = localStorage.getItem(key);
+
+      if (item) {
+        data = JSON.parse(item);
+      }
+
+      return data;
+    },
+
+    setStorage: function(key, data) {
+      var key = LOCAL_STORAGE_KEYS[key];
+      var item = JSON.stringify(data);
+
+      localStorage.setItem(key, item);
     },
   };
 
