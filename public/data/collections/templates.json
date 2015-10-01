@@ -79,7 +79,7 @@
     "title": "util",
     "samples": [
       { "title": "Ace", "url": "http://goo.gl/haBC8F" },
-      { "title": "hilight", "url": "http://goo.gl/My1PgT" },
+      { "title": "highlight.js", "url": "http://goo.gl/My1PgT" },
       { "title": "marked", "url": "aaaaaaaaaaaaaa", "visible":false },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
