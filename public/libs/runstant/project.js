@@ -77,9 +77,12 @@
         jsCode = runstant.compiler[code.script.type].func(jsCode);
       }
 
+      var title = runstant.util.sanitaize(setting.title);
+      var description = runstant.util.sanitaize(setting.description);
+
       var finalCode = htmlCode
-        .replace("${title}", setting.title)
-        .replace("${description}", setting.description)
+        .replace("${title}", title)
+        .replace("${description}", description)
         .replace("${style}", cssCode)
         .replace("${script}", jsCode)
         ;

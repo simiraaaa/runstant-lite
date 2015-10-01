@@ -136,6 +136,10 @@
     return '// Compiled TypeScript\n\n' + outfile.source;
   };
 
+  util.sanitaize = function(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  };
+
   // 動的にスクリプトをロードする
   util.loadScript = function(path, callback) {
     if (util.loadScript.cache[path]) {
