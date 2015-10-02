@@ -28,13 +28,13 @@
     return files.file('data').asText();
   };
 
-  util.json2hash = function(obj) {
+  util.encode = util.json2hash = function(obj) {
     var str = JSON.stringify(obj);
     var zipedFile = this.zip(str);
     return encodeURI(zipedFile);
   };
 
-  util.hash2json = function(data) {
+  util.decode = util.hash2json = function(data) {
     data = decodeURI(data);
     data = this.unzip(data);
     data = JSON.parse(data);
@@ -328,13 +328,14 @@
   };
 
   // バージョン管理
-  util.versions = {
+  util.converterMap = {
     '0.0.1': {
-      hash2json: function(data) {
-        data = decodeURI(data);
-        data = this.unzip(data);
-        data = JSON.parse(data);
-        return data;
+
+      zip: function(data) {
+        var zip = new JSZip();
+        zip.file('data', data);
+
+        return zip.generate({ type: "base64" });
       },
 
       unzip: function(data) {
@@ -344,24 +345,41 @@
         });
 
         return files.file('data').asText();
-      }
+      },
+
+      encode: function(obj) {
+        var str = JSON.stringify(obj);
+        var zipedFile = this.zip(str);
+        return encodeURI(zipedFile);
+      },
+
+      decode: function(data) {
+        data = decodeURI(data);
+        data = this.unzip(data);
+        data = JSON.parse(data);
+        return data;
+      },
     },
 
     '0.0.2': {
 
-      hash2json: function(data) {
-        //inflate を unzipにする予定
+      zip: function(data) {
       },
 
       unzip: function(data) {
-        // inflate
-      }
+      },
+
+      encode: function(obj) {
+      },
+
+      decode: function(data) {
+      },
     }
   };
 
   // 指定したバージョンが存在しないとき最新バージョン(utilそのまま)を返す
-  util.getVersion = function(version) {
-    return util.versions[version || '0.0.1'] || util;
+  util.getConverter = function(version) {
+    return util.converterMap[version || '0.0.1'] || util;
   };
 
   // for node

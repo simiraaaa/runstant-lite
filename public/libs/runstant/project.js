@@ -40,11 +40,11 @@
       document.title = data.setting.title + " | runstant";
     },
 
-    encode: function(data) {
-      return runstant.util.json2hash(data);
+    encode: function(data, version) {
+      return runstant.util.getConverter(version).encode(data);
     },
     decode: function(hash, version) {
-      return runstant.util.getVersion(version).hash2json(hash);
+      return runstant.util.getConverter(version).decode(hash);
     },
     save: function() {
       var data = runstant.project.data;
@@ -52,9 +52,9 @@
 
       if (this.cache !== dataString) {
         this.cache = dataString;
-
-        var hash = this.encode(data);
-        history.pushState(null, 'runstant', '?v=' + runstant.constant.TEMPLATE_DATA.version + '#' + hash);
+        var version = runstant.constant.TEMPLATE_DATA.version;
+        var hash = this.encode(data, version);
+        history.pushState(null, 'runstant', '?v=' + version + '#' + hash);
 
         // タイトル更新
         document.title = data.setting.title + " | runstant";
