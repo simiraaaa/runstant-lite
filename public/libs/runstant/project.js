@@ -65,6 +65,9 @@
             var id = url.replace('http://goo.gl/', '');
 
             runstant.user.logProject(id, data);
+          }, function(e) {
+            // URL短縮できなかったときはそのまま入れる
+            runstant.user.logProject(location.search + location.hash, data);
           });
         }
       }
