@@ -81,18 +81,22 @@ block content
     var openFromAnchor = function(a) {
       // opne preview
       var href = a.attr('href');
-      if (!href) return ;
+      if (!href) {
+        href = $('.sample a')[0].href;
+      }
 
       $('.preview').attr('src', href);
 
       // setup hash
       var path = a.data('path');
-      path = encodeURIComponent(path);
-      location.hash = path || '';
+      if (path) {
+        path = encodeURIComponent(path);
+        location.hash = path || '';
 
-      // add class
-      $('li.sample').removeClass('active');
-      a.parent().addClass('active');
+        // add class
+        $('li.sample').removeClass('active');
+        a.parent().addClass('active');
+      }
     };
 
 
