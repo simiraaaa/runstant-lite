@@ -53,7 +53,7 @@
     var zipedFile = this.deflate(str);
 
     //zip圧縮後の圧縮率
-    console.log('ziped圧縮率', (zipedFile.length / (str=this.zip(str)).length * 100).toFixed(2));
+    //console.log('ziped圧縮率', (zipedFile.length / (str=this.zip(str)).length * 100).toFixed(2));
 
     return zipedFile;
   };
