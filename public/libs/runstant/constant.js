@@ -5,25 +5,26 @@
 
   constant.RUNSTANT_URL = "http://phi-jp.github.io/runstant/release/alpha/index.html";
 
-  constant.TEMPLATE_HTML = "\<!DOCTYPE html\>\n\
- \n\
-\<html\>\n\
-  \<head\>\n\
-    \<meta charset=\"UTF-8\" /\>\n\
-    \<meta name=\"viewport\" content=\"width=device-width, user-scalable=no\" /\>\n\
-    \<meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /\>\n\
-    \n\
-    \<title\>${title}\</title\>\n\
-    \<meta name=\"description\" content=\"${description}\" /\>\n\
-    \n\
-    \<style\>${style}\</style\>\n\
-    \n\
-    \<scri____pt\>${script}\</scri____pt\>\n\
-  \</head\>\n\
-  \<body\>\n\
-    \<h1\>Hello, runstant!\</h1\>\n\
-  \</body\>\n\
-\</html\>".replace(/scri____pt/g, 'script');
+  constant.TEMPLATE_HTML = 
+    "<!doctype html>\n" + 
+    " \n" + 
+    "<html>\n" + 
+    "  <head>\n" + 
+    "    <meta charset=\"utf-8\" />\n" + 
+    "    <meta name=\"viewport\" content=\"width=device-width, user-scalable=no\" />\n" + 
+    "    <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n" + 
+    "    \n" + 
+    "    <title>${title}</title>\n" + 
+    "    <meta name=\"description\" content=\"${description}\" />\n" + 
+    "    \n" + 
+    "    <style>${style}</style>\n" + 
+    "    <script>${script}</script>\n" + 
+    "  </head>\n" + 
+    "  <body>\n" + 
+    "    <h1>Hello, runstant!</h1>\n" + 
+    "  </body>\n" + 
+    "</html>\n";
+
 
   constant.TEMPLATE_CSS = "body {\n\
   background-color: hsl(0, 0%, 96%);\n\
