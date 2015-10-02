@@ -15,7 +15,7 @@
 
       if (location.hash) {
         var hash = location.hash.substr(1);
-        data = runstant.util.hash2json(hash);
+        data = this.decode(hash);;
       }
       else {
         data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
@@ -38,6 +38,15 @@
       // タイトル更新
       document.title = data.setting.title + " | runstant";
     },
+
+    encode: function(data) {
+      // TODO: ここでバージョンごにょごにょ
+      return runstant.util.json2hash(data);
+    },
+    decode: function(hash) {
+      // TODO: ここでバージョンごにょごにょ
+      return runstant.util.hash2json(hash);
+    },
     save: function() {
       var data = runstant.project.data;
       var dataString = JSON.stringify(data);
@@ -45,7 +54,7 @@
       if (this.cache !== dataString) {
         this.cache = dataString;
 
-        var hash = runstant.util.json2hash(data);
+        var hash = this.encode(data);
         history.pushState(null, 'runstant', '#' + hash);
 
         // タイトル更新
