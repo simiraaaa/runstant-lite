@@ -1,5 +1,5 @@
 
-(function (exports) {
+(function(exports) {
   var Project = function() {
     this.cache = null;
     this.load();
@@ -19,7 +19,7 @@
         data = this.decode(hash, query.v);
       }
       else {
-        data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
+        data = JSON.parse(JSON.stringify(runstant.constant.TEMPLATE_DATA));
       }
 
       // 後方互換
@@ -43,7 +43,7 @@
     encode: function(data) {
       return runstant.util.json2hash(data);
     },
-    decode: function (hash, version) {
+    decode: function(hash, version) {
       return runstant.util.getVersion(version).hash2json(hash);
     },
     save: function() {
@@ -95,7 +95,7 @@
         .replace("${description}", description)
         .replace("${style}", cssCode)
         .replace("${script}", jsCode)
-        ;
+      ;
 
       if (debug === true) {
         var debugCode = '(' + runstant.util.ConsoleExtention.toString() + ')()';
