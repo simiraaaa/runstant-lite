@@ -331,43 +331,21 @@
   util.converterMap = {
     '0.0.1': {
 
-      zip: function(data) {
-        var zip = new JSZip();
-        zip.file('data', data);
-
-        return zip.generate({ type: "base64" });
-      },
-
-      unzip: function(data) {
-        var zip = new JSZip();
-        var files = zip.load(data, {
-          base64: true
-        });
-
-        return files.file('data').asText();
-      },
-
       encode: function(obj) {
         var str = JSON.stringify(obj);
-        var zipedFile = this.zip(str);
+        var zipedFile = util.zip(str);
         return encodeURI(zipedFile);
       },
 
       decode: function(data) {
         data = decodeURI(data);
-        data = this.unzip(data);
+        data = util.unzip(data);
         data = JSON.parse(data);
         return data;
       },
     },
 
     '0.0.2': {
-
-      zip: function(data) {
-      },
-
-      unzip: function(data) {
-      },
 
       encode: function(obj) {
       },
