@@ -1,18 +1,36 @@
 [
   {
-    "title": "Runstant",
+    "title": "Converter",
     "samples": [
-      { "title": "json checker", "url": "aaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "html escape", "url": "http://goo.gl/bJwKlC" },
       { "title": "multiline2string", "url": "http://goo.gl/6oX3Qf" },
+      { "title": "html escape", "url": "http://goo.gl/bJwKlC" },
       { "title": "jade2html", "url": "http://goo.gl/jShgHm" },
       { "title": "html2jade", "url": "http://goo.gl/p5mP5M" },
-      { "title": "regex tester", "url": "aaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "runstant project list", "url": "http://goo.gl/ntlMzI" },
-      { "title": "library snipets", "url": "http://goo.gl/ODR8b8" },
       { "title": "base64 converter", "url": "aaaaaaaaaaaa" },
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  },
+  {
+    "title": "Checker",
+    "samples": [
+      { "title": "json checker", "url": "aaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  },
+  {
+    "title": "Graphics",
+    "samples": [
       { "title": "color picker", "url": "aaaaaaaaaaaa" },
       { "title": "paint tool", "url": "aaaaaaaaaaaa" },
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  },
+  {
+    "title": "Other",
+    "samples": [
+      { "title": "library snipets", "url": "http://goo.gl/ODR8b8" },
+      { "title": "regex tester", "url": "aaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "runstant project list", "url": "http://goo.gl/ntlMzI" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   }
