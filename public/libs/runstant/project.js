@@ -15,7 +15,8 @@
 
       if (location.hash) {
         var hash = location.hash.substr(1);
-        data = this.decode(hash);;
+        var query = location.search.substr(1).toObjectAsQuery();
+        data = this.decode(hash, query.v);
       }
       else {
         data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
@@ -39,11 +40,11 @@
       document.title = data.setting.title + " | runstant";
     },
 
-    encode: function(data) {
+    encode: function(data, version) {
       // TODO: ここでバージョンごにょごにょ
       return runstant.util.json2hash(data);
     },
-    decode: function(hash) {
+    decode: function(hash, version) {
       // TODO: ここでバージョンごにょごにょ
       return runstant.util.hash2json(hash);
     },
@@ -54,7 +55,8 @@
       if (this.cache !== dataString) {
         this.cache = dataString;
 
-        var hash = this.encode(data);
+        var query = location.search.substr(1).toObjectAsQuery();
+        var hash = this.encode(data, query.v);
         history.pushState(null, 'runstant', '#' + hash);
 
         // タイトル更新
