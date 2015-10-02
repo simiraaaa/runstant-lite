@@ -1,5 +1,5 @@
 
-(function (exports) {
+(function(exports) {
   var Project = function() {
     this.cache = null;
     this.load();
