@@ -28,13 +28,13 @@
     return files.file('data').asText();
   };
 
-  util.encode = util.json2hash = function(obj) {
+  util.json2hash = function(obj) {
     var str = JSON.stringify(obj);
     var zipedFile = this.zip(str);
     return encodeURI(zipedFile);
   };
 
-  util.decode = util.hash2json = function(data) {
+  util.hash2json = function(data) {
     data = decodeURI(data);
     data = this.unzip(data);
     data = JSON.parse(data);
@@ -377,9 +377,9 @@
     }
   };
 
-  // 指定したバージョンが存在しないとき最新バージョン(utilそのまま)を返す
+  // 指定したバージョンが存在しないとき最新バージョンを返す
   util.getConverter = function(version) {
-    return util.converterMap[version || '0.0.1'] || util;
+    return util.converterMap[version || '0.0.1'] || util.converterMap[runstant.constant.TEMPLATE_DATA.version];
   };
 
   // for node
