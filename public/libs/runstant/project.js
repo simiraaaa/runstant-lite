@@ -40,13 +40,11 @@
       document.title = data.setting.title + " | runstant";
     },
 
-    encode: function(data, version) {
-      // TODO: ここでバージョンごにょごにょ
+    encode: function(data) {
       return runstant.util.json2hash(data);
     },
-    decode: function(hash, version) {
-      // TODO: ここでバージョンごにょごにょ
-      return runstant.util.hash2json(hash);
+    decode: function (hash, version) {
+      return runstant.util.getVersion(version).hash2json(hash);
     },
     save: function() {
       var data = runstant.project.data;
@@ -55,9 +53,8 @@
       if (this.cache !== dataString) {
         this.cache = dataString;
 
-        var query = location.search.substr(1).toObjectAsQuery();
-        var hash = this.encode(data, query.v);
-        history.pushState(null, 'runstant', '#' + hash);
+        var hash = this.encode(data);
+        history.pushState(null, 'runstant', '?v=' + runstant.constant.TEMPLATE_DATA.version + '#' + hash);
 
         // タイトル更新
         document.title = data.setting.title + " | runstant";
@@ -123,6 +120,7 @@
 
       return html;
     },
+
   };
 
   exports.runstant.Project = Project;
