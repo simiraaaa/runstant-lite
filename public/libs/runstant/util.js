@@ -3,7 +3,7 @@
  */
 
 
-(function (exports) {
+(function(exports) {
 
   exports.runstant = exports.runstant || {};
   var util = exports.runstant.util = {};
@@ -16,7 +16,7 @@
     var zip = new JSZip();
     zip.file('data', data);
 
-    return zip.generate({type:"base64"});
+    return zip.generate({ type: "base64" });
   };
 
   util.unzip = function(data) {
@@ -130,7 +130,7 @@
 
     compiler.addUnit(code, '');
     compiler.emit(false, function createFile(fileName) {
-        return outfile;
+      return outfile;
     });
 
     return '// Compiled TypeScript\n\n' + outfile.source;
@@ -144,7 +144,7 @@
   util.loadScript = function(path, callback) {
     if (util.loadScript.cache[path]) {
       callback && callback();
-      return ;
+      return;
     }
 
     $.getScript(path, callback);
@@ -155,7 +155,7 @@
   util.loadScripts = function(pathes, callback) {
     if (pathes.length <= 0) {
       callback && callback();
-      return ;
+      return;
     }
     var count = pathes.length;
     var counter = 0;
@@ -171,11 +171,11 @@
     });
   };
 
-  util.shorten = function (url, callback, error) {
+  util.shorten = function(url, callback, error) {
     var URL_MAX_LENGTH = 0x3fff;
 
     if (url.length > URL_MAX_LENGTH) {
-      return (error || function (e) {
+      return (error || function(e) {
         alert('コードが長すぎます!!\n100%以下にしてください\nコードの長さ: '
           + (e.length / e.max * 100).toFixed(2) + '%');
       })({
@@ -201,7 +201,7 @@
       request.post(options, function(error, response, body) {
         if (error) {
           console.log('error: ' + response.statusCode);
-          return ;
+          return;
         }
 
         console.log(body.error);
@@ -286,7 +286,7 @@
     };
     // 
     window.onerror = function(message, file, line, col, error) {
-        console.error(message + ' (line:' + line + ')');
+      console.error(message + ' (line:' + line + ')');
     };
   };
 
@@ -294,47 +294,79 @@
     return '<${script} src="${path}"></${script}>'
       .replace(/\$\{script\}/g, "script")
       .replace(/\$\{path\}/, path)
-      ;
+    ;
   };
 
   exports.runstant.compiler = {
     // html
     'jade': {
-        func: util.jade2html,
+      func: util.jade2html,
     },
     'markdown': {
-        func: util.markdown2html,
+      func: util.markdown2html,
     },
     // style
     'stylus': {
-        func: util.stylus2css,
+      func: util.stylus2css,
     },
     'less': {
-        func: util.less2css,
+      func: util.less2css,
     },
     'sass': {
-        func: util.sass2css,
+      func: util.sass2css,
     },
     // script
     'coffee': {
-        func: util.coffee2js,
+      func: util.coffee2js,
     },
     'ecmascript6': {
-        func: util.es62js,
+      func: util.es62js,
     },
     'typescript': {
-        func: util.typescript2js,
+      func: util.typescript2js,
     },
   };
 
+  // バージョン管理
+  util.converterMap = {
+    '0.0.1': {
+
+      encode: function(obj) {
+        var str = JSON.stringify(obj);
+        var zipedFile = util.zip(str);
+        return encodeURI(zipedFile);
+      },
+
+      decode: function(data) {
+        data = decodeURI(data);
+        data = util.unzip(data);
+        data = JSON.parse(data);
+        return data;
+      },
+    },
+
+    '0.0.2': {
+
+      encode: function(obj) {
+      },
+
+      decode: function(data) {
+      },
+    }
+  };
+
+  // 指定したバージョンが存在しないとき最新バージョンを返す
+  util.getConverter = function(version) {
+    return util.converterMap[version || '0.0.1'] || util.converterMap[runstant.constant.TEMPLATE_DATA.version];
+  };
 
   // for node
-  if (!isNode) return ;
+  if (!isNode) return;
 
   var spawn = require('child_process').spawn;
 
   util.open = function(url) {
-      spawn("open", [url]);
+    spawn("open", [url]);
   };
 
 })(typeof exports === 'undefined' ? this : exports);

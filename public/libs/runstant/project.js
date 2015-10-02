@@ -19,7 +19,7 @@
         data = this.decode(hash, query.v);
       }
       else {
-        data = JSON.parse( JSON.stringify(runstant.constant.TEMPLATE_DATA) );
+        data = JSON.parse(JSON.stringify(runstant.constant.TEMPLATE_DATA));
       }
 
       // 後方互換
@@ -41,12 +41,10 @@
     },
 
     encode: function(data, version) {
-      // TODO: ここでバージョンごにょごにょ
-      return runstant.util.json2hash(data);
+      return runstant.util.getConverter(version).encode(data);
     },
     decode: function(hash, version) {
-      // TODO: ここでバージョンごにょごにょ
-      return runstant.util.hash2json(hash);
+      return runstant.util.getConverter(version).decode(hash);
     },
     save: function() {
       var data = runstant.project.data;
@@ -54,10 +52,9 @@
 
       if (this.cache !== dataString) {
         this.cache = dataString;
-
-        var query = location.search.substr(1).toObjectAsQuery();
-        var hash = this.encode(data, query.v);
-        history.pushState(null, 'runstant', '#' + hash);
+        var version = runstant.constant.TEMPLATE_DATA.version;
+        var hash = this.encode(data, version);
+        history.pushState(null, 'runstant', '?v=' + version + '#' + hash);
 
         // タイトル更新
         document.title = data.setting.title + " | runstant";
@@ -98,7 +95,7 @@
         .replace("${description}", description)
         .replace("${style}", cssCode)
         .replace("${script}", jsCode)
-        ;
+      ;
 
       if (debug === true) {
         var debugCode = '(' + runstant.util.ConsoleExtention.toString() + ')()';
@@ -123,6 +120,7 @@
 
       return html;
     },
+
   };
 
   exports.runstant.Project = Project;
