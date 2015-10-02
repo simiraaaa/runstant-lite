@@ -3,10 +3,11 @@
     "title": "Runstant",
     "samples": [
       { "title": "json checker", "url": "aaaaaaaaaaaaaaaaaaaaaa" },
-      { "title": "html2jade", "url": "aaaaaaaaaaaaaaaaaaaaaa" },
+      { "title": "jade2html", "url": "http://goo.gl/jShgHm" },
+      { "title": "html2jade", "url": "http://goo.gl/p5mP5M" },
       { "title": "regex tester", "url": "aaaaaaaaaaaaaaaaaaaaaa" },
       { "title": "runstant project list", "url": "http://goo.gl/ntlMzI" },
-      { "title": "$ って一体なに？", "url": "aaaaaaaaaaaaaaaaaaaaaa" }
+      { "title": "dummy", "url": "dummy", "visible":false }
     ]
   }
 ]
