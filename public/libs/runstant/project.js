@@ -104,10 +104,7 @@
           js: jsCode
         });
 
-        return {
-          blob: blob,
-          title: title
-        };
+        return blob;
       }
 
       var finalCode = htmlCode
