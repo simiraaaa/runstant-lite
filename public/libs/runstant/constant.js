@@ -1,5 +1,5 @@
 
-;(function (exports) {
+;(function(exports) {
 
   var constant = {};
 
@@ -45,7 +45,7 @@ window.onload = function() {\n\
 }';
 
   constant.TEMPLATE_DATA = {
-    version: '0.0.1',
+    version: '0.0.2',
 
     setting: {
       title: "template - runstant lite",

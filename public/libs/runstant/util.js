@@ -365,9 +365,15 @@
     '0.0.2': {
 
       encode: function(obj) {
+        var str = JSON.stringify(obj);
+        var gziped = util.gzip(str);
+        return gziped;
       },
 
       decode: function(data) {
+        data = util.ungzip(data);
+        var obj = JSON.parse(data);
+        return obj;
       },
     }
   };
