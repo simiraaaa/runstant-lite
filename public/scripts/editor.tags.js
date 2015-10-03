@@ -424,7 +424,7 @@ riot.tag('modal-detail', '<div class="modal-content"> <h4>Project Setting</h4> <
 });
 
 <!-- シェアモーダル-->
-riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a></div> </div> </div> </div> </div>', 'modal-share { max-height: 85% !important; }', 'id="modal-share" class="modal bottom-sheet"', function(opts) {
+riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a> <a id="btn-download-zip" onclick="{downloadZip}" class="waves-effect waves-light btn red lighten-1">Download Zip</a></div> </div> </div> </div> </div>', 'modal-share { max-height: 85% !important; }', 'id="modal-share" class="modal bottom-sheet"', function(opts) {
     var self = this;
     this.init = function() {
       runstant.util.shorten(location.href, function(url) {
@@ -497,6 +497,20 @@ riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="
     
       $('#btn-download')[0].download = title;
       $('#btn-download')[0].href = url;
+      
+      return true;
+    };
+    
+    this.downloadZip = function() {
+      var title = '{title}.zip'
+          .replace('{title}', runstant.project.data.setting.title)
+          .replace(/\s/g, '_')
+          ;
+      var blob = runstant.project.toBlob(false);
+      var url = window.URL.createObjectURL(blob);
+    
+      $('#btn-download-zip')[0].download = title;
+      $('#btn-download-zip')[0].href = url;
       
       return true;
     };

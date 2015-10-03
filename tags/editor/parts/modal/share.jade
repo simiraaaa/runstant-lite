@@ -26,6 +26,8 @@ modal-share#modal-share.modal.bottom-sheet
             a.waves-effect.waves-light.btn.green.lighten-1(onclick='{fullscreen}') Fullscreen
             | 
             a#btn-download.waves-effect.waves-light.btn.amber.darken-1(onclick='{download}') Download
+            | 
+            a#btn-download-zip.waves-effect.waves-light.btn.red.lighten-1(onclick='{downloadZip}') Download Zip
   style.
     modal-share {
       max-height: 85% !important;
@@ -103,6 +105,20 @@ modal-share#modal-share.modal.bottom-sheet
 
       $('#btn-download')[0].download = title;
       $('#btn-download')[0].href = url;
+      
+      return true;
+    };
+    
+    this.downloadZip = function() {
+      var title = '{title}.zip'
+          .replace('{title}', runstant.project.data.setting.title)
+          .replace(/\s/g, '_')
+          ;
+      var blob = runstant.project.toBlob(false);
+      var url = window.URL.createObjectURL(blob);
+
+      $('#btn-download-zip')[0].download = title;
+      $('#btn-download-zip')[0].href = url;
       
       return true;
     };
