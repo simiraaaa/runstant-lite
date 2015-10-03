@@ -28,6 +28,14 @@
     return files.file('data').asText();
   };
 
+  util.blob = function(code) {
+    var zip = new JSZip();
+    zip.file('index.html', code.html);
+    zip.file('main.js', code.js);
+    zip.file('style.css', code.css);
+    return zip.generate({ type: 'blob' });
+  };
+
   util.gzip = function(data) {
     data = encodeURI(data);
     data = JSZip.compressions.DEFLATE.compress(data);
