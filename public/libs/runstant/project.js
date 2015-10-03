@@ -69,7 +69,7 @@
         }
       }
     },
-    toCode: function(debug) {
+    toCode: function(debug, toBlob) {
       var data = this.data;
       var setting = data.setting;
       var code = data.code;
@@ -90,6 +90,26 @@
       var title = runstant.util.sanitaize(setting.title);
       var description = runstant.util.sanitaize(setting.description);
 
+      if (toBlob) {
+        var finalCode = htmlCode
+          .replace("${title}", title)
+          .replace("${description}", description)
+          .replace("<style>${style}<\/style>", '<link rel="stylesheet" href="style.css">')
+          .replace("<script>${script}<\/script>", '<script src="main.js"><\/script>')
+        ;
+
+        var blob = runstant.util.blob({
+          html: finalCode,
+          css: cssCode,
+          js: jsCode
+        });
+
+        return {
+          blob: blob,
+          title: title
+        };
+      }
+
       var finalCode = htmlCode
         .replace("${title}", title)
         .replace("${description}", description)
@@ -103,6 +123,9 @@
       }
 
       return finalCode;
+    },
+    toBlob: function(debug) {
+      return this.toCode(debug, true);
     },
     toProject: function() {
       var md = '';
