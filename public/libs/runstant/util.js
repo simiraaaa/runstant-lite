@@ -28,6 +28,23 @@
     return files.file('data').asText();
   };
 
+  util.gzip = function(data) {
+    data = encodeURI(data);
+    data = JSZip.compressions.DEFLATE.compress(data);
+    data = JSZip.base64.encode(data);
+    
+    return data;
+  };
+  
+  util.ungzip = function(data) {
+    data = JSZip.base64.decode(data);
+    data = JSZip.compressions.DEFLATE.uncompress(data);
+    data = decodeURI(data); 
+    
+    return data;
+  };
+
+
   util.json2hash = function(obj) {
     var str = JSON.stringify(obj);
     var zipedFile = this.zip(str);
