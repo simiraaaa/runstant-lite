@@ -80,9 +80,9 @@
     "samples": [
       { "title": "Ace", "url": "http://goo.gl/haBC8F" },
       { "title": "highlight.js", "url": "http://goo.gl/My1PgT" },
+      { "title": "stats.js", "url": "http://goo.gl/5jzRKv" },
+      { "title": "dat.GUI", "url": "http://goo.gl/oof8BY" },
       { "title": "marked", "url": "aaaaaaaaaaaaaa", "visible":false },
-      { "title": "stats.js", "url": "http://goo.gl/5jzRKv", "visible":false },
-      { "title": "dat.GUI", "url": "http://goo.gl/oof8BY", "visible":false },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
