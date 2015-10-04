@@ -303,7 +303,10 @@
     var clear = console.clear;
 
     // 
+    var parentOrigin = document.location.origin;
     window.onmessage = function(e) {
+      if(e.origin !== parentOrigin) return;
+
       var result = eval(e.data);
       if (!result) result = result + '';
 
