@@ -31,10 +31,10 @@
       "image": "/images/logo/runstant.png"
     },
     {
-      "title": "Onsen UI",
-      "url": "1111/",
+      "title": "Onsen UI Tips",
+      "url": "/collections/onsen-tips",
       "description": "1111",
-      "image": "/images/logo/runstant.png"
+      "image": "http://docs.monaca.mobi/cur/ja/_images/with_text.png"
     },
     {
       "title": "Processing Samples",
