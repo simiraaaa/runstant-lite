@@ -54,7 +54,7 @@
     "samples": [
       { "title": "Bootstrap", "url": "http://goo.gl/NNW83L" },
       { "title": "Materialize", "url": "http://goo.gl/CmYcEh" },
-      { "title": "Onsen UI", "url": "http://goo.gl/lSivFb" },
+      { "title": "Onsen UI", "url": "http://goo.gl/JruSuI" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },

@@ -2,8 +2,11 @@
   {
     "title": "Converter",
     "samples": [
-      { "title": "get started", "url": "http://goo.gl/lSivFb" },
-      { "title": "test", "url": "http://goo.gl/rHU4U6" },
+      { "title": "get started", "url": "http://goo.gl/JruSuI" },
+      { "title": "switch", "url": "http://goo.gl/b3Poqs" },
+      { "title": "list", "url": "http://goo.gl/kKhc7t" },
+      { "title": "list with angular", "url": "http://goo.gl/GiyXOz" },
+
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
   },
