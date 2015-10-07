@@ -68,6 +68,20 @@
       });
     },
 
+    removeProject: function(title) {
+      var logs = this.getStorage('logs');
+
+      logs.projects = logs.projects.filter(function(p) {
+        if (!p.data) return true;
+        console.log(p.data.setting.title !== title);
+        return p.data.setting.title !== title;
+      });
+
+      this.setStorage('logs', logs);
+
+      return this;
+    },
+
     save: function() {
       this.setStorage('user', this.data);
 

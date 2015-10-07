@@ -43,8 +43,8 @@ app
           h4 Projects
         li.collection-item(each='{projects}')
           a(href='/?title={data.setting.title}', target='_blank') {data.setting.title}
-          a.secondary-content(href='http://goo.gl/{id}', target='_blank')
-            i.material-icons send
+          a.secondary-content(href='', onclick='{removeProject}')
+            i.material-icons delete
           time {created}
           div {data.setting.description}
 
@@ -91,6 +91,16 @@ app
       self.user.save();
 
       Materialize.toast('save', 1000, "rounded");
+    };
+
+    this.removeProject = function(e) {
+      var project = e.item;
+      if (!project.data) return ;
+
+      self.user.removeProject(project.data.setting.title);
+      self.projects = self.user.getStorage('logs').projects;
+
+      self.update();
     };
 
   //- <div class='container'>
