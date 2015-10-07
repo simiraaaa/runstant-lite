@@ -20,6 +20,7 @@
       }
       else {
         data = JSON.parse(JSON.stringify(runstant.constant.TEMPLATE_DATA));
+        data.setting.title = (new Date()).format('Y-m-d H:i:s') + ' - ' + data.setting.title;
       }
 
       // 後方互換

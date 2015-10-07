@@ -48,7 +48,7 @@ window.onload = function() {\n\
     version: '0.0.2',
 
     setting: {
-      title: "template - runstant lite",
+      title: "Runstant Lite",
       description: "思いたったらすぐ開発. プログラミングに革命を...", // もと detail
       fullscreen: false,
       current: "script",
