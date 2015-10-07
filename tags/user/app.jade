@@ -42,11 +42,11 @@ app
         li.collection-header
           h4 Projects
         li.collection-item(each='{projects}')
-          a(href='http://goo.gl/{id}', target='_blank') {title}
+          a(href='/?title={data.setting.title}', target='_blank') {data.setting.title}
           a.secondary-content(href='http://goo.gl/{id}', target='_blank')
             i.material-icons send
           time {created}
-          div {description}
+          div {data.setting.description}
 
   style.
     #editor {

@@ -12,13 +12,24 @@
   Project.prototype = {
     load: function() {
       var data = null;
+      var query = location.search.substr(1).toObjectAsQuery();
+      var hash = location.hash.substr(1);
 
-      if (location.hash) {
-        var hash = location.hash.substr(1);
-        var query = location.search.substr(1).toObjectAsQuery();
+      if (query.title) {
+        var title = decodeURIComponent(query.title);
+        if (runstant.user) {
+          var project = runstant.user.findProject(title);
+          if (project) {
+            data = project.data;
+          }
+        }
+      }
+      else if (location.hash) {
         data = this.decode(hash, query.v);
       }
-      else {
+
+      // setting default
+      if (!data) {
         data = JSON.parse(JSON.stringify(runstant.constant.TEMPLATE_DATA));
         data.setting.title = (new Date()).format('Y-m-d H:i:s') + ' - ' + data.setting.title;
       }
@@ -62,11 +73,7 @@
 
         // ユーザーデータにプロジェクト情報を保存
         if (runstant.user) {
-          runstant.util.shorten(location.href, function(url) {
-            var id = url.replace('http://goo.gl/', '');
-
-            runstant.user.logProject(id, data);
-          });
+          runstant.user.logProject(data);
         }
       }
     },
