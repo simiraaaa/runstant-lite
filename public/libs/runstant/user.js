@@ -30,16 +30,19 @@
       return this;
     },
 
-    logProject: function(id, data) {
+    logProject: function(data) {
       var logs = this.getStorage('logs');
       if (!logs) {
         logs = {
           projects: [],
         };
       }
+      logs.projects = logs.projects || [];
 
       var project = logs.projects.find(function(p) {
-        return p.title === data.setting.title;
+        if (!p.data) return false;
+
+        return p.data.setting.title === data.setting.title;
       });
 
       if (!project) {
@@ -48,14 +51,21 @@
         };
         logs.projects.push(project);
       }
-      project.id = id;
-      project.title = data.setting.title;
-      project.description = data.setting.description;
+      project.data = data;
       project.updated = (new Date()).format('Y-m-d H:i:s');
 
       this.setStorage('logs', logs);
 
       return this;
+    },
+
+    findProject: function(title) {
+      var logs = this.getStorage('logs');
+      var projects = logs.projects;
+
+      return projects.find(function(project) {
+        return project.data.setting.title === title;
+      });
     },
 
     save: function() {
