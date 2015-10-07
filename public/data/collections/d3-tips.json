@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Dummy",
+    "samples": [
+      { "title": "get started", "url": "http://goo.gl/JJ9nRO" },
+
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  },
+  {
+    "title": "折れ線グラフ",
+    "samples": [
+      { "title": "塗りつぶし折れ線グラフ", "url": "http://goo.gl/lzcNwZ" },
+
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  },
+
+  {
+    "title": "Other",
+    "samples": [
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  }
+]
