@@ -41,7 +41,6 @@
 
       var project = logs.projects.find(function(p) {
         if (!p.data) return false;
-
         return p.data.setting.title === data.setting.title;
       });
 
@@ -64,6 +63,7 @@
       var projects = logs.projects;
 
       return projects.find(function(project) {
+        if (!project.data) return ;
         return project.data.setting.title === title;
       });
     },
