@@ -307,10 +307,17 @@
     window.onmessage = function(e) {
       if(e.origin !== parentOrigin) return;
 
-      var result = eval(e.data);
-      if (!result) result = result + '';
+      if (e.data === '') return ;
 
-      post('output', [result]);
+      try {
+        var result = eval(e.data);
+        if (!result) result = result + '';
+
+        post('output', [result]);
+      } catch(e) {
+        console.log(e);
+      }
+
     };
     // 
     window.onerror = function(message, file, line, col, error) {
