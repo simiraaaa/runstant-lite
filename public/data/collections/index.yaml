@@ -1,41 +1,51 @@
 collections: 
-  - title: Templates
+  - 
+    title: "Templates"
     url: "/collections/templates"
-    description: "\u69D8\u3005\u306A\u30E9\u30A4\u30D6\u30E9\u30EA\u306E\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u3067\u3059.\x20\u6C17\u8EFD\u306B\u8272\u3005\u306A\u30E9\u30A4\u30D6\u30E9\u30EA\u3092\u8A66\u3059\u3053\u3068\u304C\u3067\u304D\u307E\u3059\x21"
+    description: "様々なライブラリのテンプレートです. 気軽に色々なライブラリを試すことができます!"
     image: "/images/logo/runstant.png"
-  - title: "jQuery\x20Tutorial"
+  - 
+    title: "jQuery Tutorial"
     url: "touch-the-color/"
-    description: "Text\x20Text\x20Text\x20Text\x20Text\x20Text\x20Text"
-    image: "https\x3A//avatars2.githubusercontent.com/u/70142\x3Fv\x3D3\x26s\x3D200"
-  - title: "jQuery\x20Tips"
+    description: "Text Text Text Text Text Text Text"
+    image: "https://avatars2.githubusercontent.com/u/70142?v=3&s=200"
+  - 
+    title: "jQuery Tips"
     url: "touch-the-kanji/"
-    description: "Text\x20Text\x20Text\x20Text\x20Text\x20Text\x20Text"
-    image: "https\x3A//avatars2.githubusercontent.com/u/70142\x3Fv\x3D3\x26s\x3D200"
-  - title: Materialize
+    description: "Text Text Text Text Text Text Text"
+    image: "https://avatars2.githubusercontent.com/u/70142?v=3&s=200"
+  - 
+    title: "Materialize"
     url: "1111/"
-    description: "Text\x20Text\x20Text\x20Text\x20Text\x20Text\x20Text"
-    image: "https\x3A//pbs.twimg.com/profile_images/532662364613525504/GN559Lfb_400x400.png"
-  - title: "JavaScript\x20Tips"
+    description: "Text Text Text Text Text Text Text"
+    image: "https://pbs.twimg.com/profile_images/532662364613525504/GN559Lfb_400x400.png"
+  - 
+    title: "JavaScript Tips"
     url: "1111/"
-    description: "Text\x20Text\x20Text\x20Text\x20Text\x20Text\x20Text"
-    image: "http\x3A//www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png"
-  - title: "Onsen\x20UI\x20Tips"
+    description: "Text Text Text Text Text Text Text"
+    image: "http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png"
+  - 
+    title: "Onsen UI Tips"
     url: "/collections/onsen-tips"
-    description: "Text\x20Text\x20Text\x20Text\x20Text\x20Text\x20Text"
-    image: "http\x3A//docs.monaca.mobi/cur/ja/_images/with_text.png"
-  - title: "p5.js\x20Samples"
+    description: "Text Text Text Text Text Text Text"
+    image: "http://docs.monaca.mobi/cur/ja/_images/with_text.png"
+  - 
+    title: "p5.js Samples"
     url: "1111/"
-    description: "\x3Ca\x20href\x3D\x27http\x3A//p5js.org/examples/examples/Structure_Setup_and_Draw.php\x27\x3Ep5.js\x3C/a\x3E"
-    image: "https\x3A//pbs.twimg.com/profile_images/502135348663578624/-oslcYof.png"
-  - title: "Jade\x20Samples"
+    description: "<a href='http://p5js.org/examples/examples/Structure_Setup_and_Draw.php'>p5.js</a>"
+    image: "https://pbs.twimg.com/profile_images/502135348663578624/-oslcYof.png"
+  - 
+    title: "Jade Samples"
     url: "1111/"
-    description: "\x3Ca\x20href\x3D\x27http\x3A//p5js.org/examples/examples/Structure_Setup_and_Draw.php\x27\x3Ep5.js\x3C/a\x3E"
-    image: "https\x3A//cms-assets.tutsplus.com/uploads/users/48/posts/22653/preview_image/jade.png"
-  - title: "D3.js\x20Tips"
+    description: "<a href='http://p5js.org/examples/examples/Structure_Setup_and_Draw.php'>p5.js</a>"
+    image: "https://cms-assets.tutsplus.com/uploads/users/48/posts/22653/preview_image/jade.png"
+  - 
+    title: "D3.js Tips"
     url: "/collections/d3-tips"
-    description: aaaaaaaaaaaaaaaaaaaaaaaaa
-    image: "http\x3A//cly7796.net/wp/wp-content/uploads/2015/08/d3js-250x220.jpg"
-  - title: Tools
+    description: "aaaaaaaaaaaaaaaaaaaaaaaaa"
+    image: "http://cly7796.net/wp/wp-content/uploads/2015/08/d3js-250x220.jpg"
+  - 
+    title: "Tools"
     url: "/collections/tools"
-    description: "\u4FBF\u5229\u306A\u30C4\u30FC\u30EB\u304C\u305F\u304F\u3055\u3093\u3042\u308A\u307E\u3059\u3088\u266A"
+    description: "便利なツールがたくさんありますよ♪"
     image: "/images/logo/runstant.png"
