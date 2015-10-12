@@ -6,6 +6,7 @@
       { "title": "html escape", "url": "http://goo.gl/Hs6dw8" },
       { "title": "jade2html", "url": "http://goo.gl/jShgHm" },
       { "title": "html2jade", "url": "http://goo.gl/p5mP5M" },
+      { "title": "markdown2html", "url": "http://goo.gl/FP2WzD" },
       { "title": "base64 converter", "url": "aaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
@@ -20,7 +21,7 @@
   {
     "title": "Graphics",
     "samples": [
-      { "title": "color picker", "url": "aaaaaaaaaaaa" },
+      { "title": "color picker", "url": "http://goo.gl/1E6PpX" },
       { "title": "paint tool", "url": "aaaaaaaaaaaa" },
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
