@@ -1,51 +1,41 @@
 collections: 
-  - 
-    title: "Templates"
+  - title: Templates
     url: "/collections/templates"
     description: "様々なライブラリのテンプレートです. 気軽に色々なライブラリを試すことができます!"
     image: "/images/logo/runstant.png"
-  - 
-    title: "jQuery Tutorial"
+  - title: "jQuery Tutorial"
     url: "touch-the-color/"
     description: "Text Text Text Text Text Text Text"
     image: "https://avatars2.githubusercontent.com/u/70142?v=3&s=200"
-  - 
-    title: "jQuery Tips"
+  - title: "jQuery Tips"
     url: "touch-the-kanji/"
     description: "Text Text Text Text Text Text Text"
     image: "https://avatars2.githubusercontent.com/u/70142?v=3&s=200"
-  - 
-    title: "Materialize"
+  - title: Materialize
     url: "1111/"
     description: "Text Text Text Text Text Text Text"
     image: "https://pbs.twimg.com/profile_images/532662364613525504/GN559Lfb_400x400.png"
-  - 
-    title: "JavaScript Tips"
+  - title: "JavaScript Tips"
     url: "1111/"
     description: "Text Text Text Text Text Text Text"
     image: "http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png"
-  - 
-    title: "Onsen UI Tips"
+  - title: "Onsen UI Tips"
     url: "/collections/onsen-tips"
     description: "Text Text Text Text Text Text Text"
     image: "http://docs.monaca.mobi/cur/ja/_images/with_text.png"
-  - 
-    title: "p5.js Samples"
+  - title: "p5.js Samples"
     url: "1111/"
     description: "<a href='http://p5js.org/examples/examples/Structure_Setup_and_Draw.php'>p5.js</a>"
     image: "https://pbs.twimg.com/profile_images/502135348663578624/-oslcYof.png"
-  - 
-    title: "Jade Samples"
+  - title: "Jade Samples"
     url: "1111/"
     description: "<a href='http://p5js.org/examples/examples/Structure_Setup_and_Draw.php'>p5.js</a>"
     image: "https://cms-assets.tutsplus.com/uploads/users/48/posts/22653/preview_image/jade.png"
-  - 
-    title: "D3.js Tips"
+  - title: "D3.js Tips"
     url: "/collections/d3-tips"
-    description: "aaaaaaaaaaaaaaaaaaaaaaaaa"
+    description: aaaaaaaaaaaaaaaaaaaaaaaaa
     image: "http://cly7796.net/wp/wp-content/uploads/2015/08/d3js-250x220.jpg"
-  - 
-    title: "Tools"
+  - title: Tools
     url: "/collections/tools"
     description: "便利なツールがたくさんありますよ♪"
     image: "/images/logo/runstant.png"
