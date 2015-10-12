@@ -6,6 +6,9 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
+var yaml = require('js-yaml');
+var fs   = require('fs');
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -28,7 +31,12 @@ app.get('/user', function(req, res) {
   });
 });
 app.get('/collections', function(req, res) {
-  var json = require('./public/data/collections/index.json');
+  // var path = './public/data/collections/index.json';
+  // var json = require(path);
+
+  var path = './public/data/collections/index.yaml';
+  var json = yaml.safeLoad(fs.readFileSync(path, 'utf8'));
+  
   res.render('collections', {
     title: 'Collections',
     json: json,
