@@ -2,7 +2,7 @@
   {
     "title": "Tips",
     "samples": [
-      { "title": "get started", "url": "http://goo.gl/JruSuI" },
+      { "title": "get started", "url": "http://goo.gl/SiVGUD" },
       { "title": "switch", "url": "http://goo.gl/b3Poqs" },
 
       { "title": "dummy", "url": "dummy", "visible":false }
@@ -21,6 +21,14 @@
     "title": "tabbar",
     "samples": [
       { "title": "tabbar", "url": "http://goo.gl/swj1fS" },
+
+      { "title": "dummy", "url": "dummy", "visible":false }
+    ]
+  },
+  {
+    "title": "nav",
+    "samples": [
+      { "title": "nav", "url": "http://goo.gl/JruSuI" },
 
       { "title": "dummy", "url": "dummy", "visible":false }
     ]
