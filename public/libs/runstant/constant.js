@@ -30,15 +30,15 @@
     "*, *:before, *:after {\n" + 
     "  box-sizing: border-box; \n" + 
     "}\n" + 
-    "\n" + 
+    "html {\n" + 
+    "  font-size: 62.5%;\n" + 
+    "}\n" + 
     "body {\n" + 
+    "  color: #444;\n" + 
     "  background-color: hsl(0, 0%, 96%);\n" + 
     "}\n" + 
-    "\n" + 
     "h1 {\n" + 
-    "  color: #444;\n" + 
-    "  font-size: 23px;\n" + 
-    "  font-family: \'Lucida Grande\',\'Hiragino Kaku Gothic ProN\', Meiryo, sans-serif;\n" + 
+    "  font-size: 1.8rem;\n" + 
     "}\n";
 
   constant.TEMPLATE_JS = 
