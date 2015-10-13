@@ -26,23 +26,30 @@
     "</html>\n";
 
 
-  constant.TEMPLATE_CSS = "body {\n\
-  background-color: hsl(0, 0%, 96%);\n\
-}\n\
-\n\
-h1 {\n\
-  color: #444;\n\
-  font-size: 23px;\n\
-  font-family: \'Lucida Grande\',\'Hiragino Kaku Gothic ProN\', Meiryo, sans-serif;\n\
-}";
-  constant.TEMPLATE_JS = '/*\n\
- * runstant lite\n\
- */\n\
-\n\
-window.onload = function() {\n\
-  // TODO: write code\n\
-  // console.log("Hello, runstant!");\n\
-}';
+  constant.TEMPLATE_CSS = 
+    "*, *:before, *:after {\n" + 
+    "  box-sizing: border-box; \n" + 
+    "}\n" + 
+    "\n" + 
+    "body {\n" + 
+    "  background-color: hsl(0, 0%, 96%);\n" + 
+    "}\n" + 
+    "\n" + 
+    "h1 {\n" + 
+    "  color: #444;\n" + 
+    "  font-size: 23px;\n" + 
+    "  font-family: \'Lucida Grande\',\'Hiragino Kaku Gothic ProN\', Meiryo, sans-serif;\n" + 
+    "}\n";
+
+  constant.TEMPLATE_JS = 
+    "\/*\n" + 
+    " * runstant lite\n" + 
+    " *\/\n" + 
+    "\n" + 
+    "window.onload = function() {\n" + 
+    "  \/\/ TODO: write code\n" + 
+    "  \/\/ console.log(\"Hello, runstant!\");\n" + 
+    "}\n";
 
   constant.TEMPLATE_DATA = {
     version: '0.0.2',
