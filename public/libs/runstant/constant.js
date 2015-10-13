@@ -91,7 +91,7 @@
     'markdown': "http://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js",
   };
 
-  constant.EMBED_CODE = "[div class='runstant'][iframe src='{url}' width=100% height=460px style='border:0px;box-shadow:0px 0px 2px 0px #aaa'][/iframe][/div]";
+  constant.EMBED_CODE = "[div class='runstant'][iframe src='{url}' width='100%' height='640px' style='border:0px;box-shadow:0px 0px 2px 0px #aaa'][/iframe][/div]";
   constant.EMBED_CODE = constant.EMBED_CODE.replace(/\[/g, '<').replace(/\]/g, '>');
 
   exports.runstant = exports.runstant || {};
