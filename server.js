@@ -30,9 +30,6 @@ app.get('/user', function(req, res) {
     pretty: true,
   });
 });
-app.get('/lazy', function(req, res) {
-  res.render('lazy', { title: 'Lazy' });
-});
 app.get('/ready', function(req, res) {
   res.render('ready', { title: 'Ready' });
 });

@@ -29,7 +29,7 @@ html
     meta(name="twitter:creator", content="@phi_jp")
   body
     button.btn
-      span ▶
+      img.logo(src='/images/logo/runstant-transparent.png')
 
     style.
       body {
@@ -38,15 +38,15 @@ html
       .btn {
         position: fixed;
         display: block;
-        width: 128px;
-        height: 128px;
+        width: 150px;
+        height: 150px;
         left: 0px;
         top: 0px;
         right: 0px;
         bottom: 0px;
         margin: auto;
-        background-color: white;
-        box-shadow: 0px 0px 4px 0px #aaa;
+        background-color: hsl(200, 18%, 26%);
+        box-shadow: 0px 0px 4px 0px #444, 0px 0px 8px 0px #444;
         cursor: pointer;
         
         border: none;
@@ -54,8 +54,10 @@ html
         
         font-size: 5rem;
         border-radius: 50%;
-        padding-left: 15px;
-        padding-top: 10px;
+        padding: 10px;
+      }
+      .btn img {
+        width: 100%;
       }
       .btn:hover {
 
@@ -64,11 +66,12 @@ html
         -webkit-transition: 500ms;
            -moz-transition: 500ms;
                 transition: 500ms;
-        -webkit-transform: scale(15);
-           -moz-transform: scale(15);
-                transform: scale(15);
+        -webkit-transform: scale(10);
+           -moz-transform: scale(10);
+                transform: scale(10);
+        opacity: 0;
       }
-      .btn.fill > span {
+      .btn.fill > img {
         -webkit-transition: 100ms;
            -moz-transition: 100ms;
                 transition: 100ms;
