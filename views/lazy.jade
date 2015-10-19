@@ -61,11 +61,17 @@ html
 
       }
       .btn.fill {
-        transition: 500ms;
-        transform: scale(15);
+        -webkit-transition: 500ms;
+           -moz-transition: 500ms;
+                transition: 500ms;
+        -webkit-transform: scale(15);
+           -moz-transform: scale(15);
+                transform: scale(15);
       }
       .btn.fill > span {
-        transition: 100ms;
+        -webkit-transition: 100ms;
+           -moz-transition: 100ms;
+                transition: 100ms;
         opacity: 0;
       }
 
@@ -95,7 +101,7 @@ html
 
         if (query.wait) {
           setTimeout(function() {
-            //- go(query.link);
+            go(query.link);
           }, +query.wait);
         }
       }
