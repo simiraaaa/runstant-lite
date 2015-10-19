@@ -30,6 +30,9 @@ app.get('/user', function(req, res) {
     pretty: true,
   });
 });
+app.get('/lazy', function(req, res) {
+  res.render('lazy', { title: 'Lazy' });
+});
 app.get('/collections', function(req, res) {
   // var path = './public/data/collections/index.json';
   // var json = require(path);
