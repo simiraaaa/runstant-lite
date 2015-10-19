@@ -33,6 +33,9 @@ app.get('/user', function(req, res) {
 app.get('/lazy', function(req, res) {
   res.render('lazy', { title: 'Lazy' });
 });
+app.get('/ready', function(req, res) {
+  res.render('ready', { title: 'Ready' });
+});
 app.get('/collections', function(req, res) {
   // var path = './public/data/collections/index.json';
   // var json = require(path);
