@@ -381,7 +381,6 @@
     },
 
     '0.0.2': {
-
       encode: function(obj) {
         var str = JSON.stringify(obj);
         var gziped = util.gzip(str);
@@ -393,7 +392,21 @@
         var obj = JSON.parse(data);
         return obj;
       },
-    }
+    },
+
+    '0.0.3': {
+      encode: function(obj) {
+        var str = JSON.stringify(obj);
+        var data = pako.deflate(str, { to: 'string',raw:true });
+        return btoa(data);
+      },
+
+      decode: function(str) {
+        var data = atob(str);
+        data = pako.inflate(data, { to: 'string',raw:true });
+        return JSON.parse(data);
+      },
+    },
   };
 
   // 指定したバージョンが存在しないとき最新バージョンを返す

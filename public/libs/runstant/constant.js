@@ -52,7 +52,7 @@
     "}\n";
 
   constant.TEMPLATE_DATA = {
-    version: '0.0.2',
+    version: '0.0.3',
 
     setting: {
       title: "Runstant Lite",
