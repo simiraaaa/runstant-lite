@@ -29,7 +29,13 @@ html
     meta(name="twitter:creator", content="@phi_jp")
 
     //- script(src="https://code.jquery.com/jquery-2.1.4.min.js")
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+    script.
+      // supported electron
+      if (typeof module !== 'undefined') {
+        var ___temp = module.exports;
+        module.exports = false;
+      }
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js')
     //- script(src="https://code.jquery.com/ui/1.11.3/jquery-ui.js")
 
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.css')
@@ -46,6 +52,12 @@ html
     link(rel='stylesheet', href='/styles/style.css')
   body
     block content
+
+    script.
+      // supported electron
+      if (typeof module !== 'undefined') {
+        module.exports = ___temp;
+      }
 
     //- google analytics code
     script.

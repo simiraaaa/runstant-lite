@@ -8,7 +8,8 @@
   exports.runstant = exports.runstant || {};
   var util = exports.runstant.util = {};
 
-  var isNode = (typeof process !== "undefined" && typeof require !== "undefined");
+  var isNode = (typeof module === "object" && typeof module.exports === "object" );
+  // var isNode = (typeof process !== "undefined" && typeof require !== "undefined");
   var JSZip = (isNode) ? require('request') : window.JSZip;
   var request = (isNode) ? require('request') : null;
 
