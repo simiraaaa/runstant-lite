@@ -5,15 +5,15 @@ editor
         li.tab.col.s3#tab-html
           a(data-type='html', href='#editor-html')
             span.type html
-            span.lang {this.data.code.html.type}
+            span.lang {runstant.project.data.code.html.type}
         li.tab.col.s3#tab-style
           a(data-type='style', href='#editor-style')
             span.type style
-            span.lang {this.data.code.style.type}
+            span.lang {runstant.project.data.code.style.type}
         li.tab.col.s3#tab-script
           a(data-type='script', href='#editor-script')
             span.type script
-            span.lang {this.data.code.script.type}
+            span.lang {runstant.project.data.code.script.type}
 
     .content
       //- #editor
@@ -75,7 +75,6 @@ editor
     }
   script.
     var self = this;
-    this.data = runstant.project.data;
 
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -92,7 +91,7 @@ editor
 
       this.setupEditors();
 
-      this.changeCurrentTab(this.data.setting.current);
+      this.changeCurrentTab(runstant.project.data.setting.current);
 
       this.updateMode();
     });
@@ -106,7 +105,7 @@ editor
 
     this.initEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
-      var code = self.data.code[type];
+      var code = runstant.project.data.code[type];
 
       editor.setValue(code.value);
 
@@ -129,6 +128,16 @@ editor
         });
       });
 
+    };
+
+    this.refresh = function() {
+      ['html', 'style', 'script'].forEach(function(type) {
+        var editor = this.editors[type];
+        var code = runstant.project.data.code[type];
+        editor.setValue(code.value);
+      }, this);
+
+      //- editor.setValue(code.value);
     };
 
     /*
@@ -161,7 +170,7 @@ editor
 
     this.updateMode = function() {
       this.editors.$forIn(function(type, editor) {
-        var mode = self.data.code[type].type;
+        var mode = runstant.project.data.code[type].type;
         editor.setMode(mode);
       });
     };

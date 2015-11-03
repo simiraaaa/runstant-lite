@@ -43,13 +43,19 @@
         data.setting.current = data.current;
         delete data.current;
       }
-
-      this.data = data;
-
       // キャッシュしておく
       this.cache = JSON.stringify(data);
+
+      this.set(data);
+    },
+
+    set: function(data) {
+      this.data = data;
+
       // タイトル更新
       document.title = data.setting.title + " | runstant";
+
+      this.save();
     },
 
     encode: function(data, version) {
@@ -59,7 +65,7 @@
       return runstant.util.getConverter(version).decode(hash);
     },
     save: function() {
-      var data = runstant.project.data;
+      var data = this.data;
       var dataString = JSON.stringify(data);
 
       if (this.cache !== dataString) {

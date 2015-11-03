@@ -69,6 +69,31 @@ app
     runstant.user = new runstant.User();
     runstant.project = new runstant.Project();
 
+    // support drag and drop
+    document.ondragenter = function() {
+      return false;
+    };
+    document.ondragover = function() {
+      return false;
+    };
+    document.ondrop = function(e) {
+      var file = e.dataTransfer.files[0];
+      var fileReader = new FileReader();
+      
+      fileReader.onload = function(e) {
+        var txt = e.target.result;
+        var json = JSON.parse(txt);
+
+        runstant.project.set(json);
+        self.tags.editor.refresh();
+        self.onsave();
+        riot.update();
+      };
+      fileReader.readAsText(file);
+
+      return false;
+    };
+
 
     runstant.detailModal = new runstant.Modal({
       query: '#modal-detail',

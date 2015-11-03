@@ -10,6 +10,30 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
     
     runstant.user = new runstant.User();
     runstant.project = new runstant.Project();
+
+    document.ondragenter = function() {
+      return false;
+    };
+    document.ondragover = function() {
+      return false;
+    };
+    document.ondrop = function(e) {
+      var file = e.dataTransfer.files[0];
+      var fileReader = new FileReader();
+      
+      fileReader.onload = function(e) {
+        var txt = e.target.result;
+        var json = JSON.parse(txt);
+    
+        runstant.project.set(json);
+        self.tags.editor.refresh();
+        self.onsave();
+        riot.update();
+      };
+      fileReader.readAsText(file);
+    
+      return false;
+    };
     
     
     runstant.detailModal = new runstant.Modal({
@@ -181,9 +205,8 @@ riot.tag('btn-fullscreen', '<a href="#" onclick="{expand}" if="{!isFullScreen}">
   
 });
 
-riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class="tabs"> <li id="tab-html" class="tab col s3"><a data-type="html" href="#editor-html"><span class="type">html</span><span class="lang">{this.data.code.html.type}</span></a></li> <li id="tab-style" class="tab col s3"><a data-type="style" href="#editor-style"><span class="type">style</span><span class="lang">{this.data.code.style.type}</span></a></li> <li id="tab-script" class="tab col s3"><a data-type="script" href="#editor-script"><span class="type">script</span><span class="lang">{this.data.code.script.type}</span></a></li> </ul> </div> <div class="content"> <div id="editor-html" class="editor-unit">html</div> <div id="editor-style" class="editor-unit">style</div> <div id="editor-script" class="editor-unit">script</div> </div> <btn-fullscreen query="editor"></btn-fullscreen> </div>', 'editor .header { margin-bottom: 1px; height: 32px; } editor .content { position: relative; width: 100%; height: calc(100% - 36px); top: 3px; } #editor, #editor-html, #editor-style, #editor-script { width: 100%; height: 100%; position: absolute; } editor .tabs { background-color: hsl(0, 0%, 27%); height: 36px; } editor .tabs .tab { height: 36px; line-height: 36px; } editor .tabs .indicator { /* background: hsl(60, 100%, 60%); */ } @media only screen and (min-width: 601px) { editor .tabs li.tab .lang { font-size: x-small; } editor .tabs li.tab .lang:before { content: \'(\'; } editor .tabs li.tab .lang:after { content: \')\'; } } @media only screen and (max-width: 600px) { editor .tabs li.tab span.type { display: none; } }', function(opts) {
+riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class="tabs"> <li id="tab-html" class="tab col s3"><a data-type="html" href="#editor-html"><span class="type">html</span><span class="lang">{runstant.project.data.code.html.type}</span></a></li> <li id="tab-style" class="tab col s3"><a data-type="style" href="#editor-style"><span class="type">style</span><span class="lang">{runstant.project.data.code.style.type}</span></a></li> <li id="tab-script" class="tab col s3"><a data-type="script" href="#editor-script"><span class="type">script</span><span class="lang">{runstant.project.data.code.script.type}</span></a></li> </ul> </div> <div class="content"> <div id="editor-html" class="editor-unit">html</div> <div id="editor-style" class="editor-unit">style</div> <div id="editor-script" class="editor-unit">script</div> </div> <btn-fullscreen query="editor"></btn-fullscreen> </div>', 'editor .header { margin-bottom: 1px; height: 32px; } editor .content { position: relative; width: 100%; height: calc(100% - 36px); top: 3px; } #editor, #editor-html, #editor-style, #editor-script { width: 100%; height: 100%; position: absolute; } editor .tabs { background-color: hsl(0, 0%, 27%); height: 36px; } editor .tabs .tab { height: 36px; line-height: 36px; } editor .tabs .indicator { /* background: hsl(60, 100%, 60%); */ } @media only screen and (min-width: 601px) { editor .tabs li.tab .lang { font-size: x-small; } editor .tabs li.tab .lang:before { content: \'(\'; } editor .tabs li.tab .lang:after { content: \')\'; } } @media only screen and (max-width: 600px) { editor .tabs li.tab span.type { display: none; } }', function(opts) {
     var self = this;
-    this.data = runstant.project.data;
     
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -200,7 +223,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     
       this.setupEditors();
     
-      this.changeCurrentTab(this.data.setting.current);
+      this.changeCurrentTab(runstant.project.data.setting.current);
     
       this.updateMode();
     });
@@ -214,7 +237,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     
     this.initEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
-      var code = self.data.code[type];
+      var code = runstant.project.data.code[type];
     
       editor.setValue(code.value);
     
@@ -236,6 +259,15 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
         });
       });
     
+    };
+    
+    this.refresh = function() {
+      ['html', 'style', 'script'].forEach(function(type) {
+        var editor = this.editors[type];
+        var code = runstant.project.data.code[type];
+        editor.setValue(code.value);
+      }, this);
+
     };
     
     
@@ -265,7 +297,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     
     this.updateMode = function() {
       this.editors.$forIn(function(type, editor) {
-        var mode = self.data.code[type].type;
+        var mode = runstant.project.data.code[type].type;
         editor.setMode(mode);
       });
     };
@@ -424,7 +456,7 @@ riot.tag('modal-detail', '<div class="modal-content"> <h4>Project Setting</h4> <
 });
 
 <!-- シェアモーダル-->
-riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a> <a id="btn-download-zip" onclick="{downloadZip}" class="waves-effect waves-light btn red lighten-1">Download Zip</a></div> </div> </div> </div> </div>', 'modal-share { max-height: 85% !important; }', 'id="modal-share" class="modal bottom-sheet"', function(opts) {
+riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="row"> <div class="col s12"> <div class="row"> <div class="input-field col s12"> <input name="_shorturl" value="getting..." type="text" onclick="this.select()"> <label>Short URL</label> </div> <div class="input-field col s12"> <input name="_embedcode" value="getting..." type="text" onclick="this.select()"> <label>Embed Code</label> </div> </div> <div class="row"> <h5>Social</h5> <div class="input-field col s12"> <button data-name="twitter" onclick="{share}" class="waves-effect waves-light btn blue lighten-2">Twitter</button> <button data-name="facebook" onclick="{share}" class="waves-effect waves-light btn blue darken-1"> Facebook</button> <button data-name="google" onclick="{share}" class="waves-effect waves-light btn red darken-1"> Google+</button> <button data-name="pocket" onclick="{share}" class="waves-effect waves-light btn pink lighten-1"> Pocket</button> <button data-name="hatebu" onclick="{share}" class="waves-effect waves-light btn blue darken-2"> Hatebu</button> </div> </div> <div class="row"> <h5>Other</h5> <div class="input-field col s12"><a onclick="{fullscreen}" class="waves-effect waves-light btn green lighten-1">Fullscreen</a> <a id="btn-download" onclick="{download}" class="waves-effect waves-light btn amber darken-1">Download</a> <a id="btn-download-zip" onclick="{downloadZip}" class="waves-effect waves-light btn red lighten-1">Download Zip</a> <a id="btn-download-runstant" onclick="{downloadRunstant}" class="waves-effect waves-light btn red lighten-2">Download Runstant</a></div> </div> </div> </div> </div>', 'modal-share { max-height: 85% !important; }', 'id="modal-share" class="modal bottom-sheet"', function(opts) {
     var self = this;
     this.init = function() {
       runstant.util.shorten(location.href, function(url) {
@@ -511,6 +543,21 @@ riot.tag('modal-share', '<div class="modal-content"> <h4>Share</h4> <div class="
     
       $('#btn-download-zip')[0].download = title;
       $('#btn-download-zip')[0].href = url;
+      
+      return true;
+    };
+    
+    this.downloadRunstant = function() {
+      var title = '{title}.json'
+        .replace('{title}', runstant.project.data.setting.title)
+        .replace(/\s/g, '_')
+        ;
+      var json = JSON.stringify(runstant.project.data, null, '  ');
+      var blob = new Blob([json]);
+      var url = window.URL.createObjectURL(blob);
+    
+      $('#btn-download-runstant')[0].download = title;
+      $('#btn-download-runstant')[0].href = url;
       
       return true;
     };
