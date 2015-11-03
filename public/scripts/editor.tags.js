@@ -221,6 +221,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
       this.initEditor('style');
       this.initEditor('script');
     
+      this.refresh();
       this.setupEditors();
     
       this.changeCurrentTab(runstant.project.data.setting.current);
@@ -237,9 +238,6 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
     
     this.initEditor = function(type) {
       var editor = this.editors[type] = new runstant.Editor('editor-' + type);
-      var code = runstant.project.data.code[type];
-    
-      editor.setValue(code.value);
     
       editor.onsave = function() {
         opts.onsave && opts.onsave();
@@ -266,8 +264,8 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
         var editor = this.editors[type];
         var code = runstant.project.data.code[type];
         editor.setValue(code.value);
+        editor.editor.moveCursorTo(0, 0);
       }, this);
-
     };
     
     
