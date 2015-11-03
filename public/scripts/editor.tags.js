@@ -64,7 +64,7 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       },
       complete: function() {
         self.tags['modal-user'].save();
-        self.tags.editor.setupEditors();
+        self.tags.editor.setup();
       },
     });
     
@@ -222,7 +222,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
       this.initEditor('script');
     
       this.refresh();
-      this.setupEditors();
+      this.setup();
     
       this.changeCurrentTab(runstant.project.data.setting.current);
     
@@ -283,7 +283,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
       project.data.setting.current = current;
     };
     
-    this.setupEditors = function() {
+    this.setup = function() {
       var user = runstant.user;
       for (var key in this.editors) {
         var editor = this.editors[key];

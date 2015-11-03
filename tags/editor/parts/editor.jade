@@ -90,7 +90,7 @@ editor
       this.initEditor('script');
 
       this.refresh();
-      this.setupEditors();
+      this.setup();
 
       this.changeCurrentTab(runstant.project.data.setting.current);
 
@@ -155,7 +155,7 @@ editor
       project.data.setting.current = current;
     };
 
-    this.setupEditors = function() {
+    this.setup = function() {
       var user = runstant.user;
       for (var key in this.editors) {
         var editor = this.editors[key];
