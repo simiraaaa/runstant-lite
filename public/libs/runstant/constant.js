@@ -43,7 +43,7 @@
 
   constant.TEMPLATE_JS = 
     "\/*\n" + 
-    " * runstant lite\n" + 
+    " * runstant\n" + 
     " *\/\n" + 
     "\n" + 
     "window.onload = function() {\n" + 
@@ -55,7 +55,7 @@
     version: '0.0.3',
 
     setting: {
-      title: "Runstant Lite",
+      title: "Runstant",
       description: "思いたったらすぐ開発. プログラミングに革命を...", // もと detail
       fullscreen: false,
       current: "script",

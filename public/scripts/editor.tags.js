@@ -312,7 +312,7 @@ riot.tag('footer', '<div class="row"> <div class="col s6"> <input type="text" va
   
 });
 
-riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="/about" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant </span><span>Lite</span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href="" onclick="{opts.onplay}"><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="fork" class="tooltipped"><a id="btn-play" href="" onclick="{fork}"><i class="mdi material-icons">call_split</i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#" onclick="runstant.shareModal.open(); return false;"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav>', 'header, [riot-tag="header"]{ display: block } header nav, [riot-tag="header"] nav{ padding: 0px 20px; } header .brand-logo, [riot-tag="header"] .brand-logo{ position: relative; white-space: nowrap; } header .brand-logo img, [riot-tag="header"] .brand-logo img{ height: 40px; transform: translate(0px, 5px); } header .brand-logo .lighter, [riot-tag="header"] .brand-logo .lighter{ font-weight: 200; }', function(opts) {
+riot.tag('header', '<nav class="blue-grey darken-3"> <div class="nav-wrapper"><a href="/about" class="brand-logo"><img src="/images/runstant.png"><span>Run</span><span class="lighter">stant </span></a> <ul class="right hide-on-small-and-down"> <li data-tooltip="play" class="tooltipped"><a id="btn-play" href="" onclick="{opts.onplay}"><i class="mdi-av-play-arrow"></i></a></li> <li data-tooltip="fork" class="tooltipped"><a id="btn-play" href="" onclick="{fork}"><i class="mdi material-icons">call_split</i></a></li> <li data-tooltip="share" class="tooltipped"><a id="btn-share" href="#" onclick="runstant.shareModal.open(); return false;"><i class="mdi-social-share"></i></a></li> <li data-tooltip="setting" class="tooltipped"><a id="btn-setting" href="#" onclick="runstant.detailModal.open(); return false;"><i class="mdi-action-settings"></i></a></li> </ul> <ul id="nav-mobile" style="left: -250px;" class="side-nav"> <li><a href="">Share</a></li> </ul> <a href="" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a> </div> </nav>', 'header, [riot-tag="header"]{ display: block } header nav, [riot-tag="header"] nav{ padding: 0px 20px; } header .brand-logo, [riot-tag="header"] .brand-logo{ position: relative; white-space: nowrap; } header .brand-logo img, [riot-tag="header"] .brand-logo img{ height: 40px; transform: translate(0px, 5px); } header .brand-logo .lighter, [riot-tag="header"] .brand-logo .lighter{ font-weight: 200; }', function(opts) {
     var self = this;
     
     this.fork = function() {
@@ -391,6 +391,99 @@ riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="
       this.messages = [];
       this.update();
     }
+  
+});
+
+riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="" placeHolder="search"> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
+    var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
+    
+    this.results = [];
+    
+    this.search = function() {
+      var q = this._search.value;
+    
+      $.ajax(api.format(q))
+        .done(function(res) {
+          this.results = res.results;
+          this.update();
+        }.bind(this))
+        ;
+    };
+  
+});
+
+riot.tag('panel-console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'panel-console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } panel-console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } panel-console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } panel-console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } panel-console .content-console span.output { outline: 0; } panel-console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } panel-console .content-console span.error { color: red; }', function(opts) {
+    var self = this;
+    
+    this.messages = [
+    ];
+    
+    this.stack = [];
+    
+    this.on('mount', function() {
+      var $input = $("#console-input");
+    });
+    
+    this.keypress = function(e) {
+      if (e.which === 13 && e.shiftKey === false) {
+        var target = $(e.target);
+        var v = target.text();
+        if (v === '') return false;
+    
+        target.text('');
+    
+        opts.onpost && opts.onpost(v);
+    
+        this.stack.push(v);
+        this.print('input', v);
+    
+        return false;
+      }
+      return true;
+    };
+    
+    this.click = function() {
+      $('#console-input').focus();
+    };
+    
+    this.print = function(type, v) {
+      this.messages.push({
+        type: type,
+        value: v,
+      });
+      this.update();
+    };
+    
+    this.clear = function() {
+      this.messages = [];
+      this.update();
+    };
+    
+    this.focus = function() {
+
+      $('util ul.tabs').tabs('select_tab', 'console');
+    };
+  
+});
+
+riot.tag('panel-project', '<div class="preview"></div>', 'panel-project { } panel-project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } panel-project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+    var self = this;
+    
+    this.on('mount', function() {
+      this.refresh();
+    
+      this.on('update', function() {
+        this.refresh();
+      });
+    });
+    
+    this.refresh = function() {
+      if (!self.jframe) {
+        self.jframe = jframe('panel-project .preview');
+      }
+      var v = runstant.project.toProject();
+      self.jframe.load(v);
+    };
   
 });
 
@@ -578,99 +671,6 @@ riot.tag('modal-user', '<div class="modal-content"> <h4>User Setting</h4> <form 
       user.data.theme = elements._theme.value;
     
       user.save();
-    };
-  
-});
-
-riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="" placeHolder="search"> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
-    var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
-    
-    this.results = [];
-    
-    this.search = function() {
-      var q = this._search.value;
-    
-      $.ajax(api.format(q))
-        .done(function(res) {
-          this.results = res.results;
-          this.update();
-        }.bind(this))
-        ;
-    };
-  
-});
-
-riot.tag('panel-console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'panel-console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } panel-console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } panel-console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } panel-console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } panel-console .content-console span.output { outline: 0; } panel-console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } panel-console .content-console span.error { color: red; }', function(opts) {
-    var self = this;
-    
-    this.messages = [
-    ];
-    
-    this.stack = [];
-    
-    this.on('mount', function() {
-      var $input = $("#console-input");
-    });
-    
-    this.keypress = function(e) {
-      if (e.which === 13 && e.shiftKey === false) {
-        var target = $(e.target);
-        var v = target.text();
-        if (v === '') return false;
-    
-        target.text('');
-    
-        opts.onpost && opts.onpost(v);
-    
-        this.stack.push(v);
-        this.print('input', v);
-    
-        return false;
-      }
-      return true;
-    };
-    
-    this.click = function() {
-      $('#console-input').focus();
-    };
-    
-    this.print = function(type, v) {
-      this.messages.push({
-        type: type,
-        value: v,
-      });
-      this.update();
-    };
-    
-    this.clear = function() {
-      this.messages = [];
-      this.update();
-    };
-    
-    this.focus = function() {
-
-      $('util ul.tabs').tabs('select_tab', 'console');
-    };
-  
-});
-
-riot.tag('panel-project', '<div class="preview"></div>', 'panel-project { } panel-project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } panel-project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
-    var self = this;
-    
-    this.on('mount', function() {
-      this.refresh();
-    
-      this.on('update', function() {
-        this.refresh();
-      });
-    });
-    
-    this.refresh = function() {
-      if (!self.jframe) {
-        self.jframe = jframe('panel-project .preview');
-      }
-      var v = runstant.project.toProject();
-      self.jframe.load(v);
     };
   
 });

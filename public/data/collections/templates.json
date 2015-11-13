@@ -9,7 +9,7 @@
   {
     "title": "markup language",
     "samples": [
-      { "title": "Default(HTML)", "url": "http://lite.runstant.com" },
+      { "title": "Default(HTML)", "url": "http://runstant.com" },
       { "title": "Jade", "url": "http://goo.gl/93hZZW" },
       { "title": "Markdown", "url": "http://goo.gl/82bJCX" },
       { "title": "dummy", "url": "dummy", "visible":false }
