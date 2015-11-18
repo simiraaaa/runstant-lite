@@ -1,6 +1,7 @@
 
 riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor width="{this.editorWidth}%" height="100%" float="right" onsave="{onsave}" class="panel"></editor> <preview width="{100-this.editorWidth}%" height="60%" float="left" class="panel"></preview> <util width="40%" height="40%" float="left" onpost="{onpost}" class="panel"></util> </div> <footer></footer> <modal-detail></modal-detail> <modal-share></modal-share> <modal-user></modal-user>', 'body { background: hsl(0, 0%, 90%); } .main { position: absolute; width: 100%; height: calc(100% - 56px - 30px); overflow: hidden; } @media only screen and (min-width: 601px) { .main { height: calc(100% - 64px - 30px); } } .panel { display: block; padding: 5px 5px; float: right; transition: 500ms; } .panel.fullscreen { width: 100% !important; height: 100% !important; } .panel.nofullscreen { width: 0% !important; height: 0% !important; opacity: 0.0; margin: 0px; padding: 0px; } .inner { /* border: 1px solid #ccc; */ position: relative; width: 100%; height: 100%; }', function(opts) {
     var self = this;
+    this.type = null;
     this.editorWidth = '60';
 
 
@@ -31,6 +32,16 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
         riot.update();
       };
       fileReader.readAsText(file);
+    
+      if (self.type === 'app') {
+        var data = {
+          action: 'load',
+          data: {
+            path: file.path,
+          },
+        };
+        window.parent.postMessage(JSON.stringify(data), "*");
+      }
     
       return false;
     };
@@ -85,6 +96,14 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
       self.tags.util.tags['panel-project'].refresh();
     
       Materialize.toast('save & play', 1000, "rounded");
+    
+      if (self.type === 'app') {
+        var data = {
+          action: 'save',
+          data: runstant.project.data,
+        };
+        window.parent.postMessage(JSON.stringify(data), "*");
+      }
     };
     
     this.onpost = function(v) {
@@ -120,7 +139,23 @@ riot.tag('app', '<header onplay="{onsave}"></header> <div class="main"> <editor 
     };
     
     this.onmessage = function(e) {
-      var data = JSON.parse(e.data);
+      var res = JSON.parse(e.data);
+      if (res.action === 'type') {
+        this.type = res.data;
+      }
+      else if (res.action === 'set') {
+        var json = JSON.parse(res.data);
+        runstant.project.set(json);
+        self.tags.editor.refresh();
+        self.onsave();
+        riot.update();
+      }
+      else {
+        this.actionConsole(res);
+      }
+    };
+    
+    this.actionConsole = function(data) {
       var method = data.method;
       var args = data.arguments;
       var csl = self.tags.util.tags['panel-console'];
