@@ -302,12 +302,28 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
   
 });
 
-riot.tag('footer', '<div class="row"> <div class="col s6"> <input type="text" value="{runstant.project.data.setting.title}" onblur="{onblurtitle}"> </div> <div class="col s6"> <ul> <li><a href="http://twitter.com/phi_jp" target="_blank"><i class="small material-icons">account_box</i></a></li> <li><a href="http://github.com/phi-jp" target="_blank"><i class="small material-icons">build</i></a></li> <li><a href="/user" target="_blank"><i class="small material-icons">settings_applications</i></a> </li> </ul> </div> </div>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; color: white } footer .row { } footer input { width: auto !important; height: 1.8rem !important; } footer ul { margin: 3px; text-align: right; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; } footer ul li a i { position: relative; top: 3px; font-size: 15px !important; }', function(opts) {
+riot.tag('footer', '<div class="row"> <div class="col s6"> <input type="text" value="{runstant.project.data.setting.title}" onblur="{onblurtitle}"> </div> <div class="col s6"> <ul> <li><a href="http://twitter.com/phi_jp" target="_blank"><i class="small material-icons">account_box</i></a></li> <li><a href="http://github.com/phi-jp" target="_blank"><i class="small material-icons">build</i></a></li> <li><a id="footer-download" href="" onclick="{download}"><i class="small material-icons">get_app</i></a></li> <li><a href="/user" target="_blank"><i class="small material-icons">settings_applications</i></a> </li> </ul> </div> </div>', 'footer { position: fixed; height: 30px; width: 100%; background-color: hsl(200, 18%, 26%)!important; bottom: 0; color: white } footer .row { } footer input { width: auto !important; height: 1.8rem !important; } footer ul { margin: 3px; text-align: right; } footer ul li { display: inline-block; margin-right: 10px; } footer ul li a { color: white; } footer ul li a i { position: relative; top: 3px; font-size: 15px !important; }', function(opts) {
     this.onblurtitle = function(e) {
       var title = e.target.value;
       runstant.project.data.setting.title = title;
       runstant.project.save();
       riot.update();
+    };
+    this.download = function(e) {
+      var title = '{title}.json'
+        .replace('{title}', runstant.project.data.setting.title)
+        .replace(/\s/g, '_')
+        ;
+      var json = JSON.stringify(runstant.project.data, null, '  ');
+      var blob = new Blob([json]);
+      var url = window.URL.createObjectURL(blob);
+    
+      var elm = document.getElementById('footer-download');
+    
+      elm.download = title;
+      elm.href = url;
+      
+      return true;
     };
   
 });
@@ -391,99 +407,6 @@ riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="
       this.messages = [];
       this.update();
     }
-  
-});
-
-riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="" placeHolder="search"> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
-    var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
-    
-    this.results = [];
-    
-    this.search = function() {
-      var q = this._search.value;
-    
-      $.ajax(api.format(q))
-        .done(function(res) {
-          this.results = res.results;
-          this.update();
-        }.bind(this))
-        ;
-    };
-  
-});
-
-riot.tag('panel-console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'panel-console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } panel-console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } panel-console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } panel-console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } panel-console .content-console span.output { outline: 0; } panel-console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } panel-console .content-console span.error { color: red; }', function(opts) {
-    var self = this;
-    
-    this.messages = [
-    ];
-    
-    this.stack = [];
-    
-    this.on('mount', function() {
-      var $input = $("#console-input");
-    });
-    
-    this.keypress = function(e) {
-      if (e.which === 13 && e.shiftKey === false) {
-        var target = $(e.target);
-        var v = target.text();
-        if (v === '') return false;
-    
-        target.text('');
-    
-        opts.onpost && opts.onpost(v);
-    
-        this.stack.push(v);
-        this.print('input', v);
-    
-        return false;
-      }
-      return true;
-    };
-    
-    this.click = function() {
-      $('#console-input').focus();
-    };
-    
-    this.print = function(type, v) {
-      this.messages.push({
-        type: type,
-        value: v,
-      });
-      this.update();
-    };
-    
-    this.clear = function() {
-      this.messages = [];
-      this.update();
-    };
-    
-    this.focus = function() {
-
-      $('util ul.tabs').tabs('select_tab', 'console');
-    };
-  
-});
-
-riot.tag('panel-project', '<div class="preview"></div>', 'panel-project { } panel-project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } panel-project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
-    var self = this;
-    
-    this.on('mount', function() {
-      this.refresh();
-    
-      this.on('update', function() {
-        this.refresh();
-      });
-    });
-    
-    this.refresh = function() {
-      if (!self.jframe) {
-        self.jframe = jframe('panel-project .preview');
-      }
-      var v = runstant.project.toProject();
-      self.jframe.load(v);
-    };
   
 });
 
@@ -671,6 +594,99 @@ riot.tag('modal-user', '<div class="modal-content"> <h4>User Setting</h4> <form 
       user.data.theme = elements._theme.value;
     
       user.save();
+    };
+  
+});
+
+riot.tag('panel-cdn', '<div class="row"> <div class="col s12"> <input type="text" name="_search" onblur="{search}" value="" placeHolder="search"> </div> <div class="col s12"> <ul> <li each="{results}" class="row result"> <div class="col s3"><a href="https://cdnjs.com/libraries/{name}" target="_blank">{name}: </a></div> <div class="col s9"><span>{description}</span> </div> </li> </ul> </div> </div>', 'panel-cdn .result { padding-bottom: 10px; border-bottom: 1px solid #ccc; }', function(opts) {
+    var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
+    
+    this.results = [];
+    
+    this.search = function() {
+      var q = this._search.value;
+    
+      $.ajax(api.format(q))
+        .done(function(res) {
+          this.results = res.results;
+          this.update();
+        }.bind(this))
+        ;
+    };
+  
+});
+
+riot.tag('panel-console', '<div class="content-console"><span each="{messages}" onclick="confirm(&quot;{value}&quot;)" class="{type}">{value}</span><span id="console-input" type="text" contenteditable="true" onkeypress="{keypress}" class="input"></span></div>', 'panel-console .content-console { position: relative; width: 100%; height: 100%; margin: 0px; padding: 5px 20px; font-family: Consolas, Monaco, \'ＭＳ ゴシック\'; overflow-x: auto; } panel-console .content-console span { border-bottom: 1px solid #ddd; display: block; line-height: 1em; margin-top: 2px; padding-bottom: 2px; color: #0055ff; font-size: 13px; white-space: pre; word-wrap: break-word; } panel-console .content-console span.input { outline: 0; color: #222; border-bottom: 0px; } panel-console .content-console span.input:before { position: absolute; left: 7px; font-weight: bold; content: \'> \'; color: #47b4eb; } panel-console .content-console span.output { outline: 0; } panel-console .content-console span.output:before { position: absolute; left: 7px; font-weight: bold; content: \'< \'; color: #47b4eb; } panel-console .content-console span.error { color: red; }', function(opts) {
+    var self = this;
+    
+    this.messages = [
+    ];
+    
+    this.stack = [];
+    
+    this.on('mount', function() {
+      var $input = $("#console-input");
+    });
+    
+    this.keypress = function(e) {
+      if (e.which === 13 && e.shiftKey === false) {
+        var target = $(e.target);
+        var v = target.text();
+        if (v === '') return false;
+    
+        target.text('');
+    
+        opts.onpost && opts.onpost(v);
+    
+        this.stack.push(v);
+        this.print('input', v);
+    
+        return false;
+      }
+      return true;
+    };
+    
+    this.click = function() {
+      $('#console-input').focus();
+    };
+    
+    this.print = function(type, v) {
+      this.messages.push({
+        type: type,
+        value: v,
+      });
+      this.update();
+    };
+    
+    this.clear = function() {
+      this.messages = [];
+      this.update();
+    };
+    
+    this.focus = function() {
+
+      $('util ul.tabs').tabs('select_tab', 'console');
+    };
+  
+});
+
+riot.tag('panel-project', '<div class="preview"></div>', 'panel-project { } panel-project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } panel-project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+    var self = this;
+    
+    this.on('mount', function() {
+      this.refresh();
+    
+      this.on('update', function() {
+        this.refresh();
+      });
+    });
+    
+    this.refresh = function() {
+      if (!self.jframe) {
+        self.jframe = jframe('panel-project .preview');
+      }
+      var v = runstant.project.toProject();
+      self.jframe.load(v);
     };
   
 });

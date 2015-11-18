@@ -10,6 +10,9 @@ footer
         li
           a(href='http://github.com/phi-jp', target='_blank')
             i.small.material-icons build
+        li
+          a#footer-download(href='', onclick='{download}')
+            i.small.material-icons get_app
         //- li
         //-   a(href='')
         //-     i.small.material-icons dashboard
@@ -60,4 +63,20 @@ footer
       runstant.project.data.setting.title = title;
       runstant.project.save();
       riot.update();
+    };
+    this.download = function(e) {
+      var title = '{title}.json'
+        .replace('{title}', runstant.project.data.setting.title)
+        .replace(/\s/g, '_')
+        ;
+      var json = JSON.stringify(runstant.project.data, null, '  ');
+      var blob = new Blob([json]);
+      var url = window.URL.createObjectURL(blob);
+
+      var elm = document.getElementById('footer-download');
+
+      elm.download = title;
+      elm.href = url;
+      
+      return true;
     };
