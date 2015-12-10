@@ -8,25 +8,39 @@ header
       ul.right.hide-on-small-and-down
         li.tooltipped(data-tooltip='play')
           a#btn-play(href='', onclick='{opts.onplay}')
-            i.mdi-av-play-arrow
+            i.material-icons play_arrow
         | 
         li.tooltipped(data-tooltip='fork')
           a#btn-play(href='', onclick='{fork}')
-            i.mdi.material-icons call_split
+            i.material-icons call_split
         | 
         li.tooltipped(data-tooltip='share')
           a#btn-share(href='#', onclick='runstant.shareModal.open(); return false;')
-            i.mdi-social-share
+            i.material-icons share
         |       
         li.tooltipped(data-tooltip='setting')
           a#btn-setting(href='#', onclick='runstant.detailModal.open(); return false;')
-            i.mdi-action-settings
+            i.material-icons settings
       |     
-      ul#nav-mobile.side-nav(style='left: -250px;')
+      ul#nav-mobile.side-nav
         li
-          a(href='') Share
+          a(href='', onclick='{opts.onplay}')
+            i.left.material-icons play_arrow
+            | Play
+        li
+          a(href='', onclick='{fork}')
+            i.left.material-icons call_split
+            | Fork
+        li
+          a(href='', onclick='runstant.shareModal.open(); return false;')
+            i.left.material-icons share
+            | Share
+        li
+          a(href='', onclick='runstant.detailModal.open(); return false;')
+            i.left.material-icons settings
+            | Settings
       |     
-      a.button-collapse(href='', data-activates='nav-mobile')
+      a.button-collapse(data-activates='nav-mobile')
         i.mdi-navigation-menu
   style(scoped).
     :scope { display: block }
@@ -45,8 +59,16 @@ header
     .brand-logo .lighter {
       font-weight: 200;
     }
+
+    .side-nav i.left {
+      line-height: 64px;
+    }
   script.
     var self = this;
+
+    this.on('mount', function() {
+      $(".button-collapse").sideNav();
+    });
 
     this.fork = function() {
       window.open(location.href);
