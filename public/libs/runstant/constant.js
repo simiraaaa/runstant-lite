@@ -49,7 +49,7 @@
     "window.onload = function() {\n" + 
     "  \/\/ TODO: write code\n" + 
     "  \/\/ console.log(\"Hello, runstant!\");\n" + 
-    "}\n";
+    "};\n";
 
   constant.TEMPLATE_DATA = {
     version: '0.0.3',
