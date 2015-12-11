@@ -5,6 +5,9 @@ header
         img(src='/images/runstant.png')
         span Run
         span.lighter stant 
+      a.button-collapse(data-activates='nav-mobile', href='')
+        i.material-icons menu
+
       ul.right.hide-on-small-and-down
         li.tooltipped(data-tooltip='play')
           a#btn-play(href='', onclick='{opts.onplay}')
@@ -24,7 +27,7 @@ header
       |     
       ul#nav-mobile.side-nav
         li
-          a(href='', onclick='{opts.onplay}')
+          a(href='', onclick='{play}')
             i.left.material-icons play_arrow
             | Play
         li
@@ -40,22 +43,12 @@ header
             i.left.material-icons settings
             | Settings
       |     
-      a.button-collapse(data-activates='nav-mobile')
-        i.mdi-navigation-menu
   style(scoped).
     :scope { display: block }
     nav {
       padding: 0px 20px;
     }
 
-    .brand-logo {
-      position: relative;
-      white-space: nowrap;
-    }
-    .brand-logo img {
-      height: 40px;
-      transform: translate(0px, 5px);
-    }
     .brand-logo .lighter {
       font-weight: 200;
     }
@@ -63,8 +56,14 @@ header
     .side-nav i.left {
       line-height: 64px;
     }
+
   script.
     var self = this;
+
+    this.play = function() {
+      opts.onplay();
+      $('.button-collapse').sideNav('hide');
+    }
 
     this.on('mount', function() {
       $(".button-collapse").sideNav();
