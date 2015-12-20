@@ -5,13 +5,17 @@ modal-share#modal-share.modal.bottom-sheet
     div.row
       div.col.s12
         div.row
-          div.input-field.col.s12
-            input(name='_shorturl', value='getting...', type="text", onclick='this.select()')
-            label Short URL
-          div.input-field.col.s12
-            input(name='_embedcode', value='getting...', type="text", onclick='this.select()')
-            label Embed Code
-
+          div.col.s8
+            div.row
+              div.input-field.col.s12
+                input(name='_shorturl', value='getting...', type="text", onclick='this.select()')
+                label Short URL
+              div.input-field.col.s12
+                input(name='_embedcode', value='getting...', type="text", onclick='this.select()')
+                label Embed Code
+          div.col.s4.center
+            img(src='https://chart.googleapis.com/chart?chs=128x128&cht=qr&chl={shortURL}')
+              
         div.row
           h5 Social
           div.input-field.col.s12
