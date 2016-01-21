@@ -325,6 +325,7 @@ riot.tag('editor', '<div class="inner z-depth-4"> <div class="header"> <ul class
         editor.setFontSize(user.data.fontSize);
         editor.setTabSize(user.data.tabSize);
         editor.setTheme(user.data.theme);
+        editor.setKeyboardHandler(user.data.keyBinding);
       }
     };
     

@@ -24,6 +24,12 @@ app
               select.browser-default(name='_theme', value='{user.data.theme}', onchange='{refreshEditor}')
                 option(each='{runstant.Editor.themes}', value='{theme}') {caption}
             div.col.s12
+              label Key Binding
+              select.browser-default(name='_keyBinding', value='{user.data.keyBinding}', onchange='{refreshEditor}')
+                option(value='ace') ace
+                option(value='vim') vim
+                option(value='emacs') emacs
+            div.col.s12
               label Tab Size ({_tabSize.value})
               p.range-field
                 input(name='_tabSize', type='range', value='{user.data.tabSize}', min='0', max='16', oninput='{refreshEditor}')
@@ -75,16 +81,25 @@ app
 
     this.refreshEditor = function() {
       var theme = this._theme.value;
+      var keyBinding = this._keyBinding.value;
       var tabSize = +this._tabSize.value;
       var fontSize = +this._fontSize.value;
       this.editor.setTheme(theme);
       this.editor.getSession().setTabSize(tabSize);
       this.editor.setFontSize(fontSize);
+
+      var keybindings = {
+      'ace': null,    // default
+      'vim': "ace/keyboard/vim",
+      'emacs': "ace/keyboard/emacs",
+      };
+      this.editor.setKeyboardHandler(keybindings[keyBinding]);
     };
 
     this.save = function() {
       self.user.data.username = this._name.value;
       self.user.data.theme = this._theme.value;
+      self.user.data.keyBinding = this._keyBinding.value;
       self.user.data.tabSize = +this._tabSize.value;
       self.user.data.fontSize = +this._fontSize.value;
 
