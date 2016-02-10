@@ -100,6 +100,7 @@
       if (runstant.compiler[code.script.type]) {
         jsCode = runstant.compiler[code.script.type].func(jsCode);
       }
+      jsCode = jsCode.replace(/\$/g, '$$$$');
 
       var title = runstant.util.sanitaize(setting.title);
       var description = runstant.util.sanitaize(setting.description);
