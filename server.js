@@ -5,6 +5,7 @@
 var express = require('express');
 var path = require('path');
 var app = express();
+var request = require('request');
 
 var yaml = require('js-yaml');
 var fs   = require('fs');
@@ -52,6 +53,15 @@ app.get('/collections/:id', function(req, res) {
     title: req.params.id,
     json: json,
     pretty: true,
+  });
+});
+app.get('/asset', function(req, res) {
+  var url = req.query.url || 'http://phiary.me/assets/img/phi.jpg';
+  var options = { uri: url, encoding: null };
+
+  request.get(options, function(error, response, body) {
+    // res.send(body, { 'Content-Type': 'image/png' }, 200);
+    res.send(body, {}, 200);
   });
 });
 
