@@ -198,7 +198,7 @@
   };
 
   util.shorten = function(url, callback, error) {
-    var URL_MAX_LENGTH = 0x3fff;
+    var URL_MAX_LENGTH = 0x1000;
 
     if (url.length > URL_MAX_LENGTH) {
       return (error || function(e) {
