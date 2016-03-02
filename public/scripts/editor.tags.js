@@ -407,7 +407,7 @@ riot.tag('preview', '<div class="inner z-depth-2"> <div onclick="runstant.detail
   
 });
 
-riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> <li class="tab col s3"><a href="#panel-cdn"><span class="type">cdn</span></a></li> </ul> </div> <div class="content"> <panel-project id="project"></panel-project> <panel-console id="console" onpost="{opts.onpost}"></panel-console> <panel-cdn id="panel-cdn"></panel-cdn> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .header { } util .inner { background: white; } util .tabs { background-color: rgb(250, 250, 250); /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } util .content { position: relative; width: 100%; height: calc(100% - 36px); } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); overflow-x: auto; }', function(opts) {
+riot.tag('util', '<div class="inner z-depth-2"> <div class="header"> <ul class="tabs"> <li class="tab col s3"><a href="#project"><span class="type">project</span></a></li> <li class="tab col s3"><a href="#console"><span class="type">console</span></a></li> <li class="tab col s3"><a href="#panel-cdn"><span class="type">cdn</span></a></li> </ul> </div> <div class="content"> <panel-project id="project"></panel-project> <panel-console id="console" onpost="{opts.onpost}"></panel-console> <panel-cdn id="panel-cdn"></panel-cdn> </div> <btn-fullscreen query="util"></btn-fullscreen> </div>', 'util { } util .header { } util .inner { background: white; } util .tabs { background-color: rgb(250, 250, 250); /* background-color: hsl(0, 0%, 27%); */ height: 36px; } util .tabs .tab { height: 36px; line-height: 36px; } util .content { position: relative; width: 100%; height: calc(100% - 36px); } /* util .header { padding: 3px 10px; height: 36px; line-height: 36px; } util .header .title { font-size: 1.2rem; } */ util .content { background-color: hsl(0, 0%, 96%); }', function(opts) {
     var self = this;
     this.root.style.width = opts.width;
     this.root.style.height = opts.height;
@@ -715,7 +715,7 @@ riot.tag('panel-console', '<div class="content-console"><span each="{messages}" 
   
 });
 
-riot.tag('panel-project', '<div class="preview"></div>', 'panel-project { } panel-project .preview { width: 100%; height: 100%; overflow: scroll; -webkit-overflow-scrolling: touch; } panel-project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
+riot.tag('panel-project', '<div class="preview"></div>', 'panel-project { } panel-project .preview { width: 100%; height: 100%; -webkit-overflow-scrolling: touch; } panel-project .preview iframe { width: 100%; height: 100%; border: none; }', function(opts) {
     var self = this;
     
     this.on('mount', function() {
