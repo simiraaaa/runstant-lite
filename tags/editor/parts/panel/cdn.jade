@@ -1,6 +1,6 @@
 panel-cdn
 
-  div.row
+  div.row.content
     div.col.s12
       input(type='text', name='_search', onblur='{search}', value='', placeHolder='search')
     div.col.s12
@@ -16,6 +16,10 @@ panel-cdn
     panel-cdn .result {
       padding-bottom: 10px;
       border-bottom: 1px solid #ccc;
+    }
+    panel-cdn .content {
+      height:100%;
+      overflow:auto;
     }
   script.
     var api = 'http://api.cdnjs.com/libraries?search={0}&fields=version,description';
