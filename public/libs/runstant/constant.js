@@ -76,7 +76,6 @@
     },
   };
 
-  constant.RUNSTANT_URL = "http://phi-jp.github.io/runstant/release/alpha/index.html";
 
   constant.LANG_SCRIPT_MAP = {
     'coffee': "http://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.7.1/coffee-script.min.js",
