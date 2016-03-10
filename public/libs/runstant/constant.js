@@ -3,52 +3,52 @@
 
   var constant = {};
 
-  constant.RUNSTANT_URL = "http://phi-jp.github.io/runstant/release/alpha/index.html";
+  constant.RUNSTANT_URL = "http://lite.runstant.com/";
 
-  constant.TEMPLATE_HTML = 
-    "<!doctype html>\n" + 
-    " \n" + 
-    "<html>\n" + 
-    "  <head>\n" + 
-    "    <meta charset=\"utf-8\" />\n" + 
-    "    <meta name=\"viewport\" content=\"width=device-width, user-scalable=no\" />\n" + 
-    "    <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n" + 
-    "    \n" + 
-    "    <title>${title}</title>\n" + 
-    "    <meta name=\"description\" content=\"${description}\" />\n" + 
-    "    \n" + 
-    "    <style>${style}</style>\n" + 
-    "    <script>${script}</script>\n" + 
-    "  </head>\n" + 
-    "  <body>\n" + 
-    "    <h1>Hello, runstant!</h1>\n" + 
-    "  </body>\n" + 
+  constant.TEMPLATE_HTML =
+    "<!doctype html>\n" +
+    " \n" +
+    "<html>\n" +
+    "  <head>\n" +
+    "    <meta charset=\"utf-8\" />\n" +
+    "    <meta name=\"viewport\" content=\"width=device-width, user-scalable=no\" />\n" +
+    "    <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n" +
+    "    \n" +
+    "    <title>${title}</title>\n" +
+    "    <meta name=\"description\" content=\"${description}\" />\n" +
+    "    \n" +
+    "    <style>${style}</style>\n" +
+    "    <script>${script}</script>\n" +
+    "  </head>\n" +
+    "  <body>\n" +
+    "    <h1>Hello, runstant!</h1>\n" +
+    "  </body>\n" +
     "</html>\n";
 
 
-  constant.TEMPLATE_CSS = 
-    "*, *:before, *:after {\n" + 
-    "  box-sizing: border-box; \n" + 
-    "}\n" + 
-    "html {\n" + 
-    "  font-size: 62.5%;\n" + 
-    "}\n" + 
-    "body {\n" + 
-    "  color: #444;\n" + 
-    "  background-color: hsl(0, 0%, 96%);\n" + 
-    "}\n" + 
-    "h1 {\n" + 
-    "  font-size: 1.8rem;\n" + 
+  constant.TEMPLATE_CSS =
+    "*, *:before, *:after {\n" +
+    "  box-sizing: border-box; \n" +
+    "}\n" +
+    "html {\n" +
+    "  font-size: 62.5%;\n" +
+    "}\n" +
+    "body {\n" +
+    "  color: #444;\n" +
+    "  background-color: hsl(0, 0%, 96%);\n" +
+    "}\n" +
+    "h1 {\n" +
+    "  font-size: 1.8rem;\n" +
     "}\n";
 
-  constant.TEMPLATE_JS = 
-    "\/*\n" + 
-    " * runstant\n" + 
-    " *\/\n" + 
-    "\n" + 
-    "window.onload = function() {\n" + 
-    "  \/\/ TODO: write code\n" + 
-    "  \/\/ console.log(\"Hello, runstant!\");\n" + 
+  constant.TEMPLATE_JS =
+    "\/*\n" +
+    " * runstant\n" +
+    " *\/\n" +
+    "\n" +
+    "window.onload = function() {\n" +
+    "  \/\/ TODO: write code\n" +
+    "  \/\/ console.log(\"Hello, runstant!\");\n" +
     "};\n";
 
   constant.TEMPLATE_DATA = {
