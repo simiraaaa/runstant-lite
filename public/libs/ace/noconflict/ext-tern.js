@@ -2891,7 +2891,7 @@ ace.define("ace/tern/tern_server",["require","exports","module","ace/range","ace
             var goBtn = elt('button', '');
             goBtn.textContent = "Rename";
             goBtn.setAttribute("type", "button");
-            goBtn.addEventListener('click', function () {
+            var rename = function () {
                 remove(tip);
                 var newName = newNameInput.value;
                 if (!newName || newName.trim().length === 0) {
@@ -2900,7 +2900,13 @@ ace.define("ace/tern/tern_server",["require","exports","module","ace/range","ace
                 }
 
                 executeRename(newName);
-            });
+            };
+            newNameInput.onkeydown = function(e){
+              if(e.keyCode === 13){
+                rename();
+              }
+            }
+            goBtn.addEventListener('click', rename);
             tip.appendChild(goBtn);
         });
     }
