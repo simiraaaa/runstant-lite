@@ -29,12 +29,14 @@ var runstant = runstant || {};
         enableLiveAutocompletion: true,
         enableTern: {
           /* http://ternjs.net/doc/manual.html#option_defs */
-          defs: ['browser', 'ecma5'],
+          defs: ['browser', 'ecma5', 'ecma6'],
           /* http://ternjs.net/doc/manual.html#plugins */
           plugins: {
             doc_comment: {
               fullDocs: true
-            }
+            },
+        
+
           },
           /**
            * (default is true) If web worker is used for tern server.

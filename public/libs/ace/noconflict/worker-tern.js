@@ -8,9 +8,9 @@
  *      Tern:  0.10.0
  *
  * NOTE: in order to get latest acorn version you now must get from NPM or manually build Acorn source. Easiest way is to create a new folder and use: npm install acorn
- * 
- * NOTE: There is a bug with chrome.fileSystem that makes saving this file (specifically acorn.js) break (messes up UTF-8 encoding). https://code.google.com/p/chromium/issues/detail?id=474183. This file must be saved with a non-chrome app. If saved with a chrome app, then overwrting save wont fix, instead must delete file and save as new file from non-chrome app. 
- * 
+ *
+ * NOTE: There is a bug with chrome.fileSystem that makes saving this file (specifically acorn.js) break (messes up UTF-8 encoding). https://code.google.com/p/chromium/issues/detail?id=474183. This file must be saved with a non-chrome app. If saved with a chrome app, then overwrting save wont fix, instead must delete file and save as new file from non-chrome app.
+ *
  * NOTE: acorn_csp.js works without eval, but tern still has code that requires eval so there is no reason to use acorn_csp.
  */
 
@@ -28,7 +28,7 @@ var isWorker = typeof window === 'undefined';
  * tern can't run in a chrome app due to content security policy that disallows eval (which tern uses).
  * this code allows tern to work in chrome app using sandboxed iframe, so this worker file is not acutally
  * a worker in the chrome app.
- * 
+ *
  * This code is irrelevant for normal usage, set isChromeApp to false when not using in Caret-T chromeApp.
  *
  */
@@ -53,7 +53,7 @@ if (isChromeApp) {
 
 if (isWorker || isChromeApp) {
     if (isChromeApp) self = window;
-    
+
     var server, nextId = 0,
         pending = {};
 
@@ -6639,6 +6639,10 @@ if (isWorker || isChromeApp) {
         return node.type == "Literal" && typeof node.value == "string" && node.start == start - 1 && node.end <= end + 1;
     }
 
+    function isString(node, start, end) {
+        return node.type == "Literal" && typeof node.value == "string";
+    }
+
     function pointInProp(objNode, point) {
         for (var i = 0; i < objNode.properties.length; i++) {
             var curProp = objNode.properties[i];
@@ -6665,7 +6669,6 @@ if (isWorker || isChromeApp) {
             ignoreObj;
         if (query.caseInsensitive) word = word.toLowerCase();
         var wrapAsObjs = query.types || query.depths || query.docs || query.urls || query.origins;
-
         function gather(prop, obj, depth, addInfo) {
             // 'hasOwnProperty' and such are usually just noise, leave them
             // out when no prefix is provided.
@@ -6702,27 +6705,63 @@ if (isWorker || isChromeApp) {
         // Decide whether this is an object property, either in a member
         // expression or an object literal.
         if (exprAt) {
+          console.log(exprAt);
             if (exprAt.node.type == "MemberExpression" && exprAt.node.object.end < wordStart) {
                 memberExpr = exprAt;
             }
-            else if (isStringAround(exprAt.node, wordStart, wordEnd)) {
-                var parent = infer.parentNode(exprAt.node, file.ast);
-                if (parent.type == "MemberExpression" && parent.property == exprAt.node) memberExpr = {
-                    node: parent,
-                    state: exprAt.state
+            else if (isString(exprAt.node, wordStart, wordEnd)) {
+
+                return {
+                    start: outputPos(query, file, wordStart),
+                    end: outputPos(query, file, wordEnd),
+                    isProperty: !! prop,
+                    isObjectKey: !! isKey,
+                    completions: completions
                 };
+                // var parent = infer.parentNode(exprAt.node, file.ast);
+                // if (parent.type == "MemberExpression" && parent.property == exprAt.node) memberExpr = {
+                //     node: parent,
+                //     state: exprAt.state
+                // };
             }
             else if (exprAt.node.type == "ObjectExpression") {
                 var objProp = pointInProp(exprAt.node, wordEnd);
                 if (objProp) {
                     objLit = exprAt;
                     prop = isKey = objProp.key.name;
+                    if(isKey){
+
+                      return {
+                          start: outputPos(query, file, wordStart),
+                          end: outputPos(query, file, wordEnd),
+                          isProperty: !! prop,
+                          isObjectKey: !! isKey,
+                          completions: completions
+                      };
+                    }
                 }
                 else if (!word && !/:\s*$/.test(file.text.slice(0, wordStart))) {
                     objLit = exprAt;
                     prop = isKey = true;
+                    return {
+                        start: outputPos(query, file, wordStart),
+                        end: outputPos(query, file, wordEnd),
+                        isProperty: !! prop,
+                        isObjectKey: !! isKey,
+                        completions: completions
+                    };
                 }
             }
+        }else{
+
+          // comment
+          return {
+              start: outputPos(query, file, wordStart),
+              end: outputPos(query, file, wordEnd),
+              isProperty: !! prop,
+              isObjectKey: !! isKey,
+              completions: completions
+          };
         }
 
         if (objLit) {
