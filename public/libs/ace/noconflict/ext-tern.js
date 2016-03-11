@@ -2201,7 +2201,7 @@ ace.define("ace/tern/tern_server",["require","exports","module","ace/range","ace
                 types: true,
                 origins: true,
                 docs: true,
-                filter: false,
+                filter: true,
                 omitObjectPrototype: false,
                 sort: false,
                 includeKeywords: true,
