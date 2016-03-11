@@ -5,9 +5,13 @@ block content
   app
 
   // ace
-  script(src="http://cdn.jsdelivr.net/ace/1.2.0/min/ace.js")
-  script(src="http://cdn.jsdelivr.net/ace/1.2.0/min/ext-language_tools.js")
-  script(src="http://cdn.jsdelivr.net/ace/1.2.0/min/ext-emmet.js")
+  //- script(src="http://cdn.jsdelivr.net/ace/1.2.0/min/ace.js")
+  script(src="/libs/ace/noconflict/ace.js")
+  script(src="/libs/ace/noconflict/ext-tern.js")
+  //- script(src="/libs/ace/noconflict/ext-language_tools.js")
+  script(src="/libs/ace/noconflict/ext-emmet.js")
+  
+  // script(src="https://rawgit.com/sevin7676/Ace.Tern/master/ace-builds/src-noconflict/ext-tern.js")
   //- script(src="http://cdn.rawgit.com/nightwing/emmet-core/master/emmet.js")
   // jszip
   script(src='http://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.js')
