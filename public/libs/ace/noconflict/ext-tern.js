@@ -1381,7 +1381,6 @@ var Autocomplete = function() {
             pos.top += rect.top - renderer.layerConfig.offset;
             pos.left += rect.left - editor.renderer.scrollLeft;
             pos.left += renderer.$gutterLayer.gutterWidth;
-
             this.popup.show(pos, lineHeight);
         } else if (keepPopupPosition && !prefix) {
             this.detach();
@@ -2977,8 +2976,9 @@ ace.define("ace/tern/tern_server",["require","exports","module","ace/range","ace
     function getCusorPosForTooltip(editor) {
         var place = editor.renderer.$cursorLayer.getPixelPosition(); //this gets left correclty, but not top if there is scrolling
         place.top = editor.renderer.$cursorLayer.cursors[0].offsetTop; //this gets top correctly regardless of scrolling, but left is not correct
-        place.top += editor.renderer.scroller.getBoundingClientRect().top; //top offset of editor on page
-        place.left += editor.renderer.container.offsetLeft;
+        var rect = editor.renderer.scroller.getBoundingClientRect();
+        place.top += rect.top; //top offset of editor on page
+        place.left += editor.renderer.container.offsetLeft + rect.left;
         return {
             left: place.left + 45,
             top: place.top + 17
