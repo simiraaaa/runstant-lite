@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/phi-jp/runstant-lite",
   "dependencies": {
-    "ace.tern": "git+https://github.com/simiraaaa/Ace.Tern.git",
+    "ace.tern": "git+https://github.com/simiraaaa/Ace.Tern.git#release/v1.0.1",
     "express": "~3.3.4",
     "jade": "^1.9.2",
     "js-yaml": "^3.4.3",
