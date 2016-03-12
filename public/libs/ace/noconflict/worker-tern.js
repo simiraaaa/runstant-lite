@@ -6711,13 +6711,7 @@ if (isWorker || isChromeApp) {
             }
             else if (isString(exprAt.node, wordStart, wordEnd)) {
 
-                return {
-                    start: outputPos(query, file, wordStart),
-                    end: outputPos(query, file, wordEnd),
-                    isProperty: !! prop,
-                    isObjectKey: !! isKey,
-                    completions: completions
-                };
+                return getReturnValue();
                 // var parent = infer.parentNode(exprAt.node, file.ast);
                 // if (parent.type == "MemberExpression" && parent.property == exprAt.node) memberExpr = {
                 //     node: parent,
@@ -6730,38 +6724,18 @@ if (isWorker || isChromeApp) {
                     objLit = exprAt;
                     prop = isKey = objProp.key.name;
                     if(isKey){
-
-                      return {
-                          start: outputPos(query, file, wordStart),
-                          end: outputPos(query, file, wordEnd),
-                          isProperty: !! prop,
-                          isObjectKey: !! isKey,
-                          completions: completions
-                      };
+                      return getReturnValue();
                     }
                 }
                 else if (!word && !/:\s*$/.test(file.text.slice(0, wordStart))) {
                     objLit = exprAt;
                     prop = isKey = true;
-                    return {
-                        start: outputPos(query, file, wordStart),
-                        end: outputPos(query, file, wordEnd),
-                        isProperty: !! prop,
-                        isObjectKey: !! isKey,
-                        completions: completions
-                    };
+                    return getReturnValue();
                 }
             }
         }else{
-
-          // comment
-          return {
-              start: outputPos(query, file, wordStart),
-              end: outputPos(query, file, wordEnd),
-              isProperty: !! prop,
-              isObjectKey: !! isKey,
-              completions: completions
-          };
+            // comment
+            return getReturnValue();
         }
 
         if (objLit) {
@@ -6814,13 +6788,17 @@ if (isWorker || isChromeApp) {
         if (query.sort !== false) completions.sort(compareCompletions);
         srv.cx.completingProperty = null;
 
-        return {
-            start: outputPos(query, file, wordStart),
-            end: outputPos(query, file, wordEnd),
-            isProperty: !! prop,
-            isObjectKey: !! isKey,
-            completions: completions
-        };
+        function getReturnValue(){
+            return {
+                start: outputPos(query, file, wordStart),
+                end: outputPos(query, file, wordEnd),
+                isProperty: !! prop,
+                isObjectKey: !! isKey,
+                completions: completions
+            };
+        }
+
+        return getReturnValue();
     }
 
     function findProperties(srv, query) {
